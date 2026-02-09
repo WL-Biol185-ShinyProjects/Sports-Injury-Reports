@@ -47,9 +47,9 @@ po/*~
 
 # RStudio Connect folder
 rsconnect/
-<<<<<<< HEAD
+
 *.Rproj*
-=======
+
 
 *.Rproj*
 
