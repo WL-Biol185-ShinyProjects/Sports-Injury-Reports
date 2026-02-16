@@ -1,0 +1,32 @@
+---
+title: "yearly_injuries_cleanup"
+output: html_document
+date: "2026-02-16"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+yearly_injuries cleanup
+- removing extra headers and footnotes
+- deleting extra space between each year
+- remove participant column and percent concussion related column (because not all years have these columns)
+- shifted all columns to fill gaps from deleted columns
+- added year column
+- removing column titles between years
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
