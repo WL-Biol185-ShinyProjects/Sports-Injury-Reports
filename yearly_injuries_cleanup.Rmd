@@ -10,13 +10,19 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## R Markdown
 
-yearly_injuries cleanup
+yearly_injuries manual cleanup
 - removing extra headers and footnotes
 - deleting extra space between each year
 - remove participant column and percent concussion related column (because not all years have these columns)
 - shifted all columns to fill gaps from deleted columns
 - added year column
 - removing column titles between years
+- deleted parentheses/negative signs randomly found in data values
+- go in and reformat percent column because only the first row has % symbol
+- changed all of the percents into actual numbers, since half the data set is in numbers and half is in percent
+  - we did this by adding columns in the data for years 2007-2014
+  - replaced all the percent columns by these added columns
+
 ```{r cars}
 summary(cars)
 ```
