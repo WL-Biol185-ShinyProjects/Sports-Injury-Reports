@@ -6,14 +6,15 @@ fluidPage(
   sidebarLayout(
     sidebarPanel(
       sliderInput(inputId = "year", 
-                  label = "Year",
+                  label = "year",
                   min = 2007,
                   max = 2024,
                   value = 2007
                   )
     ),
     mainPanel(
-      plotOutput("Yearly Injuries By Sport")
+      plotOutput("yearly_injuries_by_sport")
     )
   )
 )
+
