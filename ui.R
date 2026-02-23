@@ -20,6 +20,23 @@ fluidPage(
                )
              )
     ),
-    tabPanel("Injuries by Age")
+    tabPanel("Yearly Injuries by Age",
+             sidebarLayout(
+               sidebarPanel(
+                 selectInput(inputId = "age_group",
+                             label = "select age group",
+                             choices = c("0_to_4",
+                                         "4_to_15",
+                                         "14_to_24",
+                                         "25_to_64",
+                                         "65_or_over"
+                                         )
+                             )
+               ),
+               mainPanel(
+                 plotlyOutput("yearly_injuries_by_age")
+               )
+             )
+             )
   )
 )
