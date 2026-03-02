@@ -26,11 +26,11 @@ fluidPage(
                sidebarPanel(
                  selectInput(inputId = "age_group",
                              label = "select age group",
-                             choices = c("0_to_4",
-                                         "4_to_15",
-                                         "14_to_24",
-                                         "25_to_64",
-                                         "65_or_over"
+                             choices = c("0_to_4" = "0 to 4",
+                                         "4_to_15" = "4 to 15",
+                                         "14_to_24" = "14 to 24",
+                                         "25_to_64" = "25 to 64",
+                                         "65_or_over" = "65 or over"
                                          )
                              )
                ),
