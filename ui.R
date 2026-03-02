@@ -1,9 +1,10 @@
 library(shiny)
 library(plotly)
-
+library(bslib)
 
 
 fluidPage(
+  theme =  bs_theme(bootswatch ="minty"),
   tabsetPanel(
     tabPanel("Yearly Injuries by Sport",
              sidebarLayout(
