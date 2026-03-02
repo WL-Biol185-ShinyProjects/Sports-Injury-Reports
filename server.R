@@ -12,7 +12,9 @@ yearly_injuries_final <- read.csv("yearly_injuries_final.csv") %>%
 #Fixing the Table
   mutate(injuries = as.numeric(gsub(",", "", injuries)),
          year = as.numeric(year),
-         sport_or_activity = trimws(sport_or_activity)) %>%
+         sport_or_activity = trimws (sport_or_activity),
+         sport_or_activity = stringr::str_squish(sport_or_activity),
+  ) %>%
   group_by(sport_or_activity, year) %>%
   summarise(injuries = sum(injuries, na.rm = TRUE), .groups = "drop")
 
