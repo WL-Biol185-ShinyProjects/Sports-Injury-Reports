@@ -42,10 +42,9 @@ function(input, output) {
                  y = injuries,
                  fill = sport_or_activity,        # ADD THIS
                  text = paste("Sport:", sport_or_activity,
-                              "<br>Injuries:", scales::comma(injuries))
-      )) + 
-      geom_col() +
-      scale_fill_manual(values  = c("#78c2ad","#f3969a","#56cc9d","#6cc3d5","#ffce67")) + 
+                              "<br>Injuries:", scales::comma(injuries)),
+                 )) + 
+      geom_col(fill = "#78c28d") +
       scale_y_continuous(labels = scales::comma,
                          expand = expansion(mult = c(0,0.05))) + 
       theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 7),
