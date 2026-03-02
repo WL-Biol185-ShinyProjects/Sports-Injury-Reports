@@ -2,6 +2,10 @@ library(shiny)
 library(ggplot2)
 library(tidyverse)
 library(plotly)
+library(bslib)
+
+
+
 
 yearly_injuries_final <- read.csv("yearly_injuries_final.csv") %>%
   
@@ -52,6 +56,13 @@ function(input, output) {
 #injuries by age
   output$yearly_injuries_by_age <- renderPlotly({
     
+    tidyAge <- function(table) {
+      tidy <-gather(table,
+                    key = "age_group",
+                    value = "injuries",
+                    '0_to_4':'65_or_over')
+    }
+    yearly_injuries_by_age <-tidyAge(yearly_injuries_final)
     
     
     
