@@ -40,16 +40,16 @@ function(input, output) {
                                         ordered = TRUE)) %>%
       ggplot(aes(x = sport_or_activity, 
                  y = injuries,
+                 fill = sport_or_activity,        # ADD THIS
                  text = paste("Sport:", sport_or_activity,
-                              "<br>Injuries:", scales::comma(injuries)),
-                 )) + 
+                              "<br>Injuries:", scales::comma(injuries))
+      )) + 
       geom_col() +
-      scale_fill_manual(values = c("#78c2ad","#f3969a","#56cc9d","#6cc3d5","#ffce67"))
+      scale_fill_manual(values  = c("#78c2ad","#f3969a","#56cc9d","#6cc3d5","#ffce67")) + 
       scale_y_continuous(labels = scales::comma,
                          expand = expansion(mult = c(0,0.05))) + 
       theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 7),
-            plot.margin = margin(b = 100, r = 20, t = 20, l = 20, unit = "pt")
-            )
+            plot.margin = margin(b = 100, r = 20, t = 20, l = 20, unit = "pt"))
     
     ggplotly(p, tooltip = "text") %>%
       layout(height = 1000)
