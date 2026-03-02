@@ -20,7 +20,7 @@ yearly_injuries_final <- read.csv("yearly_injuries_final.csv") %>%
 
 
 function(input, output) {
-#yearly injuries by year
+#Sport Injuries Per Year
   output$yearly_injuries_by_sport <- renderPlotly({
     
     data <- yearly_injuries_final %>%
@@ -56,7 +56,7 @@ function(input, output) {
       layout(height = 1000)
   })
   
-#injuries by age
+#Injuries by Age Group
   output$yearly_injuries_by_age <- renderPlotly({
     
     tidyAge <- function(table) {
@@ -64,10 +64,23 @@ function(input, output) {
                     key = "age_group",
                     value = "injuries",
                     '0_to_4':'65_or_over')
+      return(tidy)
     }
     yearly_injuries_by_age <-tidyAge(yearly_injuries_final)
     
+    p <- yearly_injuries_by_age %>%
+      filter(age_group == input$age_group) %>%
+      group_by(year) %>%
+      summarise(injuries = sum(injuries, na.rm = TRUE)) %>%
+      ggplot(aes(x=year,
+                y=injuries))+
+      geom_line()+
+      theme_bw()+
+      xlab("Year")+
+      ylab("Number of Injuries")+
+      ggtitle("Injuries by Age Group Over Time")
     
-    
+    ggplotly(p)
+      
   })
 }
