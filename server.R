@@ -47,6 +47,9 @@ function(input, output) {
                               "<br>Injuries:", scales::comma(injuries)),
                  )) + 
       geom_col(fill = "#78c28d") +
+      xlab("Sport or Activity")+
+      ylab("Numbers of Injuries")+
+      ggtitle("Sport Injuries Per Year")+
       scale_y_continuous(labels = scales::comma,
                          expand = expansion(mult = c(0,0.05))) + 
       theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 7),
