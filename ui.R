@@ -2,14 +2,15 @@ library(shiny)
 library(plotly)
 library(bslib)
 
-yearly_injuries_final <- read.csv("yearly_injuries_final.csv") %>%
+
   
-  #Fixing the Table
+sport_injuries_by_age <-read.csv("yearly_injuries_final.csv") %>%
   mutate(injuries = as.numeric(gsub(",", "", injuries)),
          year = as.numeric(year),
          sport_or_activity = trimws (sport_or_activity),
          sport_or_activity = stringr::str_squish(sport_or_activity),
          ) %>%
+
   group_by(sport_or_activity, year) %>%
   summarise(injuries = sum(injuries, na.rm = TRUE), .groups = "drop")
 
@@ -36,11 +37,11 @@ fluidPage(
                sidebarPanel(
                  selectInput(inputId = "age_group",
                              label = "Select Age Group",
-                             choices = c("0 to 4" = "0_to_4",
-                                         "4 to 15" = "4_to_15",
-                                         "14 to 24" = "14_to_24",
-                                         "25 to 64" = "25_to_64",
-                                         "65 or over" = "65_or_over"
+                             choices = c("0 to 4" = "X0_to_4",
+                                         "4 to 15" = "X4_to_15",
+                                         "14 to 24" = "X14_to_24",
+                                         "25 to 64" = "X25_to_64",
+                                         "65 or over" = "X65_or_over"
                                          )
                              )
                ),
@@ -54,7 +55,7 @@ fluidPage(
                sidebarPanel(
                  selectInput(inputId = "sport_or_activity",
                              label = "Select Sport",
-                             choices = unique(yearly_injuries_final$sport_or_activity),
+                             choices = unique(sport_injuries_by_age$sport_or_activity),
                              selected = NULL
                              )
                ),

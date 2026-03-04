@@ -8,8 +8,6 @@ library(bslib)
 
 
 yearly_injuries_final <- read.csv("yearly_injuries_final.csv") %>%
-  
-#Fixing the Table
   mutate(injuries = as.numeric(gsub(",", "", injuries)),
          year = as.numeric(year),
          sport_or_activity = trimws (sport_or_activity),
@@ -18,10 +16,26 @@ yearly_injuries_final <- read.csv("yearly_injuries_final.csv") %>%
   group_by(sport_or_activity, year) %>%
   summarise(injuries = sum(injuries, na.rm = TRUE), .groups = "drop")
 
+injuries_by_agegroup <- read.csv("yearly_injuries_final.csv") %>%
+  mutate(injuries = as.numeric(gsub(",", "", injuries)),
+         year = as.numeric(year),
+         sport_or_activity = trimws (sport_or_activity),
+         sport_or_activity = stringr::str_squish(sport_or_activity),
+  ) %>%
+ 
 
 function(input, output) {
 #Sport Injuries Per Year
   output$yearly_injuries_by_sport <- renderPlotly({
+    
+    yearly_injuries_final <- read.csv("yearly_injuries_final.csv") %>%
+      mutate(injuries = as.numeric(gsub(",", "", injuries)),
+             year = as.numeric(year),
+             sport_or_activity = trimws (sport_or_activity),
+             sport_or_activity = stringr::str_squish(sport_or_activity),
+      ) %>%
+      group_by(sport_or_activity, year) %>%
+      summarise(injuries = sum(injuries, na.rm = TRUE), .groups = "drop")
     
     data <- yearly_injuries_final %>%
       arrange(injuries) %>%
@@ -66,10 +80,10 @@ function(input, output) {
       tidy <-gather(table,
                     key = "age_group",
                     value = "injuries",
-                    '0_to_4':'65_or_over')
+                    "X0_to_4":"X65_or_over")
       return(tidy)
     }
-    yearly_injuries_by_age <-tidyAge(yearly_injuries_final)
+    yearly_injuries_by_age <-tidyAge(injuries_by_agegroup)
     
     p <- yearly_injuries_by_age %>%
       filter(age_group == input$age_group) %>%
