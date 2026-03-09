@@ -43,10 +43,17 @@ fluidPage(
                                          "25 to 64" = "X25_to_64",
                                          "65 or over" = "X65_or_over"
                                          )
+                             ),
+                 selectInput(inputId = "sport_or_activity",
+                             label = "Select Sport(s)",
+                             choices = unique(injuries_by_agegroup$sport_or_activity),
+                             selected = unique(injuries_by_agegroup$sport_or_activity)[1],
+                             multiple = TRUE)
                              )
+               
                ),
                mainPanel(
-                 plotlyOutput("yearly_injuries_by_age")
+                 plotOutput("yearly_injuries_by_age")
                )
              )
              ),

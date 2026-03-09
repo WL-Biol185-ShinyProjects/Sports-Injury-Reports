@@ -21,8 +21,9 @@ injuries_by_agegroup <- read.csv("yearly_injuries_final.csv") %>%
          year = as.numeric(year),
          sport_or_activity = trimws (sport_or_activity),
          sport_or_activity = stringr::str_squish(sport_or_activity),
-  ) 
- 
+  ) %>%
+  group_by(sport_or_activity, year, X0_to_4, X4_to_15, X14_to_24, X25_to_64, X65_or_over, injuries) %>%
+  summarise(injuries = sum(injuries, na.rm = TRUE), .groups = "drop")
 
 function(input, output) {
 #Sport Injuries Per Year
@@ -74,7 +75,7 @@ function(input, output) {
   })
   
 #Injuries by Age Group
-  output$yearly_injuries_by_age <- renderPlotly({
+  output$yearly_injuries_by_age <- renderPlot({
     
     tidyAge <- function(table) {
       tidy <-gather(table,
@@ -84,20 +85,25 @@ function(input, output) {
       return(tidy)
     }
     yearly_injuries_by_age <-tidyAge(injuries_by_agegroup)
-    
-    p <- yearly_injuries_by_age %>%
-      filter(age_group == input$age_group) %>%
-      group_by(year) %>%
-      summarise(injuries = sum(injuries, na.rm = TRUE)) %>%
+
+    yearly_injuries_by_age %>%
+      filter(age_group == input$age_group,
+             sport_or_activity %in% input$sport_or_activity
+             ) %>%
+      group_by(year, sport_or_activity) %>%
+      summarise(injuries = sum(injuries, na.rm = TRUE), .group = "drop") %>%
       ggplot(aes(x=year,
-                y=injuries))+
+                 y=injuries,
+                 color=sport_or_activity,
+                 group = sport_or_activity
+                ))+
       geom_line()+
-      theme_bw()+
       xlab("Year")+
       ylab("Number of Injuries")+
-      ggtitle("Injuries by Age Group Over Time")
+      ggtitle("Injuries by Age Group Over Time")+
+    labs(color = "Sport")
     
-    ggplotly(p)
+  
       
   })
 }
