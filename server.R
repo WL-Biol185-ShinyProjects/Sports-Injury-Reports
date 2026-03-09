@@ -26,7 +26,7 @@ injuries_by_agegroup <- read.csv("yearly_injuries_final.csv") %>%
   summarise(injuries = sum(injuries, na.rm = TRUE), .groups = "drop")
 
 
-function(input, output) {
+function(input, output, session) {
 #Sport Injuries Per Year
   output$yearly_injuries_by_sport <- renderPlotly({
     
@@ -107,4 +107,16 @@ function(input, output) {
   
       
   })
-}
+  # Navigate to tabs when buttons are clicked
+  observeEvent(input$go_sport, {
+    updateTabsetPanel(session, "tabs", selected = "Sport Injuries Per Year")
+  })
+  
+  observeEvent(input$go_age, {
+    updateTabsetPanel(session, "tabs", selected = "Injuries by Age Group")
+  })
+  
+  observeEvent(input$go_sport_age, {
+    updateTabsetPanel(session, "tabs", selected = "Sport Injuries by Age")
+  })}
+
