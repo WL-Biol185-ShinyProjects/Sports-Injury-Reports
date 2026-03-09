@@ -26,7 +26,7 @@ injuries_by_agegroup <- read.csv("yearly_injuries_final.csv") %>%
 fluidPage(
   theme =  bs_theme(bootswatch ="minty"),
   tabsetPanel(id = "tabs",  # give tabsetPanel an id
-              tabPanel("Sports Injury Reports",
+              tabPanel("Home",
                        fluidRow(
                          column(12,
                                 h1("Sports Injury Reports",
