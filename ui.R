@@ -32,57 +32,59 @@ fluidPage(
   ),
 
   tabsetPanel(
-    tabPanel("Home"
-      
-    ),
-    tabPanel("Sport Injuries Per Year",
-             sidebarLayout(
-               sidebarPanel(
-                 sliderInput(inputId = "year",
-                             label = "Year",
-                             min = 2007,
-                             max = 2024,
-                             value = 2007,
-                             sep = "")
+    tabPanel("Home",
+             tabsetPanel(
+               tabPanel("Sport Injuries Per Year",
+                        sidebarLayout(
+                          sidebarPanel(
+                            sliderInput(inputId = "year",
+                                        label = "Year",
+                                        min = 2007,
+                                        max = 2024,
+                                        value = 2007,
+                                        sep = "")
+                          ),
+                          mainPanel(
+                            plotlyOutput("yearly_injuries_by_sport")
+                          )
+                        )
                ),
-               mainPanel(
-                 plotlyOutput("yearly_injuries_by_sport")
-               )
-             )
-    ),
-    tabPanel("Injuries by Age Group",
-             sidebarLayout(
-               sidebarPanel(
-                 selectInput(inputId = "age_group",
-                             label = "Select Age Group",
-                             choices = c("0 to 4" = "X0_to_4",
-                                         "4 to 15" = "X4_to_15",
-                                         "14 to 24" = "X14_to_24",
-                                         "25 to 64" = "X25_to_64",
-                                         "65 or over" = "X65_or_over"
-                                         )
-                             ),
-                 selectInput(inputId = "sport_or_activity",
-                             label = "Select Sport(s)",
-                             choices = unique(injuries_by_agegroup$sport_or_activity),
-                             selected = unique(injuries_by_agegroup$sport_or_activity)[1],
-                             multiple = TRUE)
-                             ),
-               mainPanel(
-                 plotOutput("yearly_injuries_by_age")
-               )
-               )
-             ),
-    tabPanel("Sport Injuries by Age",
-             sidebarLayout(
-               sidebarPanel(
-                 selectInput(inputId = "sport_or_activity",
-                             label = "Select Sport",
-                             choices = unique(sport_injuries_by_age$sport_or_activity),
-                             selected = NULL
-                 )
+               tabPanel("Injuries by Age Group",
+                        sidebarLayout(
+                          sidebarPanel(
+                            selectInput(inputId = "age_group",
+                                        label = "Select Age Group",
+                                        choices = c("0 to 4" = "X0_to_4",
+                                                    "4 to 15" = "X4_to_15",
+                                                    "14 to 24" = "X14_to_24",
+                                                    "25 to 64" = "X25_to_64",
+                                                    "65 or over" = "X65_or_over"
+                                        )
+                            ),
+                            selectInput(inputId = "sport_or_activity",
+                                        label = "Select Sport(s)",
+                                        choices = unique(injuries_by_agegroup$sport_or_activity),
+                                        selected = unique(injuries_by_agegroup$sport_or_activity)[1],
+                                        multiple = TRUE)
+                          ),
+                          mainPanel(
+                            plotOutput("yearly_injuries_by_age")
+                          )
+                        )
                ),
-               mainPanel(plotOutput("sport_injuries_by_age"))
-             ))
+               tabPanel("Sport Injuries by Age",
+                        sidebarLayout(
+                          sidebarPanel(
+                            selectInput(inputId = "sport_or_activity",
+                                        label = "Select Sport",
+                                        choices = unique(sport_injuries_by_age$sport_or_activity),
+                                        selected = NULL
+                            )
+                          ),
+                          mainPanel(plotOutput("sport_injuries_by_age"))
+                        ))
              )
+               
+             )),
+    
   )
