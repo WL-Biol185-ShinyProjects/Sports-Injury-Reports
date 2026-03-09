@@ -25,7 +25,16 @@ injuries_by_agegroup <- read.csv("yearly_injuries_final.csv") %>%
 
 fluidPage(
   theme =  bs_theme(bootswatch ="minty"),
+  
+  div(
+    titlePanel("Sports Injury Reports"),
+    style = "text-align: center;"
+  ),
+
   tabsetPanel(
+    tabPanel("Home"
+      
+    ),
     tabPanel("Sport Injuries Per Year",
              sidebarLayout(
                sidebarPanel(
