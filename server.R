@@ -21,7 +21,7 @@ injuries_by_agegroup <- read.csv("yearly_injuries_final.csv") %>%
          year = as.numeric(year),
          sport_or_activity = trimws (sport_or_activity),
          sport_or_activity = stringr::str_squish(sport_or_activity),
-  ) %>%
+  ) 
  
 
 function(input, output) {
