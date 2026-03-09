@@ -8,7 +8,7 @@ sport_injuries_by_age <-read.csv("yearly_injuries_final.csv") %>%
   mutate(injuries = as.numeric(gsub(",", "", injuries)),
          year = as.numeric(year),
          sport_or_activity = trimws (sport_or_activity),
-         sport_or_activity = stringr::str_squish(sport_or_activity),
+         sport_or_activity = stringr::str_squish(sport_or_activity)
          ) %>%
 
   group_by(sport_or_activity, year) %>%
@@ -58,13 +58,11 @@ fluidPage(
                              choices = unique(injuries_by_agegroup$sport_or_activity),
                              selected = unique(injuries_by_agegroup$sport_or_activity)[1],
                              multiple = TRUE)
-                             )
-               
-               ),
+                             ),
                mainPanel(
                  plotOutput("yearly_injuries_by_age")
                )
-             )
+               )
              ),
     tabPanel("Sport Injuries by Age",
              sidebarLayout(
@@ -73,8 +71,9 @@ fluidPage(
                              label = "Select Sport",
                              choices = unique(sport_injuries_by_age$sport_or_activity),
                              selected = NULL
-                             )
+                 )
                ),
-               mainPanel(plotlyOutput("sport_injuries_by_age"))
+               mainPanel(plotOutput("sport_injuries_by_age"))
              ))
+             )
   )
