@@ -14,6 +14,15 @@ sport_injuries_by_age <-read.csv("yearly_injuries_final.csv") %>%
   group_by(sport_or_activity, year) %>%
   summarise(injuries = sum(injuries, na.rm = TRUE), .groups = "drop")
 
+injuries_by_agegroup <- read.csv("yearly_injuries_final.csv") %>%
+  mutate(injuries = as.numeric(gsub(",", "", injuries)),
+         year = as.numeric(year),
+         sport_or_activity = trimws (sport_or_activity),
+         sport_or_activity = stringr::str_squish(sport_or_activity),
+  ) %>%
+  group_by(sport_or_activity, year, X0_to_4, X4_to_15, X14_to_24, X25_to_64, X65_or_over, injuries) %>%
+  summarise(injuries = sum(injuries, na.rm = TRUE), .groups = "drop")
+
 fluidPage(
   theme =  bs_theme(bootswatch ="minty"),
   tabsetPanel(
@@ -69,4 +78,3 @@ fluidPage(
                mainPanel(plotlyOutput("sport_injuries_by_age"))
              ))
   )
-)
