@@ -26,6 +26,17 @@ injuries_by_agegroup <- read.csv("yearly_injuries_final.csv") %>%
   summarise(injuries = sum(injuries, na.rm = TRUE), .groups = "drop")
 
 function(input, output, session) {
+  
+  output$tab_title <-renderUI({
+    if (input$tabs =="Home") return(NULL)
+    
+    div(
+      h3(input$tabs),
+      style = "text-align: center; color: #2c3e50; font-weight: 600;
+               border-bottom: 2px solid #e0e0e0; padding-bottom: 10px;
+               margin-bottom: 20px;"
+    )
+  })
 #Sport Injuries Per Year
   output$yearly_injuries_by_sport <- renderPlotly({
     
