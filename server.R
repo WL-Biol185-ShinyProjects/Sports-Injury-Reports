@@ -3,6 +3,7 @@ library(ggplot2)
 library(tidyverse)
 library(plotly)
 library(bslib)
+library(ggpie)
 
 
 
@@ -24,6 +25,21 @@ injuries_by_agegroup <- read.csv("yearly_injuries_final.csv") %>%
   ) %>%
   group_by(sport_or_activity, year, X0_to_4, X4_to_15, X14_to_24, X25_to_64, X65_or_over, injuries) %>%
   summarise(injuries = sum(injuries, na.rm = TRUE), .groups = "drop")
+
+agegroup_percentage <-read.csv("yearly_injuries_final.csv") %>%
+  mutate(injuries = as.numeric(gsub(",", "", injuries)),
+         year = as.numeric(year),
+         sport_or_activity = trimws (sport_or_activity),
+         sport_or_activity = stringr::str_squish(sport_or_activity),
+  ) %>%
+  group_by(sport_or_activity, year, X0_to_4, X4_to_15, X14_to_24, X25_to_64, X65_or_over, injuries) %>%
+  summarise(injuries = sum(injuries, na.rm = TRUE), .groups = "drop")
+
+  agegroup_percentage$percent_0_to_4 <- agegroup_percentage$X0_to_4/agegroup_percentage$injuries
+  agegroup_percentage$percent_4_to_15 <- agegroup_percentage$X4_to_15/agegroup_percentage$injuries
+  agegroup_percentage$percent_14_to_24 <- agegroup_percentage$X14_to_24/agegroup_percentage$injuries
+  agegroup_percentage$percent_25_to_64 <- agegroup_percentage$X25_to_64/agegroup_percentage$injuries
+  agegroup_percentage$percent_65_or_over <- agegroup_percentage$X65_or_over/agegroup_percentage$injuries
 
 function(input, output, session) {
   
@@ -128,5 +144,57 @@ function(input, output, session) {
   
   observeEvent(input$go_sport_age, {
     updateTabsetPanel(session, "tabs", selected = "Sport Injuries by Age")
-  })}
+  })
+  
+  #sport injuries by age
+  output$sport_injuries_by_age <- renderUI({
+    req(input$sport_or_activity)
+    
+    plot_output_list <- lapply(seq_along(input$sport_or_activity), function(i) {
+      plotOutput(paste0("pie_", i), height = "300px")
+    })
+    
+    do.call(fluidRow, lapply(plot_output_list, function(p) column(12 / length(input$sport_or_activity), p)))
+  })
+  
+  observe({
+    req(input$sport_or_activity)
+    
+    lapply(seq_along(input$sport_or_activity), function(i) {
+      local({
+        sport_name <- input$sport_or_activity[i]
+        plot_id    <- paste0("pie_", i)
+        
+        output[[plot_id]] <- renderPlot({
+          df <- agegroup_percentage %>%
+            filter(sport_or_activity == sport_name) %>%
+            summarise(
+              "0 to 4"    = sum(percent_0_to_4,     na.rm = TRUE),
+              "4 to 15"   = sum(percent_4_to_15,    na.rm = TRUE),
+              "14 to 24"  = sum(percent_14_to_24,   na.rm = TRUE),
+              "25 to 64"  = sum(percent_25_to_64,   na.rm = TRUE),
+              "65 or over"= sum(percent_65_or_over, na.rm = TRUE)
+            ) %>%
+            pivot_longer(cols = everything(),
+                         names_to  = "age_group",
+                         values_to = "pct") %>%
+            mutate(pct = pct / sum(pct) * 100)
+          
+          ggplot(df, aes(x = "", y = pct, fill = age_group)) +
+            geom_bar(stat = "identity", width = 1) +
+            coord_polar("y") +
+            labs(title = sport_name, fill = "Age Group") +
+            theme_void() +
+            theme(plot.title = element_text(hjust = 0.5, face = "bold")) +
+            geom_text(aes(label = paste0(round(pct, 1), "%")),
+                      position = position_stack(vjust = 0.5), size = 3)
+        })
+      })
+    })
+  })
+  
+  
+  
+  
+  }
 
