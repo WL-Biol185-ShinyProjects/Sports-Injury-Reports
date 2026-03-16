@@ -52,7 +52,22 @@ fluidPage(
                                     p("Break down injuries by sport and age group"),
                                     actionButton("go_sport_age", "Explore", class = "btn-primary")
                                   ))
-                                )
+                                ),
+                                h3("About",
+                                   style = "text-align: center; 
+                                margin: 30px auto 10px; 
+                                font-size: 40px;"),
+                                hr(style = "width: 100px; 
+                                border-top: 2px solid #78c28d; 
+                                margin: 10px auto 20px;"),
+                                p("This dashboard was created by Ellery Mcknight, Serenna Wu, and Cora Villere. 
+                                Our goal was to explore sports and recreational injury data collected over the past couple decades. 
+                                  We have examined injury trends across different sports, age groups, and years.
+                                  Our goal is to make injury data accessible and understandable for parents, coaches, and athletes alike.",
+                                  style = "text-align: center; 
+                                  font-size: 25px; 
+                                  max-width:900px; 
+                                  margin: 20px auto;")
                          )
                        )
               ),
@@ -102,10 +117,13 @@ fluidPage(
                                        label = "Select Sport(s)",
                                        choices = unique(injuries_by_agegroup$sport_or_activity),
                                        selected = unique(injuries_by_agegroup$sport_or_activity)[1],
-                                       multiple = TRUE)
+                                       multiple = TRUE),
                          ),
-                         mainPanel(uiOutput("sport_injuries_by_age"))
-                       ))
+                         mainPanel(uiOutput("sport_injuries_by_age")),
+                       )),
+              tabPanel("Favorite Sport by State",
+                                leafletOutput("sport_map", height = "600px")
+                       )
   )
 )
     
