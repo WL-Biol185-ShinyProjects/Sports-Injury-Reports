@@ -102,10 +102,13 @@ fluidPage(
                                        label = "Select Sport(s)",
                                        choices = unique(injuries_by_agegroup$sport_or_activity),
                                        selected = unique(injuries_by_agegroup$sport_or_activity)[1],
-                                       multiple = TRUE)
+                                       multiple = TRUE),
                          ),
-                         mainPanel(uiOutput("sport_injuries_by_age"))
-                       ))
+                         mainPanel(uiOutput("sport_injuries_by_age")),
+                       )),
+              tabPanel("Favorite Sport by State",
+                                leafletOutput("sport_map", height = "600px")
+                       )
   )
 )
     
