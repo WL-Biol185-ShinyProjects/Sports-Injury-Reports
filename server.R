@@ -3,8 +3,8 @@ library(ggplot2)
 library(tidyverse)
 library(plotly)
 library(bslib)
-library(ggpie)
-
+library(ggrepel)
+library(scales)
 
 
 
@@ -125,14 +125,15 @@ function(input, output, session) {
                  group = sport_or_activity
                 ))+
       geom_line()+
+      geom_point()+
+      scale_x_continuous(breaks = unique(yearly_injuries_by_age$year))+
       xlab("Year")+
       ylab("Number of Injuries")+
       ggtitle("Injuries by Age Group Over Time")+
-    labs(color = "Sport")
+      labs(color = "Sport")
     
-  
-      
   })
+  
   # Navigate to tabs when buttons are clicked
   observeEvent(input$go_sport, {
     updateTabsetPanel(session, "tabs", selected = "Sport Injuries Per Year")
@@ -149,12 +150,12 @@ function(input, output, session) {
   #sport injuries by age
   output$sport_injuries_by_age <- renderUI({
     req(input$sport_or_activity)
-    
     plot_output_list <- lapply(seq_along(input$sport_or_activity), function(i) {
-      plotOutput(paste0("pie_", i), height = "300px")
+          plotOutput(paste0("pie_", i), width = "450px", height = "450px")
     })
     
-    do.call(fluidRow, lapply(plot_output_list, function(p) column(12 / length(input$sport_or_activity), p)))
+    div(style = "display: flex; flex-wrap: wrap;",
+        tagList(plot_output_list))
   })
   
   observe({
@@ -180,14 +181,18 @@ function(input, output, session) {
                          values_to = "pct") %>%
             mutate(pct = pct / sum(pct) * 100)
           
+          df <- df %>% arrange(desc(age_group))
           ggplot(df, aes(x = "", y = pct, fill = age_group)) +
             geom_bar(stat = "identity", width = 1) +
             coord_polar("y") +
             labs(title = sport_name, fill = "Age Group") +
             theme_void() +
             theme(plot.title = element_text(hjust = 0.5, face = "bold")) +
-            geom_text(aes(label = paste0(round(pct, 1), "%")),
-                      position = position_stack(vjust = 0.5), size = 3)
+            geom_text_repel(aes(label = paste0(age_group, "\n", round(pct, 1), "%"),
+                                y = cumsum(pct) - 0.5 * pct),
+                            nudge_x = 0.7,
+                            show.legend = FALSE,
+                            size = 3)
         })
       })
     })
