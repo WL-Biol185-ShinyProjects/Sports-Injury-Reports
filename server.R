@@ -141,7 +141,14 @@ function(input, output, session) {
       xlab("Year")+
       ylab("Number of Injuries")+
       ggtitle("Injuries by Age Group Over Time")+
-      labs(color = "Sport")
+      labs(color = "Sport") +
+      theme(
+        plot.title   = element_text(size = 22),
+        axis.title   = element_text(size = 17),
+        axis.text    = element_text(size = 12),
+        legend.title = element_text(size = 18),
+        legend.text  = element_text(size = 15)
+      )
   
   })
   
@@ -156,6 +163,10 @@ function(input, output, session) {
   
   observeEvent(input$go_sport_age, {
     updateTabsetPanel(session, "tabs", selected = "Sport Injuries by Age")
+  })
+  
+  observeEvent(input$go_state, {
+    updateTabsetPanel(session, "tabs", selected = "Favorite Sport by State")
   })
   
   # Sport Injuries by Age (pie charts)
@@ -226,15 +237,92 @@ function(input, output, session) {
       setView(lng = -98.5, lat = 39.5, zoom = 4) %>%
       addProviderTiles(providers$CartoDB.Positron) %>%
       addCircleMarkers(
-        lng         = ~lon,
-        lat         = ~lat,
-        color       = ~pal(favorite_sport),
-        fillOpacity = 0.8,
-        radius      = 10,
-        label  = ~paste0(state, ": ", favorite_sport),
-        popup       = ~paste0("<b>", state, "</b><br>", "Favorite Sport: ", favorite_sport)
+        lng          = ~lon,
+        lat          = ~lat,
+        color        = "white",
+        fillColor    = ~pal(favorite_sport),
+        fillOpacity  = 0.9,
+        weight       = 2,
+        radius       = 18,
+        stroke       = TRUE,
+        label        = ~paste0(stringr::str_to_title(state), ": ", gsub("_", " ", favorite_sport)),
+        labelOptions = labelOptions(
+          style = list(
+            "font-weight"      = "bold",
+            "font-size"        = "14px",
+            "background-color" = "#78c2ad",
+            "color"            = "white",
+            "border"           = "none",
+            "border-radius"    = "4px",
+            "padding"          = "4px 8px"
+          )
+        ),
+        popup        = ~paste0(
+          "<div style='max-width:300px; font-family:Arial; padding:5px;'>",
+          "<h3 style='color:#78c2ad; margin:0 0 5px 0; border-bottom: 2px solid #78c2ad; padding-bottom:5px;'>",
+          stringr::str_to_title(state), "</h3>",
+          "<div style='text-align:center; margin:10px 0;'>",
+          case_when(
+            favorite_sport == "NFL_Football"       ~ "<img src='https://upload.wikimedia.org/wikipedia/en/a/a2/National_Football_League_logo.svg' height='60px'>",
+            favorite_sport == "NBA_Basketball"     ~ "<img src='https://cdn.freebiesupply.com/logos/large/2x/nba-logo-png-transparent.png' height='60px'>",
+            favorite_sport == "MLB_Baseball"       ~ "<img src='https://www.mlbstatic.com/team-logos/league-on-dark/1.svg' height='60px'>",
+            favorite_sport == "NHL_Hockey"         ~ "<img src='https://upload.wikimedia.org/wikipedia/en/3/3a/05_NHL_Shield.svg' height='60px'>",
+            favorite_sport == "College_Football"   ~ "<img src='https://upload.wikimedia.org/wikipedia/commons/d/dd/NCAA_logo.svg' height='60px'>",
+            favorite_sport == "College_Basketball" ~ "<img src='https://upload.wikimedia.org/wikipedia/commons/d/dd/NCAA_logo.svg' height='60px'>",
+            TRUE ~ ""
+          ),
+          "</div>",
+          "<p style='background:#f8f9fa; padding:5px 8px; border-radius:4px;'>",
+          "<b>Favorite Sport:</b> ", gsub("_", " ", favorite_sport), "</p>",
+          "<p style='font-size:12px; color:#555; line-height:1.5;'>",
+          case_when(
+            favorite_sport == "NBA_Basketball"     ~ "According to a 17-year study published in PMC, lateral ankle sprains are the most common NBA injury at 13.2%, followed by patellofemoral (knee) inflammation at 11.9%, lumbar strains at 7.9%, and hamstring strains at 3.3%. The lower extremity overall accounts for 62.4% of all injuries and is responsible for 72.3% of games missed.",
+            favorite_sport == "College_Football"   ~ "Injuries to the lower extremity were most common, constituting 50% of all injuries. The proportion of injuries to other anatomic areas was 21% for the head/neck, 15% for the upper extremity, and 14% for the trunk/back. Injuries were attributed to contact with another player in 59% of cases, noncontact in 32% of cases, and an unknown mechanism in 9% of cases.",
+            favorite_sport == "NFL_Football"       ~ "In general, the offensive lineman positions sustain the highest number of injuries while the running back has the highest rate. Overall, the knee was the most commonly injured site followed by the ankle.",
+            favorite_sport == "MLB_Baseball"       ~ "Baseball players may experience a range of arm-related injuries involving the shoulder, elbow, hand or wrist due to overuse caused by repetitive throwing and bat swinging.",
+            favorite_sport == "NHL_Hockey"         ~ "In the NHL body checking made up 28.6% of injuries. Only 6.2% of injuries were sustained by goaltenders, whereas 32.7% were defensemen and 61.1% were forwards.",
+            favorite_sport == "College_Basketball" ~ "According to NCAA injury surveillance data, ankle sprains are the most common college basketball injury at 16.2%, followed by concussions at 4.6%.",
+            TRUE ~ ""
+          ),
+          "</p></div>"
+        )
       ) %>%
       addLegend("bottomright", pal = pal, values = ~favorite_sport, title = "Favorite Sport")
   })
+  # Summary cards
+  output$most_popular_sport <- renderText({
+    favorite_sport_by_state %>%
+      count(favorite_sport) %>%
+      slice_max(n, n = 1) %>%
+      pull(favorite_sport) %>%
+      gsub("_", " ", .)
+  })
   
+  output$num_sports <- renderText({
+    favorite_sport_by_state %>%
+      distinct(favorite_sport) %>%
+      nrow()
+  })
+  
+  output$num_states <- renderText({
+    nrow(favorite_sport_by_state)
+  })
+  
+  # Bar chart
+  output$sport_state_bar <- renderPlot({
+    favorite_sport_by_state %>%
+      count(favorite_sport) %>%
+      mutate(favorite_sport = gsub("_", " ", favorite_sport)) %>%
+      arrange(desc(n)) %>%
+      ggplot(aes(x = reorder(favorite_sport, n), y = n, fill = favorite_sport)) +
+      geom_col(show.legend = FALSE) +
+      scale_fill_manual(values = c("#78c2ad", "#f3969a", "#56cc9d",
+                                   "#6cc3d5", "#ffce67", "#ff7851")) +
+      coord_flip() +
+      xlab("") +
+      ylab("Number of States") +
+      ggtitle("How Many States Prefer Each Sport?") +
+      theme_minimal() +
+      theme(plot.title = element_text(hjust = 0.5, face = "bold"))
+  })
 }
