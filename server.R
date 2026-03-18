@@ -141,7 +141,14 @@ function(input, output, session) {
       xlab("Year")+
       ylab("Number of Injuries")+
       ggtitle("Injuries by Age Group Over Time")+
-      labs(color = "Sport")
+      labs(color = "Sport") +
+      theme(
+        plot.title   = element_text(size = 22),
+        axis.title   = element_text(size = 17),
+        axis.text    = element_text(size = 12),
+        legend.title = element_text(size = 18),
+        legend.text  = element_text(size = 15)
+      )
   
   })
   
@@ -156,6 +163,10 @@ function(input, output, session) {
   
   observeEvent(input$go_sport_age, {
     updateTabsetPanel(session, "tabs", selected = "Sport Injuries by Age")
+  })
+  
+  observeEvent(input$go_state, {
+    updateTabsetPanel(session, "tabs", selected = "Favorite Sport by State")
   })
   
   # Sport Injuries by Age (pie charts)
