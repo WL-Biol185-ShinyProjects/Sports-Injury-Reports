@@ -197,12 +197,14 @@ function(input, output, session) {
             coord_polar("y") +
             labs(title = sport_name, fill = "Age Group") +
             theme_void() +
-            theme(plot.title = element_text(hjust = 0.5, face = "bold")) +
+            theme(plot.title = element_text(hjust = 0.5, face = "bold", size = 25),
+                  legend.text = element_text(size = 15),
+                  legend.title = element_text(size = 20)) +
             geom_text_repel(aes(label = paste0(age_group, "\n", round(pct, 1), "%"),
                                 y = cumsum(pct) - 0.5 * pct),
                             nudge_x = 0.7,
                             show.legend = FALSE,
-                            size = 3)
+                            size = 6)
         })
       })
     })
