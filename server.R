@@ -287,4 +287,40 @@ function(input, output, session) {
       ) %>%
       addLegend("bottomright", pal = pal, values = ~favorite_sport, title = "Favorite Sport")
   })
+  # Summary cards
+  output$most_popular_sport <- renderText({
+    favorite_sport_by_state %>%
+      count(favorite_sport) %>%
+      slice_max(n, n = 1) %>%
+      pull(favorite_sport) %>%
+      gsub("_", " ", .)
+  })
+  
+  output$num_sports <- renderText({
+    favorite_sport_by_state %>%
+      distinct(favorite_sport) %>%
+      nrow()
+  })
+  
+  output$num_states <- renderText({
+    nrow(favorite_sport_by_state)
+  })
+  
+  # Bar chart
+  output$sport_state_bar <- renderPlot({
+    favorite_sport_by_state %>%
+      count(favorite_sport) %>%
+      mutate(favorite_sport = gsub("_", " ", favorite_sport)) %>%
+      arrange(desc(n)) %>%
+      ggplot(aes(x = reorder(favorite_sport, n), y = n, fill = favorite_sport)) +
+      geom_col(show.legend = FALSE) +
+      scale_fill_manual(values = c("#78c2ad", "#f3969a", "#56cc9d",
+                                   "#6cc3d5", "#ffce67", "#ff7851")) +
+      coord_flip() +
+      xlab("") +
+      ylab("Number of States") +
+      ggtitle("How Many States Prefer Each Sport?") +
+      theme_minimal() +
+      theme(plot.title = element_text(hjust = 0.5, face = "bold"))
+  })
 }

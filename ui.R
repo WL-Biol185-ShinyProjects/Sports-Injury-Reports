@@ -156,7 +156,34 @@ fluidPage(
            associated with that state's favorite sport. Hover over a circle to see the state
            name and sport at a glance.")
                        ),
-                       leafletOutput("sport_map", height = "650px")
+                       leafletOutput("sport_map", height = "650px"),
+                       
+                       br(),
+                       
+                       # Summary cards
+                       fluidRow(
+                         column(4, wellPanel(
+                           style = "background-color: #78c2ad; color: white; text-align: center;",
+                           h4(style = "color: white;", "Most Popular Sport"),
+                           h2(style = "color: white;", textOutput("most_popular_sport"))
+                         )),
+                         column(4, wellPanel(
+                           style = "background-color: #f3969a; color: white; text-align: center;",
+                           h4(style = "color: white;", "Number of Sports"),
+                           h2(style = "color: white;", textOutput("num_sports"))
+                         )),
+                         column(4, wellPanel(
+                           style = "background-color: #ffce67; color: white; text-align: center;",
+                           h4(style = "color: white;", "States Tracked"),
+                           h2(style = "color: white;", textOutput("num_states"))
+                         ))
+                       ),
+                       
+                       br(),
+                       
+                       # Bar chart
+                       h4("States Per Sport", style = "text-align: center; color: #2c3e50;"),
+                       plotOutput("sport_state_bar", height = "300px")
               )
   )
 )
