@@ -26,6 +26,11 @@ injuries_by_agegroup <- read.csv("yearly_injuries_final.csv") %>%
 fluidPage(
   theme =  bs_theme(bootswatch ="minty"),
   h2("Sports Injury Reports", style = "text-align: center; font-size: 50px;"),
+  tags$style(HTML("                
+    .slider-animate-container {
+      margin-top: 10px;
+    }
+  ")),
   
   tabsetPanel(id = "tabs",  # give tabsetPanel an id
               tabPanel("Home",
@@ -51,6 +56,12 @@ fluidPage(
                                     h4("Sport Injuries by Age"),
                                     p("Break down injuries by sport and age group"),
                                     actionButton("go_sport_age", "Explore", class = "btn-primary")
+                                  )),
+                                  tags$div(style = "margin-top: 16px; width: 100%;"),
+                                  column(4, wellPanel(
+                                    h4("Favorite Sport by State"),
+                                    p("Explore each state's favorite sport and correponding injury facts"),
+                                    actionButton("go_state", "Explore", class = "btn-primary")
                                   ))
                                 ),
                                 h3("About",
@@ -75,15 +86,26 @@ fluidPage(
               tabPanel("Sport Injuries Per Year",
                        sidebarLayout(
                          sidebarPanel(
+                           h4("Filter by Year"),
                            sliderInput(inputId = "year",
                                        label = "Year",
                                        min = 2007,
                                        max = 2024,
                                        value = 2007,
-                                       sep = "")
+                                       sep = "",
+                                       animate = animationOptions(
+                                         interval = 1000,
+                                         loop = TRUE,
+                                         playButton = "▶ Play",
+                                         pauseButton = "⏸ Pause"
+                                       )
+                           ),
+                           hr(),
+                           p("Use the slider or press Play to animate injuries over time.",
+                             style = "color: gray; font-size: 15px;")
                          ),
                          mainPanel(
-                           plotlyOutput("yearly_injuries_by_sport")
+                           plotlyOutput("yearly_injuries_by_sport", height = "500px")
                          )
                        )
               ),
