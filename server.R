@@ -229,10 +229,32 @@ function(input, output, session) {
         color       = ~pal(favorite_sport),
         fillOpacity = 0.8,
         radius      = 10,
-        label  = ~paste0(state, ": ", favorite_sport),
-        popup       = ~paste0("<b>", state, "</b><br>", "Favorite Sport: ", favorite_sport)
-      ) %>%
+        label       = ~paste0(state, ": ", favorite_sport),
+        popup       = ~paste0(
+          "<div style='max-width:250px'>",
+          "<b style='font-size:14px'>", state, "</b><br>",
+          case_when(
+            favorite_sport == "NFL_Football"       ~ "<img src='https://upload.wikimedia.org/wikipedia/en/a/a2/National_Football_League_logo.svg' height='40px'><br>",
+            favorite_sport == "NBA_Basketball"     ~ "<img src='https://cdn.freebiesupply.com/logos/large/2x/nba-logo-png-transparent.png' height='40px'><br>",
+            favorite_sport == "MLB_Baseball"       ~ "<img src='https://www.mlbstatic.com/team-logos/league-on-dark/1.svg' height='40px'><br>",
+            favorite_sport == "NHL_Hockey"         ~ "<img src='https://upload.wikimedia.org/wikipedia/en/3/3a/05_NHL_Shield.svg' height='40px'><br>",
+            favorite_sport == "College_Football"   ~ "<img src='https://upload.wikimedia.org/wikipedia/commons/d/dd/NCAA_logo.svg' height='40px'><br>",
+            favorite_sport == "College_Basketball" ~ "<img src='https://upload.wikimedia.org/wikipedia/commons/d/dd/NCAA_logo.svg' height='40px'><br>",
+            TRUE ~ ""
+          ),
+          "Favorite Sport: ", favorite_sport, "<br><br>",
+          case_when(
+            favorite_sport == "NBA_Basketball"     ~ "According to a 17-year study published in PMC, lateral ankle sprains are the most common NBA injury at 13.2%, followed by patellofemoral (knee) inflammation at 11.9%, lumbar strains at 7.9%, and hamstring strains at 3.3%. The lower extremity overall accounts for 62.4% of all injuries and is responsible for 72.3% of games missed.",
+            favorite_sport == "College_Football"   ~ "Injuries to the lower extremity were most common, constituting 50% of all injuries. The proportion of injuries to other anatomic areas was 21% for the head/neck, 15% for the upper extremity, and 14% for the trunk/back.",
+            favorite_sport == "NFL_Football"       ~ "In general, the offensive lineman positions sustain the highest number of injuries while the running back has the highest rate. Overall, the knee was the most commonly injured site followed by the ankle.",
+            favorite_sport == "MLB_Baseball"       ~ "Baseball players may experience a range of arm-related injuries involving the shoulder, elbow, hand or wrist due to overuse caused by repetitive throwing and bat swinging.",
+            favorite_sport == "NHL_Hockey"         ~ "In the NHL body checking made up 28.6% of injuries. Only 6.2% of injuries were sustained by goaltenders, whereas 32.7% were defensemen and 61.1% were forwards.",
+            favorite_sport == "College_Basketball" ~ "According to NCAA injury surveillance data, ankle sprains are the most common college basketball injury at 16.2%, followed by concussions at 4.6%.",
+            TRUE ~ ""
+          ),
+          "</div>"
+        )
+      ) %>%                                        # closes addCircleMarkers
       addLegend("bottomright", pal = pal, values = ~favorite_sport, title = "Favorite Sport")
   })
-  
 }
