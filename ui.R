@@ -110,21 +110,27 @@ fluidPage(
                          )
                        )
               ),
-              tabPanel("Sport Injuries by Age",
-                       sidebarLayout(
-                         sidebarPanel(
-                           selectInput(inputId = "sport_or_activity",
-                                       label = "Select Sport(s)",
-                                       choices = unique(injuries_by_agegroup$sport_or_activity),
-                                       selected = unique(injuries_by_agegroup$sport_or_activity)[1],
-                                       multiple = TRUE),
-                         ),
-                         mainPanel(uiOutput("sport_injuries_by_age")),
-                       )),
               tabPanel("Favorite Sport by State",
-                                leafletOutput("sport_map", height = "600px")
-                       )
+                       br(),
+                       div(
+                         style = "background-color: #f8f9fa; border-left: 4px solid #78c2ad;
+             padding: 15px; margin-bottom: 15px; border-radius: 4px;",
+                         div(
+                           style = "display: flex; gap: 20px; align-items: center;
+               justify-content: center; margin-bottom: 15px;",
+                           img(src = "https://upload.wikimedia.org/wikipedia/en/a/a2/National_Football_League_logo.svg", height = "60px"),
+                           img(src = "https://upload.wikimedia.org/wikipedia/en/3/3a/05_NHL_Shield.svg", height = "60px"),
+                           img(src = "https://upload.wikimedia.org/wikipedia/commons/d/dd/NCAA_logo.svg", height = "60px"),
+                           img(src = "https://cdn.freebiesupply.com/logos/large/2x/nba-logo-png-transparent.png", height = "60px"),
+                           img(src = "https://www.mlbstatic.com/team-logos/league-on-dark/1.svg", height = "60px"),
+                         ),
+                         p(style = "margin: 0; color: #2c3e50; font-size: 16px;",
+                           "This map displays the most popular sport in each state based on fan interest and
+       viewership data. Click on any circle to learn more about the most common injuries
+       associated with that state's favorite sport. Hover over a circle to see the state
+       name and sport at a glance.")
+                       ),
+                       leafletOutput("sport_map", height = "600px")
+              )
   )
 )
-    
-
