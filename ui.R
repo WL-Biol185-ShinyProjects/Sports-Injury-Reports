@@ -73,72 +73,109 @@ fluidPage(
               ),
               
               tabPanel("Sport Injuries Per Year",
-                       sidebarLayout(
-                         sidebarPanel(
-                           h4("Filter by Year"),
-                           sliderInput(inputId = "year",
-                                       label = "Year",
-                                       min = 2007,
-                                       max = 2024,
-                                       value = 2007,
-                                       sep = "",
-                                       animate = animationOptions(
-                                         interval = 1000,
-                                         loop = TRUE,
-                                         playButton = "▶ Play",
-                                         pauseButton = "⏸ Pause"
-                                       )
-                           ),
-                           hr(),
-                           p("Use the slider or press Play to animate injuries over time.",
-                             style = "color: gray; font-size: 15px;")
-                         ),
-                         mainPanel(
-                           plotlyOutput("yearly_injuries_by_sport", height = "500px")
-                         )
+                       fluidRow(
+                         column(12,
+                                h1("See which sports cause the most injuries each year",
+                                   style = "text-align: center; margin-top: 50px; font-size: 40px;"),
+                                h4("Instructions...",
+                                   style = "text-align: center; color: grey;"),
+                                sidebarLayout(
+                                  sidebarPanel(
+                                    width = 3,
+                                    h4("Filter by Year"),
+                                    sliderInput(inputId = "year",
+                                                label = "Year",
+                                                min = 2007,
+                                                max = 2024,
+                                                value = 2007,
+                                                sep = "",
+                                                animate = animationOptions(
+                                                  interval = 1000,
+                                                  loop = TRUE,
+                                                  playButton = "▶ Play",
+                                                  pauseButton = "⏸ Pause"
+                                                )
+                                    ),
+                                    hr(),
+                                    p("Use the slider or press Play to animate injuries over time.",
+                                      style = "color: gray; font-size: 15px;")
+                                  ),
+                                  mainPanel(
+                                    width = 9,
+                                    div(style = "border: 1px solid #ddd; border-radius: 5px; padding: 10px; height: 950px; overflow: hidden; margin-bottom: 30px;",
+                                        plotlyOutput("yearly_injuries_by_sport", height = "1000px")
+                                    )
+                                  )
+                                )
+                                )
                        )
-              ),
+                       ),
               
-              tabPanel("Injuries by Age Group",
-
-                       sidebarLayout(
-                         sidebarPanel(
-                           selectInput(inputId = "age_group",
-                                       label = "Select Age Group",
-                                       choices = c("0 to 4"     = "X0_to_4",
-                                                   "4 to 15"    = "X4_to_15",
-                                                   "14 to 24"   = "X14_to_24",
-                                                   "25 to 64"   = "X25_to_64",
-                                                   "65 or over" = "X65_or_over")
-                           ),
-                           selectInput(inputId = "sport_or_activity",
-                                       label = "Select Sport(s)",
-                                       choices  = unique(injuries_by_agegroup$sport_or_activity),
-                                       selected = unique(injuries_by_agegroup$sport_or_activity)[1],
-                                       multiple = TRUE)
-                         ),
-                         mainPanel(
-                           plotOutput("yearly_injuries_by_age")
-
-                         )
-                       )
-              ),
               
-              tabPanel("Sport Injuries by Age",
-
-                       sidebarLayout(
-                         sidebarPanel(
-                           selectInput(inputId = "sport_or_activity",
-                                       label = "Select Sport(s)",
-                                       choices  = unique(injuries_by_agegroup$sport_or_activity),
-                                       selected = unique(injuries_by_agegroup$sport_or_activity)[1],
-                                       multiple = TRUE)
-                         ),
-                         mainPanel(
-                           uiOutput("sport_injuries_by_age")
-                         )
+              tabPanel("Injuries By Age Group",
+                       fluidRow(
+                         column(12, 
+                                h1("Explore how injuries vary across age groups",
+                                   style = "text-align: center; margin-top: 50px; font-size: 40px;"),
+                                h4("Instructions...",
+                                   style = "text-align: center; color: grey;"),
+                                hr(),
+                                sidebarLayout(
+                                  sidebarPanel(
+                                    width = 3,
+                                    selectInput(inputId = "age_group",
+                                                label = "Select Age Group",
+                                                choices = c("0 to 4"     = "X0_to_4",
+                                                            "4 to 15"    = "X4_to_15",
+                                                            "14 to 24"   = "X14_to_24",
+                                                            "25 to 64"   = "X25_to_64",
+                                                            "65 or over" = "X65_or_over")
+                                    ),
+                                    selectInput(inputId = "sport_or_activity",
+                                                label = "Select Sport(s)",
+                                                choices  = unique(injuries_by_agegroup$sport_or_activity),
+                                                selected = unique(injuries_by_agegroup$sport_or_activity)[1],
+                                                multiple = TRUE)
+                                  ),
+                                  mainPanel(
+                                    width = 9,
+                                    div(style = "border: 1px solid #ddd; border-radius: 5px; padding: 10px; margin-bottom: 30px;",
+                                        plotOutput("yearly_injuries_by_age")
+                                    )
+                                  )
+                                )
+                                )
                        )
-              ),
+                       ),
+             
+             tabPanel("Sport Injuries By Age",
+                      fluidRow(
+                        column(12,
+                               h1("Break down injuries by sport and age group",
+                                  style = "text-align: center; margin-top: 50px; font-size: 40px;"),
+                               h4("Instructions...",
+                                  style = "text-align: center; color: grey;"),
+                               hr(),
+                               sidebarLayout(
+                                 sidebarPanel(
+                                   width = 3,
+                                   selectInput(inputId = "sport_or_activity",
+                                               label = "Select Sport(s)",
+                                               choices  = unique(injuries_by_agegroup$sport_or_activity),
+                                               selected = unique(injuries_by_agegroup$sport_or_activity)[1],
+                                               multiple = TRUE)
+                                 ),
+                                 mainPanel(
+                                   width = 9,  
+                                   div(style = "border: 1px solid #ddd; border-radius: 5px; padding: 10px; margin-bottom: 30px;",
+                                       uiOutput("sport_injuries_by_age")
+                                   )
+                                 )
+                               )
+                               )
+                      )
+                      ),
+             
               tabPanel("Favorite Sport by State",
                        br(),
                        div(
