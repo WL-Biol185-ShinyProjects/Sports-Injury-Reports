@@ -59,6 +59,11 @@ fluidPage(
                                     h4("Favorite Sport by State"),
                                     p("Explore each state's favorite sport and corresponding injury facts"),
                                     actionButton("go_state", "Explore", class = "btn-primary")
+                                  )),
+                                  column(4, wellPanel(        # ← add this
+                                    h4("About Us"),
+                                    p("Meet the team behind Sports Injury Reports"),
+                                    actionButton("go_about", "Meet the Team", class = "btn-primary")
                                   ))
                                 ),
                                 h3("About", style = "text-align: center; margin: 30px auto 10px; font-size: 40px;"),
@@ -225,6 +230,45 @@ fluidPage(
                        # Bar chart
                        h4("States Per Sport", style = "text-align: center; color: #2c3e50;"),
                        plotOutput("sport_state_bar", height = "300px")
-              )
+              ),
+             tabPanel("About",
+                      fluidRow(
+                        column(12,
+                               h1("About Us",
+                                  style = "text-align: center; margin-top: 40px; font-size: 40px;"),
+                               h4("The team behind Sports Injury Reports",
+                                  style = "text-align: center; color: grey; margin-bottom: 40px;"),
+                               hr()
+                        )
+                      ),
+                      fluidRow(
+                        column(4, wellPanel(
+                          tags$img(src = "person1.jpg",
+                                   style = "width: 100%; border-radius: 50%; margin-bottom: 15px;"),
+                          h4("Cora Villere", style = "text-align: center;"),
+                          p("2027", style = "text-align: center; color: grey; font-size: 12px;"),
+                          p("I am a Biology major on the pre-health track, with a passion for medicine and public health.
+                            Specifically, I hope to become an emergency physician. Emergency departments are on the front lines of
+                            sports injuries every day, leading to a great interest in this project.",
+                            style = "text-align: center; font-size: 13px;")
+                        )),
+                        column(4, wellPanel(
+                          tags$img(src = "person2.jpg",
+                                   style = "width: 100%; border-radius: 50%; margin-bottom: 15px;"),
+                          h4("Name Here", style = "text-align: center;"),
+                          p("Year", style = "text-align: center; color: grey; font-size: 12px;"),
+                          p("Blurb about yourself here.",
+                            style = "text-align: center; font-size: 13px;")
+                        )),
+                        column(4, wellPanel(
+                          tags$img(src = "person3.jpg",
+                                   style = "width: 100%; border-radius: 50%; margin-bottom: 15px;"),
+                          h4("Name Here", style = "text-align: center;"),
+                          p("Year", style = "text-align: center; color: grey; font-size: 12px;"),
+                          p("Blurb about yourself here.",
+                            style = "text-align: center; font-size: 13px;")
+                        ))
+                      )             
+             )  
   )
 )

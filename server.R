@@ -169,6 +169,10 @@ function(input, output, session) {
     updateTabsetPanel(session, "tabs", selected = "Favorite Sport by State")
   })
   
+  observeEvent(input$go_about, {
+    updateTabsetPanel(session, "tabs", selected = "About")
+  })
+  
   # Sport Injuries by Age (pie charts)
   output$sport_injuries_by_age <- renderUI({
     req(input$sport_or_activity)
