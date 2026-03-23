@@ -422,7 +422,7 @@ fluidPage(
                                      style = "width: 250px; height: 250px; object-fit: cover; border-radius: 8px; flex-shrink: 0;"),
                             tags$div(
                               h4("Ellery Mcknight", style = "margin-top: 0;"),
-                              p("Year", style = "color: grey; font-size: 12px;"),
+                              p("2028", style = "color: grey; font-size: 12px;"),
                               p("I'm a biology major and data science minor from Atlanta, GA. On campus I enjoy being part of the University Singers and am involved in greek life. In my free time I like spending time outside and playing the guitar.",
                                 style = "font-size: 13px;")
                             )
