@@ -213,7 +213,7 @@ fluidPage(
                                    style = "text-align: center; color: grey;"),
                                 sidebarLayout(
                                   sidebarPanel(
-                                    width = 4,
+                                    width = 3,
                                     h4("Filter by Year"),
                                     sliderInput(inputId = "year",
                                                 label = "Year",
@@ -222,7 +222,7 @@ fluidPage(
                                                 value = 2007,
                                                 sep = "",
                                                 animate = animationOptions(
-                                                  interval = 1000,
+                                                  interval = 2000,
                                                   loop = TRUE,
                                                   playButton = "▶ Play",
                                                   pauseButton = "⏸ Pause"
@@ -231,20 +231,16 @@ fluidPage(
                                     hr(),
                                     p("Use the slider or press Play to animate injuries over time.",
                                       style = "color: gray; font-size: 15px;"),
-
-                                    br(),
-                                    wellPanel(
-                                      style = "background: white; border: 1px solid #ddd; border-radius: 8px; padding: 12px;",
-                                      uiOutput("top_sport_boxes")
-                                    )
+                                    uiOutput("top_sport_boxes_wrapper")
                                   ),
+                                  
                                   mainPanel(
-                                    width = 8,
+                                    width = 9,
                                     div(style = "border: 1px solid #ddd; border-radius: 5px; padding: 10px; height: 950px; overflow: hidden; margin-bottom: 30px;",
                                         plotlyOutput("yearly_injuries_by_sport", height = "1000px")
                                     )
                                   )
-                                )
+                                ),
                          )
                        )
               ),
