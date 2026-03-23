@@ -98,7 +98,13 @@ fluidPage(
                                     ),
                                     hr(),
                                     p("Use the slider or press Play to animate injuries over time.",
-                                      style = "color: gray; font-size: 15px;")
+                                      style = "color: gray; font-size: 15px;"),
+                                    # ---- ADD THIS BELOW ----
+                                    br(),
+                                    wellPanel(
+                                      style = "background: white; border: 1px solid #ddd; border-radius: 8px; padding: 12px;",
+                                      uiOutput("top_sport_boxes")
+                                    )
                                   ),
                                   mainPanel(
                                     width = 9,
@@ -107,9 +113,9 @@ fluidPage(
                                     )
                                   )
                                 )
-                                )
+                         )
                        )
-                       ),
+              ),
               
               
               tabPanel("Injuries By Age Group",

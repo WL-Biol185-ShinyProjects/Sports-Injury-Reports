@@ -117,6 +117,44 @@ function(input, output, session) {
       layout(height = 1000)
   })
   
+  output$top_sport_boxes <- renderUI({
+  yearly_injuries_final <- read.csv("yearly_injuries_final.csv") %>%
+    mutate(injuries = as.numeric(gsub(",", "", injuries)),
+           year = as.numeric(year),
+           sport_or_activity = trimws(stringr::str_squish(sport_or_activity))) %>%
+    group_by(sport_or_activity, year) %>%
+    summarise(injuries = sum(injuries, na.rm = TRUE), .groups = "drop")
+
+  filtered <- yearly_injuries_final %>%
+    filter(year == input$year) %>%
+    arrange(desc(injuries))
+
+  if (nrow(filtered) == 0) return(NULL)
+
+  top <- slice(filtered, 1)
+  bot <- slice(filtered, n())
+
+  tagList(
+    h5("Year at a Glance", style = "text-align: center; color: #555; margin-top: 0;"),
+    fluidRow(
+      column(6,
+        div(style = "background: #f3969a; border-radius: 8px; padding: 10px; text-align: center;",
+          p("Most injured", style = "font-size: 11px; color: gray; margin-bottom: 4px;"),
+          p(top$sport_or_activity, style = "font-size: 12px; font-weight: bold; color: #a83237; margin: 0; word-wrap: break-word;"),
+          p(scales::comma(top$injuries), style = "font-size: 16px; font-weight: bold; color: #a83237; margin: 4px 0 0;")
+        )
+      ),
+      column(6,
+        div(style = "background: #78c2ad; border-radius: 8px; padding: 10px; text-align: center;",
+          p("Least injured", style = "font-size: 11px; color: gray; margin-bottom: 4px;"),
+          p(bot$sport_or_activity, style = "font-size: 12px; font-weight: bold; color: #1a5c4a; margin: 0; word-wrap: break-word;"),
+          p(scales::comma(bot$injuries), style = "font-size: 16px; font-weight: bold; color: #1a5c4a; margin: 4px 0 0;")
+        )
+      )
+    )
+  )
+})
+  
   # Injuries by Age Group
   output$yearly_injuries_by_age <- renderPlot({
     tidyAge <- function(table) {
