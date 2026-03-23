@@ -22,7 +22,7 @@ injuries_by_agegroup <- read.csv("yearly_injuries_final.csv") %>%
 fluidPage(
   theme = bs_theme(bootswatch = "minty") |>
     bs_add_variables("navbar-bg" = "#78c2ad"),
-  h2("Sports Injury Reports", style = "text-align: center; font-size: 50px;"),
+  h2("Sports Injury Reports", style = "text-align: center; font-size: 50px; margin-top: 10px; margin-bottom: 10px;"),
   tags$style(HTML("
   body {
     background-color: #f0f7f5;
@@ -212,7 +212,7 @@ fluidPage(
                                    style = "text-align: center; color: grey;"),
                                 sidebarLayout(
                                   sidebarPanel(
-                                    width = 3,
+                                    width = 4,
                                     h4("Filter by Year"),
                                     sliderInput(inputId = "year",
                                                 label = "Year",
@@ -230,7 +230,7 @@ fluidPage(
                                     hr(),
                                     p("Use the slider or press Play to animate injuries over time.",
                                       style = "color: gray; font-size: 15px;"),
-                                    # ---- ADD THIS BELOW ----
+
                                     br(),
                                     wellPanel(
                                       style = "background: white; border: 1px solid #ddd; border-radius: 8px; padding: 12px;",
@@ -238,7 +238,7 @@ fluidPage(
                                     )
                                   ),
                                   mainPanel(
-                                    width = 9,
+                                    width = 8,
                                     div(style = "border: 1px solid #ddd; border-radius: 5px; padding: 10px; height: 950px; overflow: hidden; margin-bottom: 30px;",
                                         plotlyOutput("yearly_injuries_by_sport", height = "1000px")
                                     )
@@ -285,33 +285,37 @@ fluidPage(
                        )
                        ),
              
-             tabPanel("Sport Injuries By Age",
-                      fluidRow(
-                        column(12,
-                               h1("Break down injuries by sport and age group",
-                                  style = "text-align: center; margin-top: 50px; font-size: 40px;"),
-                               h4("Instructions...",
-                                  style = "text-align: center; color: grey;"),
-                               hr(),
-                               sidebarLayout(
-                                 sidebarPanel(
-                                   width = 3,
-                                   selectInput(inputId = "sport_or_activity",
-                                               label = "Select Sport(s)",
-                                               choices  = unique(injuries_by_agegroup$sport_or_activity),
-                                               selected = unique(injuries_by_agegroup$sport_or_activity)[1],
-                                               multiple = TRUE)
-                                 ),
-                                 mainPanel(
-                                   width = 9,  
-                                   div(style = "border: 1px solid #ddd; border-radius: 5px; padding: 10px; margin-bottom: 30px;",
-                                       uiOutput("sport_injuries_by_age")
-                                   )
-                                 )
-                               )
-                               )
-                      )
-                      ),
+              tabPanel("Sport Injuries By Age",
+                       fluidRow(
+                         column(12,
+                                h1("Break down injuries by sport and age group",
+                                   style = "text-align: center; margin-top: 50px; font-size: 40px;"),
+                                h4("Instructions...",
+                                   style = "text-align: center; color: grey;"),
+                                hr(),
+                                sidebarLayout(
+                                  sidebarPanel(
+                                    width = 3,
+                                    style = "position: sticky; top: 20px;",
+                                    selectInput(inputId = "sport_or_activity",
+                                                label = "Select Sport(s)",
+                                                choices  = unique(injuries_by_agegroup$sport_or_activity),
+                                                selected = unique(injuries_by_agegroup$sport_or_activity)[1],
+                                                multiple = TRUE),
+                                    hr(),
+                                    p("Age Group Legend", style = "text-align: center; font-weight: bold; color: #555; margin-bottom: 0;"),
+                                    plotOutput("age_legend", height = "180px")
+                                  ),
+                                  mainPanel(
+                                    width = 9,
+                                    div(style = "border: 1px solid #ddd; border-radius: 5px; padding: 10px; margin-bottom: 30px;",
+                                        uiOutput("sport_injuries_by_age")
+                                    )
+                                  )
+                                )
+                         )
+                       )
+              ),
              
               tabPanel("Favorite Sport by State",
                        br(),
@@ -401,9 +405,9 @@ fluidPage(
                         column(4, wellPanel(
                           tags$img(src = "person3.jpg",
                                    style = "width: 100%; border-radius: 50%; margin-bottom: 15px;"),
-                          h4("Name Here", style = "text-align: center;"),
-                          p("Year", style = "text-align: center; color: grey; font-size: 12px;"),
-                          p("Blurb about yourself here.",
+                          h4("Serenna Wu", style = "text-align: center;"),
+                          p("2029", style = "text-align: center; color: grey; font-size: 12px;"),
+                          p("I am a Neuroscience major pursuing a career in...",
                             style = "text-align: center; font-size: 13px;")
                         ))
                       )             
