@@ -2,6 +2,7 @@ library(shiny)
 library(plotly)
 library(bslib)
 library(leaflet)
+library(markdown)
 
 sport_injuries_by_age <- read.csv("yearly_injuries_final.csv") %>%
   mutate(injuries = as.numeric(gsub(",", "", injuries)),
@@ -369,6 +370,22 @@ fluidPage(
                        h4("States Per Sport", style = "text-align: center; color: #2c3e50;"),
                        plotOutput("sport_state_bar", height = "300px")
               ),
+             tabPanel("Injury Prevention",
+                      fluidRow(
+                        column(12,
+                               h1("Injury Prevention",
+                                  style = "text-align: center; margin-top: 40px; font-size: 40px;"),
+                               hr()
+                               )
+                        ),
+                      fluidRow(
+                        column(6, offset = 3, wellPanel(
+                          style = "margin-bottom: 20px;",
+                                   style = "width: 100%; border-radius: 50%; margin-bottom: 15px;"),
+                          h4("How can I prevent injuries?", style = "text-align: center;"),
+                          includeMarkdown("injury_prevention.md"),
+                            style = "font-size: 20px;")
+                        )),
              tabPanel("About",
                       fluidRow(
                         column(12,
