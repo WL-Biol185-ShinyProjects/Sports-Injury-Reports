@@ -393,7 +393,7 @@ fluidPage(
                         column(4, wellPanel(
                           tags$img(src = "person2.jpg",
                                    style = "width: 100%; border-radius: 50%; margin-bottom: 15px;"),
-                          h4("Name Here", style = "text-align: center;"),
+                          h4("Ellery McKnight", style = "text-align: center;"),
                           p("Year", style = "text-align: center; color: grey; font-size: 12px;"),
                           p("I'm a biology major and data science minor from Atlanta, GA. On campus I enjoy being part of the University Singers and am involved in greek life. In my free time I like spending tie outside and playing the guitar.",
                             style = "text-align: center; font-size: 13px;")
