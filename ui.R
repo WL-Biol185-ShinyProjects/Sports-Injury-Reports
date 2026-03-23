@@ -2,6 +2,7 @@ library(shiny)
 library(plotly)
 library(bslib)
 library(leaflet)
+library(markdown)
 
 sport_injuries_by_age <- read.csv("yearly_injuries_final.csv") %>%
   mutate(injuries = as.numeric(gsub(",", "", injuries)),
@@ -369,6 +370,22 @@ fluidPage(
                        h4("States Per Sport", style = "text-align: center; color: #2c3e50;"),
                        plotOutput("sport_state_bar", height = "300px")
               ),
+             tabPanel("Injury Prevention",
+                      fluidRow(
+                        column(12,
+                               h1("Injury Prevention",
+                                  style = "text-align: center; margin-top: 40px; font-size: 40px;"),
+                               hr()
+                               )
+                        ),
+                      fluidRow(
+                        column(6, offset = 3, wellPanel(
+                          style = "margin-bottom: 20px;",
+                                   style = "width: 100%; border-radius: 50%; margin-bottom: 15px;"),
+                          h4("How can I prevent injuries?", style = "text-align: center;"),
+                          includeMarkdown("injury_prevention.md"),
+                            style = "font-size: 20px;")
+                        )),
              tabPanel("About",
                       fluidRow(
                         column(12,
@@ -398,17 +415,19 @@ fluidPage(
                         )),
                         column(6, offset = 3, wellPanel(
                           style = "margin-bottom: 20px;",
+
                           tags$div(
                             style = "display: flex; align-items: center; gap: 20px;",
                             tags$img(src = "person2.jpg",
                                      style = "width: 250px; height: 250px; object-fit: cover; border-radius: 8px; flex-shrink: 0;"),
                             tags$div(
-                              h4("Name Here", style = "margin-top: 0;"),
+                              h4("Ellery Mcknight", style = "margin-top: 0;"),
                               p("Year", style = "color: grey; font-size: 12px;"),
                               p("I'm a biology major and data science minor from Atlanta, GA. On campus I enjoy being part of the University Singers and am involved in greek life. In my free time I like spending time outside and playing the guitar.",
                                 style = "font-size: 13px;")
                             )
                           )
+
                         )),
                         column(6, offset = 3, wellPanel(
                           style = "margin-bottom: 20px;",

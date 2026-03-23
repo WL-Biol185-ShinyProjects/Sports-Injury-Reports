@@ -11,3 +11,6 @@ hello!
 
 https://www.aseaofblue.com/2023/8/9/23716779/favorite-sports-of-the-50-states 
 - I hand copied this information into a data table
+
+https://www.hopkinsmedicine.org/health/conditions-and-diseases/sports-injuries/preventing-sports-injuries
+- injury prevention information
