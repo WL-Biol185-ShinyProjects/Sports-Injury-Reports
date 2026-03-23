@@ -395,7 +395,7 @@ fluidPage(
                                    style = "width: 100%; border-radius: 50%; margin-bottom: 15px;"),
                           h4("Name Here", style = "text-align: center;"),
                           p("Year", style = "text-align: center; color: grey; font-size: 12px;"),
-                          p("Blurb about yourself here.",
+                          p("I'm a biology major and data science minor from Atlanta, GA. On campus I enjoy being part of the University Singers and am involved in greek life. In my free time I like spending tie outside and playing the guitar.",
                             style = "text-align: center; font-size: 13px;")
                         )),
                         column(4, wellPanel(
