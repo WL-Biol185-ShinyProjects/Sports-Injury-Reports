@@ -380,7 +380,8 @@ fluidPage(
                         )
                       ),
                       fluidRow(
-                        column(4, wellPanel(
+                        column(6, offset = 3, wellPanel(
+                          style = "margin-bottom: 20px;",
                           tags$img(src = "person1.jpg",
                                    style = "width: 100%; border-radius: 50%; margin-bottom: 15px;"),
                           h4("Cora Villere", style = "text-align: center;"),
@@ -390,7 +391,8 @@ fluidPage(
                             sports injuries every day, leading to a great interest in this project.",
                             style = "text-align: center; font-size: 13px;")
                         )),
-                        column(4, wellPanel(
+                        column(6, offset = 3, wellPanel(
+                          style = "margin-bottom: 20px;",
                           tags$img(src = "person2.jpg",
                                    style = "width: 100%; border-radius: 50%; margin-bottom: 15px;"),
                           h4("Name Here", style = "text-align: center;"),
@@ -398,7 +400,8 @@ fluidPage(
                           p("Blurb about yourself here.",
                             style = "text-align: center; font-size: 13px;")
                         )),
-                        column(4, wellPanel(
+                        column(6, offset = 3, wellPanel(
+                          style = "margin-bottom: 20px;",
                           tags$img(src = "person3.jpg",
                                    style = "width: 100%; border-radius: 50%; margin-bottom: 15px;"),
                           h4("Name Here", style = "text-align: center;"),
