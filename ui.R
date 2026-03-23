@@ -382,34 +382,49 @@ fluidPage(
                       fluidRow(
                         column(6, offset = 3, wellPanel(
                           style = "margin-bottom: 20px;",
-                          tags$img(src = "person1.jpg",
-                                   style = "width: 100%; border-radius: 50%; margin-bottom: 15px;"),
-                          h4("Cora Villere", style = "text-align: center;"),
-                          p("2027", style = "text-align: center; color: grey; font-size: 12px;"),
-                          p("I am a Biology major on the pre-health track, with a passion for medicine and public health.
-                            Specifically, I hope to become an emergency physician. Emergency departments are on the front lines of
-                            sports injuries every day, leading to a great interest in this project.",
-                            style = "text-align: center; font-size: 13px;")
+                          tags$div(
+                            style = "display: flex; align-items: center; gap: 20px;",
+                            tags$img(src = "cora.jpeg",
+                                     style = "width: 250px; height: 250px; object-fit: cover; border-radius: 8px; flex-shrink: 0;"),
+                            tags$div(
+                              h4("Cora Villere", style = "margin-top: 0;"),
+                              p("2027", style = "color: grey; font-size: 12px;"),
+                              p("I am a Biology major on the pre-health track, with a passion for medicine and public health.
+                              Specifically, I hope to become an emergency physician. Emergency departments are on the front lines of
+                              sports injuries every day, leading to a great interest in this project.",
+                                style = "font-size: 13px;")
+                            )
+                          )
                         )),
                         column(6, offset = 3, wellPanel(
                           style = "margin-bottom: 20px;",
-                          tags$img(src = "person2.jpg",
-                                   style = "width: 100%; border-radius: 50%; margin-bottom: 15px;"),
-                          h4("Name Here", style = "text-align: center;"),
-                          p("Year", style = "text-align: center; color: grey; font-size: 12px;"),
-                          p("I'm a biology major and data science minor from Atlanta, GA. On campus I enjoy being part of the University Singers and am involved in greek life. In my free time I like spending tie outside and playing the guitar.",
-                            style = "text-align: center; font-size: 13px;")
+                          tags$div(
+                            style = "display: flex; align-items: center; gap: 20px;",
+                            tags$img(src = "person2.jpg",
+                                     style = "width: 250px; height: 250px; object-fit: cover; border-radius: 8px; flex-shrink: 0;"),
+                            tags$div(
+                              h4("Name Here", style = "margin-top: 0;"),
+                              p("Year", style = "color: grey; font-size: 12px;"),
+                              p("I'm a biology major and data science minor from Atlanta, GA. On campus I enjoy being part of the University Singers and am involved in greek life. In my free time I like spending time outside and playing the guitar.",
+                                style = "font-size: 13px;")
+                            )
+                          )
                         )),
                         column(6, offset = 3, wellPanel(
                           style = "margin-bottom: 20px;",
-                          tags$img(src = "person3.jpg",
-                                   style = "width: 100%; border-radius: 50%; margin-bottom: 15px;"),
-                          h4("Name Here", style = "text-align: center;"),
-                          p("Year", style = "text-align: center; color: grey; font-size: 12px;"),
-                          p("Blurb about yourself here.",
-                            style = "text-align: center; font-size: 13px;")
+                          tags$div(
+                            style = "display: flex; align-items: center; gap: 20px;",
+                            tags$img(src = "person3.jpg",
+                                     style = "width: 250px; height: 250px; object-fit: cover; border-radius: 8px; flex-shrink: 0;"),
+                            tags$div(
+                              h4("Name Here", style = "margin-top: 0;"),
+                              p("Year", style = "color: grey; font-size: 12px;"),
+                              p("Blurb about yourself here.",
+                                style = "font-size: 13px;")
+                            )
+                          )
                         ))
-                      )             
+                      )           
              )  
   )
 )
