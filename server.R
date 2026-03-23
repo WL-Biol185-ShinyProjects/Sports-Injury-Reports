@@ -231,7 +231,16 @@ function(input, output, session) {
     
     map_data <- left_join(favorite_sport_by_state, state_coords, by = "state")
     
-    pal <- colorFactor(palette = "Set3", domain = map_data$favorite_sport)
+    sport_colors <- c(
+      "NFL_Football"       = "#78c2ad",
+      "NBA_Basketball"     = "#f3969a",
+      "MLB_Baseball"       = "#56cc9d",
+      "NHL_Hockey"         = "#6cc3d5",
+      "College_Football"   = "#ffce67",
+      "College_Basketball" = "#ff7851"
+    )
+    
+    pal <- colorFactor(palette = sport_colors, domain = names(sport_colors))
     
     leaflet(data = map_data) %>%
       setView(lng = -98.5, lat = 39.5, zoom = 4) %>%
