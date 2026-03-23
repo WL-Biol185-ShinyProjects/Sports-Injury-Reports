@@ -6,6 +6,7 @@ library(bslib)
 library(ggrepel)
 library(scales)
 library(leaflet)
+library(ggpubr)
 
 
 yearly_injuries_final <- read.csv("yearly_injuries_final.csv") %>%
@@ -173,16 +174,41 @@ function(input, output, session) {
   updateTabsetPanel(session, "tabs", selected = "About")
 })
   
-  # Sport Injuries by Age (pie charts)
+  #Sport Injuries by Age
+  age_colors <- c(
+    "0 to 4"     = "#f3969a",
+    "4 to 15"    = "#56cc9d",
+    "14 to 24"   = "#6cc3d5",
+    "25 to 64"   = "#ff7851",
+    "65 or over" = "#ffce67"
+  )
+  
   output$sport_injuries_by_age <- renderUI({
     req(input$sport_or_activity)
     plot_output_list <- lapply(seq_along(input$sport_or_activity), function(i) {
-          plotOutput(paste0("pie_", i), width = "450px", height = "450px")
+      plotOutput(paste0("pie_", i), width = "450px", height = "450px")
     })
     
-    div(style = "display: flex; flex-wrap: wrap;",
+    div(style = "display: flex; flex-wrap: wrap; gap: 30px; padding: 20px; justify-content: center;",
         tagList(plot_output_list))
-
+  })
+  
+  output$age_legend <- renderPlot({
+    df <- data.frame(
+      age_group = c("0 to 4", "4 to 15", "14 to 24", "25 to 64", "65 or over"),
+      pct = c(20, 20, 20, 20, 20)
+    )
+    p <- ggplot(df, aes(x = "", y = pct, fill = age_group)) +
+      geom_bar(stat = "identity", width = 1) +
+      scale_fill_manual(values = age_colors) +
+      labs(fill = "Age Group") +
+      theme_void() +
+      theme(legend.position = "right",
+            legend.direction = "vertical",
+            legend.text = element_text(size = 13),
+            legend.title = element_text(size = 15),
+            legend.key.size = unit(1, "cm"))
+    ggpubr::as_ggplot(ggpubr::get_legend(p))
   })
   
   observe({
@@ -210,12 +236,18 @@ function(input, output, session) {
           ggplot(df, aes(x = "", y = pct, fill = age_group)) +
             geom_bar(stat = "identity", width = 1) +
             coord_polar("y") +
-            labs(title = sport_name, fill = "Age Group") +
+            scale_fill_manual(values = age_colors) +
+            labs(title = tools::toTitleCase(
+              stringr::str_wrap(
+                gsub("_", " ", sport_name), width = 23)),
+              fill = "Age Group") +
             theme_void() +
-            theme(plot.title = element_text(hjust = 0.5, face = "bold", size = 25),
-                  legend.text = element_text(size = 15),
-                  legend.title = element_text(size = 20)) +
-            geom_text_repel(aes(label = paste0(age_group, "\n", round(pct, 1), "%"),
+            theme(plot.title = element_text(hjust = 0.5, face = "bold", size = 25, lineheight = 0.9),
+                  legend.position = "none") +
+            geom_text_repel(data = . %>% filter(pct > 0),
+                            aes(label = ifelse(pct < 1, 
+                                               paste0(age_group, "\n", round(pct, 1), "%"),
+                                               paste0(round(pct, 1), "%")),
                                 y = cumsum(pct) - 0.5 * pct),
                             nudge_x = 0.7,
                             show.legend = FALSE,
