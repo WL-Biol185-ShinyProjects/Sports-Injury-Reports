@@ -437,6 +437,59 @@ fluidPage(
                                 )
                          )
                        ),
+                       br(),
+                       h3("Resources", style = "text-align: center; color: #2c3e50; font-weight: 700;"),
+                       hr(style = "width: 100px; border-top: 2px solid #78c2ad; margin: 10px auto 20px;"),
+                       fluidRow(
+                         column(4,
+                                div(style = "background-color: white; border-radius: 12px; padding: 25px;
+                 box-shadow: 0 2px 10px rgba(0,0,0,0.08); border-top: 4px solid #78c2ad;
+                 height: 100%; margin-bottom: 15px;",
+                                    div(style = "text-align: center; font-size: 35px; margin-bottom: 10px;"),
+                                    h4(style = "color: #78c2ad; font-weight: 700; text-align: center;", "For Athletes"),
+                                    tags$ul(style = "color: #555; font-size: 14px; line-height: 2;",
+                                            tags$li(tags$a(href = "https://www.stopsportsinjuries.org", target = "_blank",
+                                                           "STOP Sports Injuries")),
+                                            tags$li(tags$a(href = "https://www.aossm.org", target = "_blank",
+                                                           "American Orthopaedic Society for Sports Medicine")),
+                                            tags$li(tags$a(href = "https://www.nata.org", target = "_blank",
+                                                           "National Athletic Trainers Association"))
+                                    )
+                                )
+                         ),
+                         column(4,
+                                div(style = "background-color: white; border-radius: 12px; padding: 25px;
+                 box-shadow: 0 2px 10px rgba(0,0,0,0.08); border-top: 4px solid #f3969a;
+                 height: 100%; margin-bottom: 15px;",
+                                    div(style = "text-align: center; font-size: 35px; margin-bottom: 10px;"),
+                                    h4(style = "color: #f3969a; font-weight: 700; text-align: center;", "For Parents"),
+                                    tags$ul(style = "color: #555; font-size: 14px; line-height: 2;",
+                                            tags$li(tags$a(href = "https://www.healthychildren.org/English/healthy-living/sports/Pages/default.aspx",
+                                                           target = "_blank", "AAP Healthy Children - Sports")),
+                                            tags$li(tags$a(href = "https://www.cdc.gov/headsup/index.html", target = "_blank",
+                                                           "CDC Heads Up - Concussion Safety")),
+                                            tags$li(tags$a(href = "https://www.safekids.org", target = "_blank",
+                                                           "Safe Kids Worldwide"))
+                                    )
+                                )
+                         ),
+                         column(4,
+                                div(style = "background-color: white; border-radius: 12px; padding: 25px;
+                 box-shadow: 0 2px 10px rgba(0,0,0,0.08); border-top: 4px solid #6cc3d5;
+                 height: 100%; margin-bottom: 15px;",
+                                    div(style = "text-align: center; font-size: 35px; margin-bottom: 10px;"),
+                                    h4(style = "color: #6cc3d5; font-weight: 700; text-align: center;", "For Coaches"),
+                                    tags$ul(style = "color: #555; font-size: 14px; line-height: 2;",
+                                            tags$li(tags$a(href = "https://www.ncaa.org/sports/2014/10/6/sport-science-institute.aspx",
+                                                           target = "_blank", "NCAA Sport Science Institute")),
+                                            tags$li(tags$a(href = "https://www.nsca.com", target = "_blank",
+                                                           "National Strength and Conditioning Association")),
+                                            tags$li(tags$a(href = "https://www.usada.org", target = "_blank",
+                                                           "U.S. Anti-Doping Agency - Clean Sport"))
+                                    )
+                                )
+                         )
+                       ),
                        br()
               ),
              tabPanel("About",
