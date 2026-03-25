@@ -578,7 +578,70 @@ fluidPage(
                          tabPanel("Fracture"),
                          tabPanel("Strains & Sprains")
               ),
-              
+
+              tabPanel("Nutrition & Recovery",
+                       fluidRow(
+                         column(12,
+                                h1("Nutrition & Recovery",
+                                   style = "text-align: center; margin-top: 40px; font-size: 40px;"),
+                                h4("Key nutritional strategies for injury prevention and recovery in athletes",
+                                   style = "text-align: center; color: grey;"),
+                                hr(), 
+                                tags$style(HTML("
+    details { 
+    background: white; 
+    border-radius: 8px; 
+    padding: 12px 16px; 
+    margin-bottom: 10px;
+    border: 1px solid #78c2ad;
+  }
+  details summary { 
+    font-size: 18px; 
+    font-weight: 600; 
+    color: #78c2ad; 
+    cursor: pointer; 
+    list-style: none;
+  }
+  details summary::-webkit-details-marker { display: none; }
+  details summary::before { content: '▶ '; font-size: 12px; }
+  details[open] summary::before { content: '▼ '; font-size: 12px; }
+  details p { margin-top: 10px; font-size: 15px; }
+")),
+                                
+                                tags$details(tags$summary("Carbohydrates"),
+                                             p(strong("Role: "), "Prevents muscle/mental fatigue and supports energy for sustained performance and recovery."),
+                                             p(strong("Examples: "), "Consume as part of balanced meals, especially around training sessions.")),
+                                
+                                tags$details(tags$summary("Proteins"),
+                                             p(strong("Role: "), "Essential for muscle repair and adaptation, reducing the risk of overuse injuries."),
+                                             p(strong("Examples: "), "Ingest 20-30 grams post-training for muscle recovery.")),
+                                
+                                tags$details(tags$summary("Healthy Fats (e.g., Omega-3 Fatty Acids)"),
+                                             p(strong("Role: "), "Supports joint health and reduces chronic inflammation linked to repetitive stress."),
+                                             p(strong("Examples: "), "Include foods like fish, walnuts, and flaxseeds regularly in the diet.")),
+                                
+                                tags$details(tags$summary("Calcium and Vitamin D"),
+                                             p(strong("Role: "), "Strengthens bones and reduces the risk of stress fractures."),
+                                             p(strong("Examples: "), "Supplement with 800 IU/day of vitamin D and 2,000 mg of calcium.")),
+                                
+                                tags$details(tags$summary("Antioxidants"),
+                                             p(strong("Role: "), "Protects muscles from oxidative stress, speeding up recovery and reducing soreness."),
+                                             p(strong("Examples: "), "Incorporate berries, citrus fruits, and leafy greens.")),
+                                
+                                tags$details(tags$summary("Hydration"),
+                                             p(strong("Role: "), "Maintains joint lubrication, muscle elasticity, and optimal coordination."),
+                                             p(strong("Examples: "), "Ensure consistent hydration before, during, and after high-impact activities.")),
+                                
+                                tags$details(tags$summary("Anti-inflammatory Nutrients"),
+                                             p(strong("Role: "), "Reduces chronic inflammation and supports tissue resilience against repetitive strain."),
+                                             p(strong("Examples: "), "Use turmeric, ginger, and omega-3 supplements.")),
+                                
+                                tags$details(tags$summary("Timing of Nutrient Intake"),
+                                             p(strong("Role: "), "Enhances recovery by promoting muscle repair and glycogen replenishment post-training."),
+                                             p(strong("Examples: "), "Consume protein and carbohydrates within 30 minutes post-exercise."))
+                                )
+                       )),
+
              tabPanel("About Us",
 
                       fluidRow(
