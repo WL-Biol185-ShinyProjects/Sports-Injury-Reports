@@ -448,126 +448,200 @@ fluidPage(
               ),
 
            
-              tabPanel("Injury Prevention",
-                       fluidRow(
-                         column(12,
-                                h1("Injury Prevention",
-                                   style = "text-align: center; margin-top: 40px; font-size: 40px;"),
-                                h4("Tips to keep you safe and active",
-                                   style = "text-align: center; color: grey;"),
-                                hr()
-                         )
-                       ),
-                       fluidRow(
-                         column(4,
-                                div(style = "background-color: white; border-radius: 12px; padding: 25px;
+              
+              
+              navbarMenu("Injuries & Prevention",
+                         tabPanel("General Information",
+                                  fluidRow(
+                                    column(12,
+                                           h1("Injury Prevention",
+                                              style = "text-align: center; margin-top: 40px; font-size: 40px;"),
+                                           h4("Tips to keep you safe and active",
+                                              style = "text-align: center; color: grey;"),
+                                           hr()
+                                    )
+                                  ),
+                                  fluidRow(
+                                    column(4,
+                                           div(style = "background-color: white; border-radius: 12px; padding: 25px;
                    box-shadow: 0 2px 10px rgba(0,0,0,0.08); border-top: 4px solid #78c2ad;
                    height: 100%; margin-bottom: 15px;",
-                                    div(style = "text-align: center; font-size: 40px; margin-bottom: 10px;", "🏃"),
-                                    h4(style = "color: #78c2ad; font-weight: 700; text-align: center;", "General Tips"),
-                                    tags$ul(style = "color: #555; font-size: 20px; line-height: 1.8;",
-                                            tags$li("Always warm up before activity and cool down afterward"),
-                                            tags$li("Stay hydrated before, during, and after exercise"),
-                                            tags$li("Know your limits and gradually increase intensity"),
-                                            tags$li("Get adequate rest and recovery between sessions")
-                                    )
-                                )
-                         ),
-                         column(4,
-                                div(style = "background-color: white; border-radius: 12px; padding: 25px;
+                                               div(style = "text-align: center; font-size: 40px; margin-bottom: 10px;", "🏃"),
+                                               h4(style = "color: #78c2ad; font-weight: 700; text-align: center;", "General Tips"),
+                                               tags$ul(style = "color: #555; font-size: 20px; line-height: 1.8;",
+                                                       tags$li("Always warm up before activity and cool down afterward"),
+                                                       tags$li("Stay hydrated before, during, and after exercise"),
+                                                       tags$li("Know your limits and gradually increase intensity"),
+                                                       tags$li("Get adequate rest and recovery between sessions")
+                                               )
+                                           )
+                                    ),
+                                    column(4,
+                                           div(style = "background-color: white; border-radius: 12px; padding: 25px;
                    box-shadow: 0 2px 10px rgba(0,0,0,0.08); border-top: 4px solid #f3969a;
                    height: 100%; margin-bottom: 15px;",
-                                    div(style = "text-align: center; font-size: 40px; margin-bottom: 10px;", "🏈"),
-                                    h4(style = "color: #f3969a; font-weight: 700; text-align: center;", "Equipment"),
-                                    tags$ul(style = "color: #555; font-size: 20px; line-height: 1.8;",
-                                            tags$li("Wear appropriate protective gear for your sport"),
-                                            tags$li("Make sure equipment fits properly"),
-                                            tags$li("Replace worn out shoes and gear regularly")
-                                    )
-                                )
-                         ),
-                         column(4,
-                                div(style = "background-color: white; border-radius: 12px; padding: 25px;
+                                               div(style = "text-align: center; font-size: 40px; margin-bottom: 10px;", "🏈"),
+                                               h4(style = "color: #f3969a; font-weight: 700; text-align: center;", "Equipment"),
+                                               tags$ul(style = "color: #555; font-size: 20px; line-height: 1.8;",
+                                                       tags$li("Wear appropriate protective gear for your sport"),
+                                                       tags$li("Make sure equipment fits properly"),
+                                                       tags$li("Replace worn out shoes and gear regularly")
+                                               )
+                                           )
+                                    ),
+                                    column(4,
+                                           div(style = "background-color: white; border-radius: 12px; padding: 25px;
                    box-shadow: 0 2px 10px rgba(0,0,0,0.08); border-top: 4px solid #6cc3d5;
                    height: 100%; margin-bottom: 15px;",
-                                    div(style = "text-align: center; font-size: 40px; margin-bottom: 10px;", "🎯"),
-                                    h4(style = "color: #6cc3d5; font-weight: 700; text-align: center;", "Technique"),
-                                    tags$ul(style = "color: #555; font-size: 20px; line-height: 1.8;",
-                                            tags$li("Learn proper form from a coach or trainer"),
-                                            tags$li("Avoid overuse by varying your activities"),
-                                            tags$li("Listen to your body and stop if something hurts")
+                                               div(style = "text-align: center; font-size: 40px; margin-bottom: 10px;", "🎯"),
+                                               h4(style = "color: #6cc3d5; font-weight: 700; text-align: center;", "Technique"),
+                                               tags$ul(style = "color: #555; font-size: 20px; line-height: 1.8;",
+                                                       tags$li("Learn proper form from a coach or trainer"),
+                                                       tags$li("Avoid overuse by varying your activities"),
+                                                       tags$li("Listen to your body and stop if something hurts")
+                                               )
+                                           )
                                     )
-                                )
-                         )
-                       ),
-                       br(),
-                       fluidRow(
-                         column(8, offset = 2,
-                                div(style = "background: linear-gradient(135deg, #78c2ad 0%, #6cc3d5 100%);
+                                  ),
+                                  br(),
+                                  fluidRow(
+                                    column(8, offset = 2,
+                                           div(style = "background: linear-gradient(135deg, #78c2ad 0%, #6cc3d5 100%);
                    border-radius: 12px; padding: 30px; text-align: center;
                    box-shadow: 0 4px 15px rgba(120,194,173,0.4);",
-                                    h4(style = "color: white; font-weight: 700; font-size: 25px;",
-                                       "Remember: Prevention is always better than treatment!"),
-                                    p(style = "color: white; opacity: 0.9; font-size: 20px; margin: 0;",
-                                      "Taking small steps before and after activity can save you weeks of recovery time.")
-                                )
-                         )
-                       ),
-                       br(),
-                       h3("Resources", style = "text-align: center; color: #2c3e50; font-weight: 700;"),
-                       hr(style = "width: 100px; border-top: 2px solid #78c2ad; margin: 10px auto 20px;"),
-                       fluidRow(
-                         column(4,
-                                div(style = "background-color: white; border-radius: 12px; padding: 25px;
+                                               h4(style = "color: white; font-weight: 700; font-size: 25px;",
+                                                  "Remember: Prevention is always better than treatment!"),
+                                               p(style = "color: white; opacity: 0.9; font-size: 20px; margin: 0;",
+                                                 "Taking small steps before and after activity can save you weeks of recovery time.")
+                                           )
+                                    )
+                                  ),
+                                  br(),
+                                  h3("Resources", style = "text-align: center; color: #2c3e50; font-weight: 700;"),
+                                  hr(style = "width: 100px; border-top: 2px solid #78c2ad; margin: 10px auto 20px;"),
+                                  fluidRow(
+                                    column(4,
+                                           div(style = "background-color: white; border-radius: 12px; padding: 25px;
                  box-shadow: 0 2px 10px rgba(0,0,0,0.08); border-top: 4px solid #78c2ad;
                  height: 100%; margin-bottom: 15px;",
-                                    div(style = "text-align: center; font-size: 35px; margin-bottom: 10px;"),
-                                    h4(style = "color: #78c2ad; font-weight: 700; text-align: center;", "For Athletes"),
-                                    tags$ul(style = "color: #555; font-size: 14px; line-height: 2;",
-                                            tags$li(tags$a(href = "https://www.stopsportsinjuries.org", target = "_blank",
-                                                           "STOP Sports Injuries")),
-                                            tags$li(tags$a(href = "https://www.aossm.org", target = "_blank",
-                                                           "American Orthopaedic Society for Sports Medicine")),
-                                            tags$li(tags$a(href = "https://www.nata.org", target = "_blank",
-                                                           "National Athletic Trainers Association"))
-                                    )
-                                )
-                         ),
-                         column(4,
-                                div(style = "background-color: white; border-radius: 12px; padding: 25px;
+                                               div(style = "text-align: center; font-size: 35px; margin-bottom: 10px;"),
+                                               h4(style = "color: #78c2ad; font-weight: 700; text-align: center;", "For Athletes"),
+                                               tags$ul(style = "color: #555; font-size: 14px; line-height: 2;",
+                                                       tags$li(tags$a(href = "https://www.stopsportsinjuries.org", target = "_blank",
+                                                                      "STOP Sports Injuries")),
+                                                       tags$li(tags$a(href = "https://www.aossm.org", target = "_blank",
+                                                                      "American Orthopaedic Society for Sports Medicine")),
+                                                       tags$li(tags$a(href = "https://www.nata.org", target = "_blank",
+                                                                      "National Athletic Trainers Association"))
+                                               )
+                                           )
+                                    ),
+                                    column(4,
+                                           div(style = "background-color: white; border-radius: 12px; padding: 25px;
                  box-shadow: 0 2px 10px rgba(0,0,0,0.08); border-top: 4px solid #f3969a;
                  height: 100%; margin-bottom: 15px;",
-                                    div(style = "text-align: center; font-size: 35px; margin-bottom: 10px;"),
-                                    h4(style = "color: #f3969a; font-weight: 700; text-align: center;", "For Parents"),
-                                    tags$ul(style = "color: #555; font-size: 14px; line-height: 2;",
-                                            tags$li(tags$a(href = "https://www.healthychildren.org/English/healthy-living/sports/Pages/default.aspx",
-                                                           target = "_blank", "AAP Healthy Children - Sports")),
-                                            tags$li(tags$a(href = "https://www.cdc.gov/headsup/index.html", target = "_blank",
-                                                           "CDC Heads Up - Concussion Safety")),
-                                            tags$li(tags$a(href = "https://www.safekids.org", target = "_blank",
-                                                           "Safe Kids Worldwide"))
-                                    )
-                                )
-                         ),
-                         column(4,
-                                div(style = "background-color: white; border-radius: 12px; padding: 25px;
+                                               div(style = "text-align: center; font-size: 35px; margin-bottom: 10px;"),
+                                               h4(style = "color: #f3969a; font-weight: 700; text-align: center;", "For Parents"),
+                                               tags$ul(style = "color: #555; font-size: 14px; line-height: 2;",
+                                                       tags$li(tags$a(href = "https://www.healthychildren.org/English/healthy-living/sports/Pages/default.aspx",
+                                                                      target = "_blank", "AAP Healthy Children - Sports")),
+                                                       tags$li(tags$a(href = "https://www.cdc.gov/headsup/index.html", target = "_blank",
+                                                                      "CDC Heads Up - Concussion Safety")),
+                                                       tags$li(tags$a(href = "https://www.safekids.org", target = "_blank",
+                                                                      "Safe Kids Worldwide"))
+                                               )
+                                           )
+                                    ),
+                                    column(4,
+                                           div(style = "background-color: white; border-radius: 12px; padding: 25px;
                  box-shadow: 0 2px 10px rgba(0,0,0,0.08); border-top: 4px solid #6cc3d5;
                  height: 100%; margin-bottom: 15px;",
-                                    div(style = "text-align: center; font-size: 35px; margin-bottom: 10px;"),
-                                    h4(style = "color: #6cc3d5; font-weight: 700; text-align: center;", "For Coaches"),
-                                    tags$ul(style = "color: #555; font-size: 14px; line-height: 2;",
-                                            tags$li(tags$a(href = "https://www.ncaa.org/news/2023/9/15/media-center-sport-science-institute-distributes-recommendations-to-prevent-catastrophic-injury-and-death-in-college-sports",
-                                                           target = "_blank", "NCAA Sport Science Institute")),
-                                            tags$li(tags$a(href = "https://www.nsca.com", target = "_blank",
-                                                           "National Strength and Conditioning Association")),
-                                            tags$li(tags$a(href = "https://www.usada.org", target = "_blank",
-                                                           "U.S. Anti-Doping Agency - Clean Sport"))
+                                               div(style = "text-align: center; font-size: 35px; margin-bottom: 10px;"),
+                                               h4(style = "color: #6cc3d5; font-weight: 700; text-align: center;", "For Coaches"),
+                                               tags$ul(style = "color: #555; font-size: 14px; line-height: 2;",
+                                                       tags$li(tags$a(href = "https://www.ncaa.org/news/2023/9/15/media-center-sport-science-institute-distributes-recommendations-to-prevent-catastrophic-injury-and-death-in-college-sports",
+                                                                      target = "_blank", "NCAA Sport Science Institute")),
+                                                       tags$li(tags$a(href = "https://www.nsca.com", target = "_blank",
+                                                                      "National Strength and Conditioning Association")),
+                                                       tags$li(tags$a(href = "https://www.usada.org", target = "_blank",
+                                                                      "U.S. Anti-Doping Agency - Clean Sport"))
+                                               )
+                                           )
                                     )
-                                )
-                         )
-                       ),
-                       br()
+                                  ),
+                                  br()
+                         ),
+                         tabPanel("Concussion"
+                                  ),
+                         tabPanel("Ankle Sprain"),
+                         tabPanel("Knee Injury"),
+                         tabPanel("Fracture"),
+                         tabPanel("Strains & Sprains")
               ),
+
+              tabPanel("Nutrition & Recovery",
+                       fluidRow(
+                         column(12,
+                                h1("Nutrition & Recovery",
+                                   style = "text-align: center; margin-top: 40px; font-size: 40px;"),
+                                h4("Key nutritional strategies for injury prevention and recovery in athletes",
+                                   style = "text-align: center; color: grey;"),
+                                hr(), 
+                                tags$style(HTML("
+    details { 
+    background: white; 
+    border-radius: 8px; 
+    padding: 12px 16px; 
+    margin-bottom: 10px;
+    border: 1px solid #78c2ad;
+  }
+  details summary { 
+    font-size: 18px; 
+    font-weight: 600; 
+    color: #78c2ad; 
+    cursor: pointer; 
+    list-style: none;
+  }
+  details summary::-webkit-details-marker { display: none; }
+  details summary::before { content: '▶ '; font-size: 12px; }
+  details[open] summary::before { content: '▼ '; font-size: 12px; }
+  details p { margin-top: 10px; font-size: 15px; }
+")),
+                                
+                                tags$details(tags$summary("Carbohydrates"),
+                                             p(strong("Role: "), "Prevents muscle/mental fatigue and supports energy for sustained performance and recovery."),
+                                             p(strong("Examples: "), "Consume as part of balanced meals, especially around training sessions.")),
+                                
+                                tags$details(tags$summary("Proteins"),
+                                             p(strong("Role: "), "Essential for muscle repair and adaptation, reducing the risk of overuse injuries."),
+                                             p(strong("Examples: "), "Ingest 20-30 grams post-training for muscle recovery.")),
+                                
+                                tags$details(tags$summary("Healthy Fats (e.g., Omega-3 Fatty Acids)"),
+                                             p(strong("Role: "), "Supports joint health and reduces chronic inflammation linked to repetitive stress."),
+                                             p(strong("Examples: "), "Include foods like fish, walnuts, and flaxseeds regularly in the diet.")),
+                                
+                                tags$details(tags$summary("Calcium and Vitamin D"),
+                                             p(strong("Role: "), "Strengthens bones and reduces the risk of stress fractures."),
+                                             p(strong("Examples: "), "Supplement with 800 IU/day of vitamin D and 2,000 mg of calcium.")),
+                                
+                                tags$details(tags$summary("Antioxidants"),
+                                             p(strong("Role: "), "Protects muscles from oxidative stress, speeding up recovery and reducing soreness."),
+                                             p(strong("Examples: "), "Incorporate berries, citrus fruits, and leafy greens.")),
+                                
+                                tags$details(tags$summary("Hydration"),
+                                             p(strong("Role: "), "Maintains joint lubrication, muscle elasticity, and optimal coordination."),
+                                             p(strong("Examples: "), "Ensure consistent hydration before, during, and after high-impact activities.")),
+                                
+                                tags$details(tags$summary("Anti-inflammatory Nutrients"),
+                                             p(strong("Role: "), "Reduces chronic inflammation and supports tissue resilience against repetitive strain."),
+                                             p(strong("Examples: "), "Use turmeric, ginger, and omega-3 supplements.")),
+                                
+                                tags$details(tags$summary("Timing of Nutrient Intake"),
+                                             p(strong("Role: "), "Enhances recovery by promoting muscle repair and glycogen replenishment post-training."),
+                                             p(strong("Examples: "), "Consume protein and carbohydrates within 30 minutes post-exercise."))
+                                )
+                       )),
+
              tabPanel("About Us",
 
                       fluidRow(
@@ -606,7 +680,7 @@ fluidPage(
                             tags$div(
                               h4("Ellery Mcknight", style = "margin-top: 0;"),
                               p("2028", style = "color: grey; font-size: 12px;"),
-                              p("I'm a biology major and data science minor from Atlanta, GA. On campus I enjoy being part of the University Singers and am involved in greek life. In my free time I like spending time outside and playing the guitar.",
+                              p("I'm a Biology major and Data Science minor from Atlanta, GA. On campus I enjoy being part of the University Singers and am involved in greek life. In my free time I like spending time outside and playing the guitar.",
                                 style = "font-size: 13px;")
                             )
                           )
@@ -621,7 +695,7 @@ fluidPage(
                             tags$div(
                               h4("Serenna Wu", style = "margin-top: 0;"),
                               p("2029", style = "color: grey; font-size: 12px;"),
-                              p("Blurb about yourself here.",
+                              p("I am a Neuroscience major passionate about developing treatment for neurodegenerative diseases. On campus, I am a part of the First-Year Residential Experience Board, HOSA, the LEAD Program, Orientaion Leader, and Eco-Rep. In my free time, I enjoy playing the flute and making arts and crafts.",
                                 style = "font-size: 13px;")
                             )
                           )
