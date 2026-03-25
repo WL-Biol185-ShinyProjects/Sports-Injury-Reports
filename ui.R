@@ -554,7 +554,7 @@ fluidPage(
                                     div(style = "text-align: center; font-size: 35px; margin-bottom: 10px;"),
                                     h4(style = "color: #6cc3d5; font-weight: 700; text-align: center;", "For Coaches"),
                                     tags$ul(style = "color: #555; font-size: 14px; line-height: 2;",
-                                            tags$li(tags$a(href = "https://www.ncaa.org/sports/2014/10/6/sport-science-institute.aspx",
+                                            tags$li(tags$a(href = "https://www.ncaa.org/news/2023/9/15/media-center-sport-science-institute-distributes-recommendations-to-prevent-catastrophic-injury-and-death-in-college-sports",
                                                            target = "_blank", "NCAA Sport Science Institute")),
                                             tags$li(tags$a(href = "https://www.nsca.com", target = "_blank",
                                                            "National Strength and Conditioning Association")),
