@@ -370,22 +370,73 @@ fluidPage(
                        h4("States Per Sport", style = "text-align: center; color: #2c3e50;"),
                        plotOutput("sport_state_bar", height = "300px")
               ),
-             tabPanel("Injury Prevention",
-                      fluidRow(
-                        column(12,
-                               h1("Injury Prevention",
-                                  style = "text-align: center; margin-top: 40px; font-size: 40px;"),
-                               hr()
-                               )
-                        ),
-                      fluidRow(
-                        column(6, offset = 3, wellPanel(
-                          style = "margin-bottom: 20px;",
-                                   style = "width: 100%; border-radius: 50%; margin-bottom: 15px;"),
-                          h4("How can I prevent injuries?", style = "text-align: center;"),
-                          includeMarkdown("injury_prevention.md"),
-                            style = "font-size: 20px;")
-                        )),
+              tabPanel("Injury Prevention",
+                       fluidRow(
+                         column(12,
+                                h1("Injury Prevention",
+                                   style = "text-align: center; margin-top: 40px; font-size: 40px;"),
+                                h4("Tips to keep you safe and active",
+                                   style = "text-align: center; color: grey;"),
+                                hr()
+                         )
+                       ),
+                       fluidRow(
+                         column(4,
+                                div(style = "background-color: white; border-radius: 12px; padding: 25px;
+                   box-shadow: 0 2px 10px rgba(0,0,0,0.08); border-top: 4px solid #78c2ad;
+                   height: 100%; margin-bottom: 15px;",
+                                    div(style = "text-align: center; font-size: 40px; margin-bottom: 10px;", "🏃"),
+                                    h4(style = "color: #78c2ad; font-weight: 700; text-align: center;", "General Tips"),
+                                    tags$ul(style = "color: #555; font-size: 15px; line-height: 1.8;",
+                                            tags$li("Always warm up before activity and cool down afterward"),
+                                            tags$li("Stay hydrated before, during, and after exercise"),
+                                            tags$li("Know your limits and gradually increase intensity"),
+                                            tags$li("Get adequate rest and recovery between sessions")
+                                    )
+                                )
+                         ),
+                         column(4,
+                                div(style = "background-color: white; border-radius: 12px; padding: 25px;
+                   box-shadow: 0 2px 10px rgba(0,0,0,0.08); border-top: 4px solid #f3969a;
+                   height: 100%; margin-bottom: 15px;",
+                                    div(style = "text-align: center; font-size: 40px; margin-bottom: 10px;", "🏈"),
+                                    h4(style = "color: #f3969a; font-weight: 700; text-align: center;", "Equipment"),
+                                    tags$ul(style = "color: #555; font-size: 15px; line-height: 1.8;",
+                                            tags$li("Wear appropriate protective gear for your sport"),
+                                            tags$li("Make sure equipment fits properly"),
+                                            tags$li("Replace worn out shoes and gear regularly")
+                                    )
+                                )
+                         ),
+                         column(4,
+                                div(style = "background-color: white; border-radius: 12px; padding: 25px;
+                   box-shadow: 0 2px 10px rgba(0,0,0,0.08); border-top: 4px solid #6cc3d5;
+                   height: 100%; margin-bottom: 15px;",
+                                    div(style = "text-align: center; font-size: 40px; margin-bottom: 10px;", "🎯"),
+                                    h4(style = "color: #6cc3d5; font-weight: 700; text-align: center;", "Technique"),
+                                    tags$ul(style = "color: #555; font-size: 15px; line-height: 1.8;",
+                                            tags$li("Learn proper form from a coach or trainer"),
+                                            tags$li("Avoid overuse by varying your activities"),
+                                            tags$li("Listen to your body and stop if something hurts")
+                                    )
+                                )
+                         )
+                       ),
+                       br(),
+                       fluidRow(
+                         column(8, offset = 2,
+                                div(style = "background: linear-gradient(135deg, #78c2ad 0%, #6cc3d5 100%);
+                   border-radius: 12px; padding: 30px; text-align: center;
+                   box-shadow: 0 4px 15px rgba(120,194,173,0.4);",
+                                    h4(style = "color: white; font-weight: 700; font-size: 20px;",
+                                       "Remember: Prevention is always better than treatment!"),
+                                    p(style = "color: white; opacity: 0.9; font-size: 15px; margin: 0;",
+                                      "Taking small steps before and after activity can save you weeks of recovery time.")
+                                )
+                         )
+                       ),
+                       br()
+              ),
              tabPanel("About",
                       fluidRow(
                         column(12,
