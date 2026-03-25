@@ -386,7 +386,7 @@ fluidPage(
                           includeMarkdown("injury_prevention.md"),
                             style = "font-size: 20px;")
                         )),
-             tabPanel("About",
+             tabPanel("About Us",
                       fluidRow(
                         column(12,
                                h1("About Us",
@@ -418,7 +418,7 @@ fluidPage(
 
                           tags$div(
                             style = "display: flex; align-items: center; gap: 20px;",
-                            tags$img(src = "person2.jpg",
+                            tags$img(src = "ellery.jpeg",
                                      style = "width: 250px; height: 250px; object-fit: cover; border-radius: 8px; flex-shrink: 0;"),
                             tags$div(
                               h4("Ellery Mcknight", style = "margin-top: 0;"),
@@ -433,7 +433,7 @@ fluidPage(
                           style = "margin-bottom: 20px;",
                           tags$div(
                             style = "display: flex; align-items: center; gap: 20px;",
-                            tags$img(src = "person3.jpg",
+                            tags$img(src = "serenna.jpeg",
                                      style = "width: 250px; height: 250px; object-fit: cover; border-radius: 8px; flex-shrink: 0;"),
                             tags$div(
                               h4("Serenna Wu", style = "margin-top: 0;"),
