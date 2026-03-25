@@ -163,13 +163,12 @@ function(input, output, session) {
       group_by(year, sport_or_activity) %>%
 
       summarise(injuries = sum(injuries, na.rm = TRUE), .group = "drop") %>%
-      ggplot(aes(x=year,
-                 y=injuries,
-                 color=sport_or_activity,
-                 group = sport_or_activity
-                ))+
-      geom_line()+
-      geom_point()+
+      ggplot(aes(x = year,
+                 y = injuries,
+                 color = sport_or_activity,
+                 group = sport_or_activity)) +
+      geom_line(linewidth = 1.5) +
+      geom_point(size = 3) +
       scale_x_continuous(breaks = unique(yearly_injuries_by_age$year))+
       xlab("Year")+
       ylab("Number of Injuries")+
