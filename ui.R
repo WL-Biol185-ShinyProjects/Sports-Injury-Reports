@@ -164,6 +164,15 @@ fluidPage(
                        
                        div(class = "hero-banner", style = "margin-top: 20px;",
                            h1("Sports Injury Reports"),
+                           # Fun Facts
+                           div(style = "background: white; border-radius: 12px; padding: 25px 40px;
+             box-shadow: 0 2px 10px rgba(0,0,0,0.08); margin: 20px 10px;
+             border-left: 6px solid #78c2ad; text-align: center;",
+                               h4(style = "color: #78c2ad; font-weight: 700; margin-bottom: 15px;", "Did You Know?"),
+                               uiOutput("fun_fact"),
+                               br(),
+                               actionButton("next_fact", "Next Fact →", class = "btn-primary")
+                           ),
                            h4("Exploring Sports Injury Data from 2007 to 2024"),
                            br(),
                            div(style = "display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; opacity: 0.9;",
