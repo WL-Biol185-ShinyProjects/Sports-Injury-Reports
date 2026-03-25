@@ -9,6 +9,7 @@ library(leaflet)
 library(ggpubr)
 
 
+
 yearly_injuries_final <- read.csv("yearly_injuries_final.csv") %>%
   mutate(injuries = as.numeric(gsub(",", "", injuries)),
          year = as.numeric(year),
