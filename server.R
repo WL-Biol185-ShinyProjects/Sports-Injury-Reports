@@ -191,15 +191,15 @@ function(input, output, session) {
   })
   
   observeEvent(input$go_age, {
-    updateTabsetPanel(session, "tabs", selected = "Injuries by Age Group")
+    updateTabsetPanel(session, "tabs", selected = "Injuries By Age Group")
   })
   
   observeEvent(input$go_sport_age, {
-    updateTabsetPanel(session, "tabs", selected = "Sport Injuries by Age")
+    updateTabsetPanel(session, "tabs", selected = "Sport Injuries By Age")
   })
   
   observeEvent(input$go_state, {
-    updateTabsetPanel(session, "tabs", selected = "Favorite Sport by State")
+    updateTabsetPanel(session, "tabs", selected = "Favorite Sport By State")
   })
   
   observeEvent(input$go_about, {

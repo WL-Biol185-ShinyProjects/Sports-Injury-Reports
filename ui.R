@@ -314,7 +314,7 @@ fluidPage(
                        )
               ),
              
-              tabPanel("Favorite Sport by State",
+              tabPanel("Favorite Sport By State",
                        br(),
                        div(
                          style = "background-color: #f8f9fa; border-left: 4px solid #78c2ad;
