@@ -398,4 +398,26 @@ function(input, output, session) {
       theme_minimal() +
       theme(plot.title = element_text(hjust = 0.5, face = "bold"))
   })
+  fun_facts <- c(
+    "Basketball and football consistently rank among the top 3 most injury prone sports every year.",
+    "Children aged 4 to 15 account for a large share of sports injuries each year.",
+    "Overuse injuries make up nearly 50% of all youth sports injuries.",
+    "The 25 to 64 age group sees the most cycling related injuries.",
+    "Exercise and fitness activity injuries have risen steadily since 2007.",
+    "Snow skiing injuries peak in adults aged 25 to 64.",
+    "Soccer injuries are most common in the 14 to 24 age group.",
+    "Trampolining sends thousands of children to the ER every single year."
+  )
+  
+  fact_index <- reactiveVal(1)
+  
+  observeEvent(input$next_fact, {
+    next_i <- (fact_index() %% length(fun_facts)) + 1
+    fact_index(next_i)
+  })
+  
+  output$fun_fact <- renderUI({
+    p(style = "font-size: 18px; color: #444; line-height: 1.6; margin: 0;",
+      fun_facts[fact_index()])
+  })
 }
