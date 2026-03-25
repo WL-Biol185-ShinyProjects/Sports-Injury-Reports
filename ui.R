@@ -187,7 +187,7 @@ fluidPage(
                                     p("Explore each state's favorite sport and corresponding injury facts"),
                                     actionButton("go_state", "Explore", class = "btn-primary")
                                   )),
-                                  column(4, wellPanel(        # ← add this
+                                  column(4, wellPanel(        
                                     h4("About Us"),
                                     p("Meet the team behind Sports Injury Reports"),
                                     actionButton("go_about", "Meet the Team", class = "btn-primary")
@@ -203,14 +203,18 @@ fluidPage(
                          )
                        )
               ),
-              
+             
               tabPanel("Sport Injuries Per Year",
                        fluidRow(
+                         br(),
+                         div(
+                           style = "background-color: #f8f9fa; border-left: 4px solid #78c2ad;
+                 padding: 15px; margin-bottom: 15px; border-radius: 4px;",
+                           h4(style = "color: #78c2ad; margin-top:0;", "Sport Injuries Per Year"),
+                           p(style = "margin: 0; color: #2c3e50; font-size: 20px;",
+                             "Use the slider on the left to filter by year, or press ▶ Play to animate injury trends from 2007 to 2024. Hover over any bar to see the exact sport and injury count. The cards below the slider highlight the most and least injured sport for the selected year.")
+                         ),
                          column(12,
-                                h1("See which sports cause the most injuries each year",
-                                   style = "text-align: center; margin-top: 50px; font-size: 40px;"),
-                                h4("Instructions...",
-                                   style = "text-align: center; color: grey;"),
                                 sidebarLayout(
                                   sidebarPanel(
                                     width = 3,
@@ -229,8 +233,6 @@ fluidPage(
                                                 )
                                     ),
                                     hr(),
-                                    p("Use the slider or press Play to animate injuries over time.",
-                                      style = "color: gray; font-size: 15px;"),
                                     uiOutput("top_sport_boxes_wrapper")
                                   ),
                                   
@@ -248,11 +250,15 @@ fluidPage(
               
               tabPanel("Injuries By Age Group",
                        fluidRow(
+                         br(),
+                         div(
+                           style = "background-color: #f8f9fa; border-left: 4px solid #78c2ad;
+                 padding: 15px; margin-bottom: 15px; border-radius: 4px;",
+                           h4(style = "color: #78c2ad; margin-top:0;", "Injuries By Age Group"),
+                           p(style = "margin: 0; color: #2c3e50; font-size: 20px;",
+                             "Select an age group and one or more sports from the sidebar to compare injury counts across different age group. Use the sport selector to add or remove sports from the chart.")
+                         ),
                          column(12, 
-                                h1("Explore how injuries vary across age groups",
-                                   style = "text-align: center; margin-top: 50px; font-size: 40px;"),
-                                h4("Instructions...",
-                                   style = "text-align: center; color: grey;"),
                                 hr(),
                                 sidebarLayout(
                                   sidebarPanel(
@@ -284,11 +290,15 @@ fluidPage(
              
               tabPanel("Sport Injuries By Age",
                        fluidRow(
+                         br(),
+                         div(
+                           style = "background-color: #f8f9fa; border-left: 4px solid #78c2ad;
+                 padding: 15px; margin-bottom: 15px; border-radius: 4px;",
+                           h4(style = "color: #78c2ad; margin-top:0;", "Sport Injuries By Age"),
+                           p(style = "margin: 0; color: #2c3e50; font-size: 20px;",
+                             "Select one or more sports from the sidebar to see a pie chart breakdown of injuries by age group for each sport. The legend on the left shows which color corresponds to each age group.")
+                         ),
                          column(12,
-                                h1("Break down injuries by sport and age group",
-                                   style = "text-align: center; margin-top: 50px; font-size: 40px;"),
-                                h4("Instructions...",
-                                   style = "text-align: center; color: grey;"),
                                 hr(),
                                 sidebarLayout(
                                   sidebarPanel(
@@ -329,7 +339,7 @@ fluidPage(
                            img(src = "https://cdn.freebiesupply.com/logos/large/2x/nba-logo-png-transparent.png", height = "50px"),
                            img(src = "https://www.mlbstatic.com/team-logos/league-on-dark/1.svg", height = "50px")
                          ),
-                         p(style = "margin: 0; color: #2c3e50; font-size: 16px;",
+                         p(style = "margin: 0; color: #2c3e50; font-size: 20px;",
                            "This map displays the most popular sport in each state based on fan interest and
            viewership data. Click on any circle to learn more about the most common injuries
            associated with that state's favorite sport. Hover over a circle to see the state
@@ -389,7 +399,7 @@ fluidPage(
                    height: 100%; margin-bottom: 15px;",
                                     div(style = "text-align: center; font-size: 40px; margin-bottom: 10px;", "🏃"),
                                     h4(style = "color: #78c2ad; font-weight: 700; text-align: center;", "General Tips"),
-                                    tags$ul(style = "color: #555; font-size: 15px; line-height: 1.8;",
+                                    tags$ul(style = "color: #555; font-size: 20px; line-height: 1.8;",
                                             tags$li("Always warm up before activity and cool down afterward"),
                                             tags$li("Stay hydrated before, during, and after exercise"),
                                             tags$li("Know your limits and gradually increase intensity"),
@@ -403,7 +413,7 @@ fluidPage(
                    height: 100%; margin-bottom: 15px;",
                                     div(style = "text-align: center; font-size: 40px; margin-bottom: 10px;", "🏈"),
                                     h4(style = "color: #f3969a; font-weight: 700; text-align: center;", "Equipment"),
-                                    tags$ul(style = "color: #555; font-size: 15px; line-height: 1.8;",
+                                    tags$ul(style = "color: #555; font-size: 20px; line-height: 1.8;",
                                             tags$li("Wear appropriate protective gear for your sport"),
                                             tags$li("Make sure equipment fits properly"),
                                             tags$li("Replace worn out shoes and gear regularly")
@@ -416,7 +426,7 @@ fluidPage(
                    height: 100%; margin-bottom: 15px;",
                                     div(style = "text-align: center; font-size: 40px; margin-bottom: 10px;", "🎯"),
                                     h4(style = "color: #6cc3d5; font-weight: 700; text-align: center;", "Technique"),
-                                    tags$ul(style = "color: #555; font-size: 15px; line-height: 1.8;",
+                                    tags$ul(style = "color: #555; font-size: 20px; line-height: 1.8;",
                                             tags$li("Learn proper form from a coach or trainer"),
                                             tags$li("Avoid overuse by varying your activities"),
                                             tags$li("Listen to your body and stop if something hurts")
@@ -430,9 +440,9 @@ fluidPage(
                                 div(style = "background: linear-gradient(135deg, #78c2ad 0%, #6cc3d5 100%);
                    border-radius: 12px; padding: 30px; text-align: center;
                    box-shadow: 0 4px 15px rgba(120,194,173,0.4);",
-                                    h4(style = "color: white; font-weight: 700; font-size: 20px;",
+                                    h4(style = "color: white; font-weight: 700; font-size: 25px;",
                                        "Remember: Prevention is always better than treatment!"),
-                                    p(style = "color: white; opacity: 0.9; font-size: 15px; margin: 0;",
+                                    p(style = "color: white; opacity: 0.9; font-size: 20px; margin: 0;",
                                       "Taking small steps before and after activity can save you weeks of recovery time.")
                                 )
                          )
