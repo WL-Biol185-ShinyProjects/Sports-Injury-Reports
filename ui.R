@@ -159,55 +159,103 @@ fluidPage(
   
   tabsetPanel(id = "tabs",
               tabPanel("Home",
-                       fluidRow(
-                         column(12,
-                                h1("Welcome!", style = "text-align: center; margin-top: 50px; font-size: 40px;"),
-                                h4("Exploring Sports Injury Data from 2007 to 2024",
-                                   style = "text-align: center; color: grey;"),
-                                hr(),
-                                fluidRow(
-                                  column(4, wellPanel(
-                                    h4("Sport Injuries Per Year"),
-                                    p("See which sports cause the most injuries each year"),
-                                    actionButton("go_sport", "Explore", class = "btn-primary")
-                                  )),
-                                  column(4, wellPanel(
-                                    h4("Injuries by Age Group"),
-                                    p("Explore how injuries vary across age groups"),
-                                    actionButton("go_age", "Explore", class = "btn-primary")
-                                  )),
-                                  column(4, wellPanel(
-                                    h4("Sport Injuries by Age"),
-                                    p("Break down injuries by sport and age group"),
-                                    actionButton("go_sport_age", "Explore", class = "btn-primary")
-                                  )),
-                                  tags$div(style = "margin-top: 16px; width: 100%;"),
-                                  column(4, wellPanel(
-                                    h4("Favorite Sport by State"),
-                                    p("Explore each state's favorite sport and corresponding injury facts"),
-                                    actionButton("go_state", "Explore", class = "btn-primary")
-                                  )),
-                                  column(4, wellPanel(
-                                    h4("Injury Prevention"),
-                                    p("Learn how to stay safe and reduce your risk of injury in your favorite sport."),
-                                    actionButton("go_prevention", "Explore", class = "btn-primary")
-                                  )),
-                                  column(4, wellPanel(        # ← add this
-                                    h4("About Us"),
-                                    p("Meet the team behind Sports Injury Reports"),
-                                    actionButton("go_about", "Meet the Team", class = "btn-primary")
-                                  ))
-                                  
+                       # Hero Banner
+                       div(class = "hero-banner", style = "margin-top: 20px;",
+                           h1("Sports Injury Reports"),
+                           h4("Exploring Sports Injury Data from 2007 to 2024"),
+                           br(),
+                           div(style = "display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; opacity: 0.9;",
+                               div(style = "text-align: center;",
+                                   h2(style = "font-size: 36px; font-weight: 800; margin: 0;", "18"),
+                                   p(style = "margin: 0; font-size: 13px;", "Years of Data")
+                               ),
+                               div(style = "text-align: center;",
+                                   h2(style = "font-size: 36px; font-weight: 800; margin: 0;", "50+"),
+                                   p(style = "margin: 0; font-size: 13px;", "Sports Tracked")
+                               ),
+                               div(style = "text-align: center;",
+                                   h2(style = "font-size: 36px; font-weight: 800; margin: 0;", "50"),
+                                   p(style = "margin: 0; font-size: 13px;", "States Covered")
+                               ),
+                               div(style = "text-align: center;",
+                                   h2(style = "font-size: 36px; font-weight: 800; margin: 0;", "5"),
+                                   p(style = "margin: 0; font-size: 13px;", "Age Groups")
+                               )
+                           )
+                       ),
+                       
+                       # Explore Section
+                       h3("Explore the Data",
+                          style = "text-align: center; font-weight: 700; color: #2c3e50;
+              margin: 30px 0 5px 0; font-size: 32px;"),
+                       p("Click any card below to dive into the data",
+                         style = "text-align: center; color: #888; margin-bottom: 25px;"),
+                       
+                       fluidRow(style = "margin: 0 10px;",
+                                column(4,
+                                       div(class = "nav-card", style = "border-top-color: #78c2ad; margin-bottom: 20px;",
+                                           div(style = "font-size: 40px; margin-bottom: 12px;"),
+                                           h4("Sport Injuries Per Year"),
+                                           p("See which sports cause the most injuries each year"),
+                                           br(),
+                                           actionButton("go_sport", "Explore →", class = "btn-primary")
+                                       )
                                 ),
-                                h3("About", style = "text-align: center; margin: 30px auto 10px; font-size: 40px;"),
-                                hr(style = "width: 100px; border-top: 2px solid #78c28d; margin: 10px auto 20px;"),
-                                p("This dashboard was created by Ellery Mcknight, Serenna Wu, and Cora Villere.
-            Our goal was to explore sports and recreational injury data collected over the past couple decades.
-            We have examined injury trends across different sports, age groups, and years.
-            Our goal is to make injury data accessible and understandable for parents, coaches, and athletes alike.",
-                                  style = "text-align: center; font-size: 25px; max-width:900px; margin: 20px auto;")
-                         )
-                       )
+                                column(4,
+                                       div(class = "nav-card", style = "border-top-color: #f3969a; margin-bottom: 20px;",
+                                           div(style = "font-size: 40px; margin-bottom: 12px;",),
+                                           h4("Injuries by Age Group"),
+                                           p("Explore how injuries vary across different age groups over time"),
+                                           br(),
+                                           actionButton("go_age", "Explore →", class = "btn-primary",
+                                                        style = "background-color: #f3969a !important; border-color: #f3969a !important;")
+                                       )
+                                ),
+                                column(4,
+                                       div(class = "nav-card", style = "border-top-color: #6cc3d5; margin-bottom: 20px;",
+                                           div(style = "font-size: 40px; margin-bottom: 12px;",),
+                                           h4("Sport Injuries by Age"),
+                                           p("Break down injuries by sport and age group with pie charts"),
+                                           br(),
+                                           actionButton("go_sport_age", "Explore →", class = "btn-primary",
+                                                        style = "background-color: #6cc3d5 !important; border-color: #6cc3d5 !important;")
+                                       )
+                                )
+                       ),
+                       fluidRow(style = "margin: 0 10px;",
+                                column(4,
+                                       div(class = "nav-card", style = "border-top-color: #ffce67; margin-bottom: 20px;",
+                                           div(style = "font-size: 40px; margin-bottom: 12px;"),
+                                           h4("Favorite Sport by State"),
+                                           p("Explore each state's favorite sport and corresponding injury facts"),
+                                           br(),
+                                           actionButton("go_state", "Explore →", class = "btn-primary",
+                                                        style = "background-color: #ffce67 !important; border-color: #ffce67 !important;
+                              color: #2c3e50 !important;")
+                                       )
+                                ),
+                                column(4,
+                                       div(class = "nav-card", style = "border-top-color: #56cc9d; margin-bottom: 20px;",
+                                           div(style = "font-size: 40px; margin-bottom: 12px;"),
+                                           h4("Injury Prevention"),
+                                           p("Learn how to stay safe and reduce your risk of injury in your favorite sport"),
+                                           br(),
+                                           actionButton("go_prevention", "Explore →", class = "btn-primary",
+                                                        style = "background-color: #56cc9d !important; border-color: #56cc9d !important;")
+                                       )
+                                ),
+                                column(4,
+                                       div(class = "nav-card", style = "border-top-color: #ff7851; margin-bottom: 20px;",
+                                           div(style = "font-size: 40px; margin-bottom: 12px;"),
+                                           h4("About Us"),
+                                           p("Meet the team behind Sports Injury Reports"),
+                                           br(),
+                                           actionButton("go_about", "Meet the Team →", class = "btn-primary",
+                                                        style = "background-color: #ff7851 !important; border-color: #ff7851 !important;")
+                                       )
+                                )
+                       ),
+                       br()
               ),
               
               tabPanel("Sport Injuries Per Year",
