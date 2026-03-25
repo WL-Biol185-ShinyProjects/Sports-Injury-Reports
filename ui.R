@@ -187,11 +187,17 @@ fluidPage(
                                     p("Explore each state's favorite sport and corresponding injury facts"),
                                     actionButton("go_state", "Explore", class = "btn-primary")
                                   )),
+                                  column(4, wellPanel(
+                                    h4("Injury Prevention"),
+                                    p("Learn how to stay safe and reduce your risk of injury in your favorite sport."),
+                                    actionButton("go_prevention", "Explore", class = "btn-primary")
+                                  )),
                                   column(4, wellPanel(        # ← add this
                                     h4("About Us"),
                                     p("Meet the team behind Sports Injury Reports"),
                                     actionButton("go_about", "Meet the Team", class = "btn-primary")
                                   ))
+                                  
                                 ),
                                 h3("About", style = "text-align: center; margin: 30px auto 10px; font-size: 40px;"),
                                 hr(style = "width: 100px; border-top: 2px solid #78c28d; margin: 10px auto 20px;"),
@@ -439,7 +445,7 @@ fluidPage(
                        ),
                        br()
               ),
-             tabPanel("About",
+             tabPanel("About Us",
 
                       fluidRow(
                         column(12,
