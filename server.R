@@ -202,9 +202,15 @@ function(input, output, session) {
     updateTabsetPanel(session, "tabs", selected = "Favorite Sport By State")
   })
   
+  observeEvent(input$go_prevention, {
+    updateTabsetPanel(session, "tabs", selected = "Injury Prevention")
+  })
+  
   observeEvent(input$go_about, {
-  updateTabsetPanel(session, "tabs", selected = "About")
-})
+  updateTabsetPanel(session, "tabs", selected = "About Us")
+  })
+  
+  
   
   #Sport Injuries by Age
   age_colors <- c(
