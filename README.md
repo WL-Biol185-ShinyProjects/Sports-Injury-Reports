@@ -18,3 +18,6 @@ https://pmc.ncbi.nlm.nih.gov/articles/PMC5384815/table/i1062-6050-52-3-167-t01/
 
 https://pmc.ncbi.nlm.nih.gov/articles/PMC5099231/
 - Q collar study
+
+https://chnwebapp-auc-prod01.azurewebsites.net/athletes-risk-acl-tears
+- acl tear data

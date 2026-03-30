@@ -574,7 +574,91 @@ fluidPage(
                          tabPanel("Concussion"
                                   ),
                          tabPanel("Ankle Sprain"),
-                         tabPanel("Knee Injury"),
+                         tabPanel("ACL Injuries",
+                                  br(),
+                                  h1("ACL Injuries in Sport", style = "text-align: center; font-size: 40px;"),
+                                  h4("Who is at risk and how to prevent",
+                                     style = "text-align: center; color: grey;"),
+                                  hr(),
+                                  fluidRow(
+                                    column(8, offset = 2,
+                                           div(style = "background: white; border-radius: 12px; padding: 20px;
+             box-shadow: 0 2px 10px rgba(0,0,0,0.08); margin-bottom: 20px;",
+                                               h4(style = "color: #56cc9d; font-weight: 700; text-align: center;",
+                                                  "ACL Injury Prevention: Estimated Risk Reduction by Strategy"),
+                                               p(style = "text-align: center; color: grey; font-size: 13px; margin-bottom: 15px;",
+                                                 "Evidence-based programs combining neuromuscular training and strength work
+                show up to 52% risk reduction in female athletes and 85% in male athletes."),
+                                               plotOutput("acl_prevention", height = "300px"),
+                                               p(style = "text-align: center; color: grey; font-size: 12px; margin-top: 12px;",
+                                                 HTML("Source: Nessler et al. (2017). <em>ACL Injury Prevention: What Does Research Tell Us?</em>
+                     Curr Rev Musculoskelet Med. &nbsp;
+                     <a href='https://pmc.ncbi.nlm.nih.gov/articles/PMC5577417/' target='_blank'>
+                     PMC5577417</a>"))
+                                           )
+                                    )
+                                  ), 
+                                  # Row 1 - Total reconstructions + gender split
+                                  fluidRow(
+                                    column(6,
+                                           div(style = "background: white; border-radius: 12px; padding: 20px;
+                   box-shadow: 0 2px 10px rgba(0,0,0,0.08); margin-bottom: 20px;",
+                                               h4(style = "color: #78c2ad; font-weight: 700; text-align: center;",
+                                                  "Total ACL Reconstructions by Sport"),
+                                               plotOutput("acl_total_bar", height = "300px")
+                                           )
+                                    ),
+                                    column(6,
+                                           div(style = "background: white; border-radius: 12px; padding: 20px;
+                   box-shadow: 0 2px 10px rgba(0,0,0,0.08); margin-bottom: 20px;",
+                                               h4(style = "color: #f3969a; font-weight: 700; text-align: center;",
+                                                  "Male vs Female Split by Sport"),
+                                               plotOutput("acl_gender_split", height = "300px")
+                                           )
+                                    )
+                                  ),
+                                  
+                                  # Row 2 - Risk % by gender + notch width
+                                  fluidRow(
+                                    column(6,
+                                           div(style = "background: white; border-radius: 12px; padding: 20px;
+                   box-shadow: 0 2px 10px rgba(0,0,0,0.08); margin-bottom: 20px;",
+                                               h4(style = "color: #6cc3d5; font-weight: 700; text-align: center;",
+                                                  "ACL Risk % by Sport and Gender"),
+                                               plotOutput("acl_risk_gender", height = "300px")
+                                           )
+                                    ),
+                                    column(6,
+                                           div(style = "background: white; border-radius: 12px; padding: 20px;
+                   box-shadow: 0 2px 10px rgba(0,0,0,0.08); margin-bottom: 20px;",
+                                               h4(style = "color: #ffce67; font-weight: 700; text-align: center;",
+                                                  "Intercondylar Notch Width: Normal vs ACL Tear"), p(style = "text-align: center; color: grey; font-size: 13px; margin-bottom: 15px;",
+                                                                                                      "The intercondylar notch is the groove at the base of the femur (thigh bone) 
+   through which the ACL passes. A narrower notch means less space for the ACL 
+   during rotation, increasing tear risk — females tend to have narrower notch 
+   widths on average, contributing to their higher injury rates."),
+                                               plotOutput("acl_notch_width", height = "300px")
+                                           )
+                                    )
+                                  ),
+                      
+                             
+                                  
+                                  # Research callout banner
+                                  fluidRow(
+                                    column(8, offset = 2,
+                                           div(style = "background: linear-gradient(135deg, #78c2ad 0%, #6cc3d5 100%);
+                   border-radius: 12px; padding: 30px; text-align: center;
+                   box-shadow: 0 4px 15px rgba(120,194,173,0.4); margin-bottom: 20px;",
+                                               h4(style = "color: white; font-weight: 700; font-size: 18px;",
+                                                  "Female athletes are approximately twice as likely to tear their ACL as male athletes."),
+                                               p(style = "color: white; opacity: 0.9; font-size: 14px; margin: 0;",
+                                                 "Source: Shelbourne Knee Center, internal research report 2018")
+                                           )
+                                    )
+                                  ),
+                                  br()
+                         ),
                          tabPanel("Fracture"),
                          tabPanel("Strains & Sprains")
               ),
