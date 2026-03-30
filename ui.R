@@ -763,6 +763,9 @@ fluidPage(
                                   ))
                                 ),
                                 br(),
+                                br(),
+                                div(style = "text-align:center;",
+                                    uiOutput("hydro_bottles")
                                 ),
                                 hr(),
                                 div(style = "background:#e8f5f1; border-radius:12px; padding:20px; border: 1px solid #78c2ad; margin-bottom:15px;",
@@ -792,7 +795,9 @@ fluidPage(
                                                     uiOutput("timing_post_foods")
                                       ))
                                     )
+                                    ),
                                 ),
+                            
                                 hr(),
                                 h4("Nutrient Details", style = "color:#78c2ad; font-weight:700; margin-bottom:15px;"),
                                 tags$details(class = "nutrition-details nutr-teal",

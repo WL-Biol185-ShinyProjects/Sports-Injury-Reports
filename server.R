@@ -567,6 +567,16 @@ function(input, output, session) {
     else "High activity level — consider electrolyte drinks to replace sodium and potassium lost through sweat."
   })
   
+  output$hydro_bottles <- renderUI({
+    total <- hydro_vals()$total
+    bottles <- ceiling(total / 16)
+    tagList(
+      p(style = "color:#555; font-size:13px; margin-bottom:5px;",
+        paste0("That's about ", bottles, " standard plastic water bottles (16 oz) per day")),
+      p(style = "font-size:20px; letter-spacing:4px;")
+    )
+  })
+  
   #Nutrient Timing
   timing_data <- list(
     endurance = list(
