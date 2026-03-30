@@ -881,8 +881,6 @@ fluidPage(
                                     br()
                                   )
                          ),
-                         
-                         
                          tabPanel("ACL Injuries",
                                   br(),
                                   h1("ACL Injuries in Sport", style = "text-align: center; font-size: 40px;"),
@@ -951,6 +949,7 @@ fluidPage(
                                     )
                                   ),
                       
+                             
                                   
                                   # Research callout banner
                                   fluidRow(
