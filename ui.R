@@ -697,7 +697,91 @@ fluidPage(
                          ),
                          
                          tabPanel("Ankle Sprain"),
-                         tabPanel("Knee Injury"),
+                         tabPanel("ACL Injuries",
+                                  br(),
+                                  h1("ACL Injuries in Sport", style = "text-align: center; font-size: 40px;"),
+                                  h4("Who is at risk and how to prevent",
+                                     style = "text-align: center; color: grey;"),
+                                  hr(),
+                                  fluidRow(
+                                    column(8, offset = 2,
+                                           div(style = "background: white; border-radius: 12px; padding: 20px;
+             box-shadow: 0 2px 10px rgba(0,0,0,0.08); margin-bottom: 20px;",
+                                               h4(style = "color: #56cc9d; font-weight: 700; text-align: center;",
+                                                  "ACL Injury Prevention: Estimated Risk Reduction by Strategy"),
+                                               p(style = "text-align: center; color: grey; font-size: 13px; margin-bottom: 15px;",
+                                                 "Evidence-based programs combining neuromuscular training and strength work
+                show up to 52% risk reduction in female athletes and 85% in male athletes."),
+                                               plotOutput("acl_prevention", height = "300px"),
+                                               p(style = "text-align: center; color: grey; font-size: 12px; margin-top: 12px;",
+                                                 HTML("Source: Nessler et al. (2017). <em>ACL Injury Prevention: What Does Research Tell Us?</em>
+                     Curr Rev Musculoskelet Med. &nbsp;
+                     <a href='https://pmc.ncbi.nlm.nih.gov/articles/PMC5577417/' target='_blank'>
+                     PMC5577417</a>"))
+                                           )
+                                    )
+                                  ), 
+                                  # Row 1 - Total reconstructions + gender split
+                                  fluidRow(
+                                    column(6,
+                                           div(style = "background: white; border-radius: 12px; padding: 20px;
+                   box-shadow: 0 2px 10px rgba(0,0,0,0.08); margin-bottom: 20px;",
+                                               h4(style = "color: #78c2ad; font-weight: 700; text-align: center;",
+                                                  "Total ACL Reconstructions by Sport"),
+                                               plotOutput("acl_total_bar", height = "300px")
+                                           )
+                                    ),
+                                    column(6,
+                                           div(style = "background: white; border-radius: 12px; padding: 20px;
+                   box-shadow: 0 2px 10px rgba(0,0,0,0.08); margin-bottom: 20px;",
+                                               h4(style = "color: #f3969a; font-weight: 700; text-align: center;",
+                                                  "Male vs Female Split by Sport"),
+                                               plotOutput("acl_gender_split", height = "300px")
+                                           )
+                                    )
+                                  ),
+                                  
+                                  # Row 2 - Risk % by gender + notch width
+                                  fluidRow(
+                                    column(6,
+                                           div(style = "background: white; border-radius: 12px; padding: 20px;
+                   box-shadow: 0 2px 10px rgba(0,0,0,0.08); margin-bottom: 20px;",
+                                               h4(style = "color: #6cc3d5; font-weight: 700; text-align: center;",
+                                                  "ACL Risk % by Sport and Gender"),
+                                               plotOutput("acl_risk_gender", height = "300px")
+                                           )
+                                    ),
+                                    column(6,
+                                           div(style = "background: white; border-radius: 12px; padding: 20px;
+                   box-shadow: 0 2px 10px rgba(0,0,0,0.08); margin-bottom: 20px;",
+                                               h4(style = "color: #ffce67; font-weight: 700; text-align: center;",
+                                                  "Intercondylar Notch Width: Normal vs ACL Tear"), p(style = "text-align: center; color: grey; font-size: 13px; margin-bottom: 15px;",
+                                                                                                      "The intercondylar notch is the groove at the base of the femur (thigh bone) 
+   through which the ACL passes. A narrower notch means less space for the ACL 
+   during rotation, increasing tear risk — females tend to have narrower notch 
+   widths on average, contributing to their higher injury rates."),
+                                               plotOutput("acl_notch_width", height = "300px")
+                                           )
+                                    )
+                                  ),
+                      
+                             
+                                  
+                                  # Research callout banner
+                                  fluidRow(
+                                    column(8, offset = 2,
+                                           div(style = "background: linear-gradient(135deg, #78c2ad 0%, #6cc3d5 100%);
+                   border-radius: 12px; padding: 30px; text-align: center;
+                   box-shadow: 0 4px 15px rgba(120,194,173,0.4); margin-bottom: 20px;",
+                                               h4(style = "color: white; font-weight: 700; font-size: 18px;",
+                                                  "Female athletes are approximately twice as likely to tear their ACL as male athletes."),
+                                               p(style = "color: white; opacity: 0.9; font-size: 14px; margin: 0;",
+                                                 "Source: Shelbourne Knee Center, internal research report 2018")
+                                           )
+                                    )
+                                  ),
+                                  br()
+                         ),
                          tabPanel("Fracture"),
                          tabPanel("Strains & Sprains")
               ),
@@ -707,65 +791,189 @@ fluidPage(
               tabPanel("Nutrition & Recovery",
                        fluidRow(
                          column(12,
-                                h1("Nutrition & Recovery",
-                                   style = "text-align: center; margin-top: 40px; font-size: 40px;"),
-                                h4("Key nutritional strategies for injury prevention and recovery in athletes",
-                                   style = "text-align: center; color: grey;"),
-                                hr(), 
+                                div(
+                                  style = "background-color: #f8f9fa; border-left: 4px solid #78c2ad;
+                                  padding: 15px; margin-bottom: 15px; border-radius: 4px;",
+                                  h4(style = "color: #78c2ad; margin-top:0;", "Nutrition & Recovery"),
+                                  p(style = "margin: 0; color: #2c3e50; font-size: 20px;",
+                                    "Key nutritional strategies for injury prevention and recovery in athletes.")
+                                ),
+                                
                                 tags$style(HTML("
-    details { 
-    background: white; 
-    border-radius: 8px; 
-    padding: 12px 16px; 
-    margin-bottom: 10px;
-    border: 1px solid #78c2ad;
-  }
-  details summary { 
-    font-size: 18px; 
-    font-weight: 600; 
-    color: #78c2ad; 
-    cursor: pointer; 
-    list-style: none;
-  }
-  details summary::-webkit-details-marker { display: none; }
-  details summary::before { content: '▶ '; font-size: 12px; }
-  details[open] summary::before { content: '▼ '; font-size: 12px; }
-  details p { margin-top: 10px; font-size: 15px; }
-")),
+                                  .nutrition-details {
+                                  border-radius: 10px;
+                                  padding: 14px 18px;
+                                  margin-bottom: 12px;
+                                  border-left: 6px solid #78c2ad;
+                                  background-color: #f9fefc;
+                                  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+                                  transition: box-shadow 0.2s;
+                                    }
+                                  .nutrition-details[open] {
+                                  box-shadow: 0 4px 14px rgba(0,0,0,0.10);
+                                    }
+        .nutrition-details summary {
+          font-size: 18px;
+          font-weight: 600;
+          cursor: pointer;
+          list-style: none;
+          display: flex;
+          align-items: center;
+          gap: 10px;
+        }
+        .nutrition-details summary::-webkit-details-marker { display: none; }
+        .nutrition-details summary::before {
+          content: '▶';
+          font-size: 11px;
+          transition: transform 0.2s;
+        }
+        .nutrition-details[open] summary::before {
+          transform: rotate(90deg);
+        }
+        .nutrition-details p {
+          margin-top: 10px;
+          font-size: 15px;
+          color: #444;
+        }
+        .nutr-teal   { border-left-color: #78c2ad; background-color: #f0faf7; }
+        .nutr-teal   summary { color: #78c2ad; }
+        .nutr-coral  { border-left-color: #f3969a; background-color: #fff5f6; }
+        .nutr-coral  summary { color: #f3969a; }
+        .nutr-blue   { border-left-color: #6cc3d5; background-color: #f0f9fc; }
+        .nutr-blue   summary { color: #6cc3d5; }
+        .nutr-yellow { border-left-color: #ffce67; background-color: #fffdf0; }
+        .nutr-yellow summary { color: #d4a800; }
+        .nutr-green  { border-left-color: #56cc9d; background-color: #f0fdf7; }
+        .nutr-green  summary { color: #56cc9d; }
+        .nutr-orange { border-left-color: #ff7851; background-color: #fff5f2; }
+        .nutr-orange summary { color: #ff7851; }
+      ")),
                                 
-                                tags$details(tags$summary("Carbohydrates"),
-                                             p(strong("Role: "), "Prevents muscle/mental fatigue and supports energy for sustained performance and recovery."),
-                                             p(strong("Examples: "), "Consume as part of balanced meals, especially around training sessions.")),
+                  
+                                hr(),
+                                div(style = "background:#e8f5f1; border-radius:12px; padding:20px; border: 1px solid #78c2ad; margin-bottom:15px;",
+                                    h4("Hydration Calculator", style = "color:#78c2ad; font-weight:700; margin-bottom:15px;"),
+                                fluidRow(
+                                  column(4,
+                                         sliderInput("hydro_weight", "Body weight (lbs)", min = 80, max = 300, value = 160, step = 1)
+                                  ),
+                                  column(4,
+                                         sliderInput("hydro_duration", "Activity duration (min)", min = 15, max = 180, value = 60, step = 15)
+                                  ),
+                                  column(4,
+                                         selectInput("hydro_intensity", "Intensity",
+                                                     choices = c("Low (walking, yoga)" = "1",
+                                                                 "Moderate (running, cycling)" = "1.3",
+                                                                 "High (HIIT, team sport)" = "1.6"),
+                                                     selected = "1.3")
+                                  )
+                                ),
+                                fluidRow(
+                                  column(4, div(style = "background:#e8f4fb; border-radius:10px; padding:15px; text-align:center; border-top: 4px solid #6cc3d5;",
+                                                p("Daily baseline", style = "color:#555; margin:0; font-size:13px;"),
+                                                h3(textOutput("hydro_baseline"), style = "color:#6cc3d5; margin:5px 0 0;"),
+                                                p("oz / day", style = "color:#888; margin:0; font-size:12px;")
+                                  )),
+                                  column(4, div(style = "background:#fdf0f1; border-radius:10px; padding:15px; text-align:center; border-top: 4px solid #f3969a;",
+                                                p("Exercise addition", style = "color:#555; margin:0; font-size:13px;"),
+                                                h3(textOutput("hydro_extra"), style = "color:#f3969a; margin:5px 0 0;"),
+                                                p("oz", style = "color:#888; margin:0; font-size:12px;")
+                                  )),
+                                  column(4, div(style = "background:#56cc9d; border-radius:10px; padding:15px; text-align:center; border-top: 4px solid #3aaa7a;",
+                                                p("Total target", style = "color:white; margin:0; font-size:13px;"),
+                                                h3(textOutput("hydro_total"), style = "color:white; margin:5px 0 0;"),
+                                                p("oz / day", style = "color:white; margin:0; font-size:12px;")
+                                  ))
+                                ),
+                                br(),
+                                br(),
+                                div(style = "text-align:center;",
+                                    uiOutput("hydro_bottles")
+                                ),
+                                hr(),
+                                div(style = "background:#e8f5f1; border-radius:12px; padding:20px; border: 1px solid #78c2ad; margin-bottom:15px;",
+                                    h4("Nutrient Timing", style = "color:#78c2ad; font-weight:700; margin-bottom:15px;"),
+                                    selectInput("timing_sport", "Sport type",
+                                                choices = c("Endurance (running, cycling)" = "endurance",
+                                                            "Strength (weightlifting)"      = "strength",
+                                                            "Team sport (soccer, basketball)" = "team")
+                                    ),
+                                    fluidRow(
+                                      column(4, div(style = "background:#e8f4fb; border-top:4px solid #6cc3d5; border-radius:10px; padding:15px;",
+                                                    h5("Pre-workout", style = "color:#6cc3d5; font-weight:700; margin-top:0;"),
+                                                    textOutput("timing_pre_time"),
+                                                    br(),
+                                                    uiOutput("timing_pre_foods")
+                                      )),
+                                      column(4, div(style = "background:#fdf0f1; border-top:4px solid #f3969a; border-radius:10px; padding:15px;",
+                                                    h5("During", style = "color:#f3969a; font-weight:700; margin-top:0;"),
+                                                    textOutput("timing_during_time"),
+                                                    br(),
+                                                    uiOutput("timing_during_foods")
+                                      )),
+                                      column(4, div(style = "background:#f0fdf7; border-top:4px solid #56cc9d; border-radius:10px; padding:15px;",
+                                                    h5("Post-workout", style = "color:#56cc9d; font-weight:700; margin-top:0;"),
+                                                    textOutput("timing_post_time"),
+                                                    br(),
+                                                    uiOutput("timing_post_foods")
+                                      ))
+                                    )
+                                    ),
+                                ),
+                            
+                                hr(),
+                                h4("Nutrient Details", style = "color:#78c2ad; font-weight:700; margin-bottom:15px;"),
+                                tags$details(class = "nutrition-details nutr-teal",
+                                             tags$summary("🍞  Carbohydrates"),
+                                             p(strong("Role: "), "Prevents muscle and mental fatigue; supports energy for sustained performance and recovery."),
+                                             p(strong("Examples: "), "Consume as part of balanced meals, especially around training sessions — rice, oats, pasta, fruit.")
+                                ),
                                 
-                                tags$details(tags$summary("Proteins"),
+                                tags$details(class = "nutrition-details nutr-coral",
+                                             tags$summary("🥩  Proteins"),
                                              p(strong("Role: "), "Essential for muscle repair and adaptation, reducing the risk of overuse injuries."),
-                                             p(strong("Examples: "), "Ingest 20-30 grams post-training for muscle recovery.")),
+                                             p(strong("Examples: "), "Ingest 20–30 grams post-training — chicken, eggs, Greek yogurt, legumes.")
+                                ),
                                 
-                                tags$details(tags$summary("Healthy Fats (e.g., Omega-3 Fatty Acids)"),
+                                tags$details(class = "nutrition-details nutr-blue",
+                                             tags$summary("🐟  Healthy Fats (Omega-3 Fatty Acids)"),
                                              p(strong("Role: "), "Supports joint health and reduces chronic inflammation linked to repetitive stress."),
-                                             p(strong("Examples: "), "Include foods like fish, walnuts, and flaxseeds regularly in the diet.")),
+                                             p(strong("Examples: "), "Include foods like salmon, walnuts, and flaxseeds regularly in the diet.")
+                                ),
                                 
-                                tags$details(tags$summary("Calcium and Vitamin D"),
+                                tags$details(class = "nutrition-details nutr-yellow",
+                                             tags$summary("☀️  Calcium and Vitamin D"),
                                              p(strong("Role: "), "Strengthens bones and reduces the risk of stress fractures."),
-                                             p(strong("Examples: "), "Supplement with 800 IU/day of vitamin D and 2,000 mg of calcium.")),
+                                             p(strong("Examples: "), "Supplement with 800 IU/day of vitamin D and 2,000 mg of calcium — dairy, fortified milk, sunlight.")
+                                ),
                                 
-                                tags$details(tags$summary("Antioxidants"),
+                                tags$details(class = "nutrition-details nutr-green",
+                                             tags$summary("🫐  Antioxidants"),
                                              p(strong("Role: "), "Protects muscles from oxidative stress, speeding up recovery and reducing soreness."),
-                                             p(strong("Examples: "), "Incorporate berries, citrus fruits, and leafy greens.")),
+                                             p(strong("Examples: "), "Incorporate berries, citrus fruits, and leafy greens.")
+                                ),
                                 
-                                tags$details(tags$summary("Hydration"),
+                                tags$details(class = "nutrition-details nutr-blue",
+                                             tags$summary("💧  Hydration"),
                                              p(strong("Role: "), "Maintains joint lubrication, muscle elasticity, and optimal coordination."),
-                                             p(strong("Examples: "), "Ensure consistent hydration before, during, and after high-impact activities.")),
+                                             p(strong("Examples: "), "Ensure consistent hydration before, during, and after high-impact activities — water, electrolyte drinks.")
+                                ),
                                 
-                                tags$details(tags$summary("Anti-inflammatory Nutrients"),
+                                tags$details(class = "nutrition-details nutr-orange",
+                                             tags$summary("🌿  Anti-inflammatory Nutrients"),
                                              p(strong("Role: "), "Reduces chronic inflammation and supports tissue resilience against repetitive strain."),
-                                             p(strong("Examples: "), "Use turmeric, ginger, and omega-3 supplements.")),
+                                             p(strong("Examples: "), "Use turmeric, ginger, and omega-3 supplements.")
+                                ),
                                 
-                                tags$details(tags$summary("Timing of Nutrient Intake"),
+                                tags$details(class = "nutrition-details nutr-teal",
+                                             tags$summary("⏱️  Timing of Nutrient Intake"),
                                              p(strong("Role: "), "Enhances recovery by promoting muscle repair and glycogen replenishment post-training."),
-                                             p(strong("Examples: "), "Consume protein and carbohydrates within 30 minutes post-exercise."))
-                                )
-                       )),
+                                             p(strong("Examples: "), "Consume protein and carbohydrates within 30 minutes post-exercise.")
+                                ),
+                                br()
+                         )
+                       )
+              ),
 
              tabPanel("About Us",
 

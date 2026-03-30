@@ -421,6 +421,7 @@ function(input, output, session) {
     p(style = "font-size: 18px; color: #444; line-height: 1.6; margin: 0;",
       fun_facts[fact_index()])
   })
+
   
   # Concussion bar chart
   output$concussion_plot <- renderPlot({
@@ -467,5 +468,197 @@ function(input, output, session) {
         legend.position  = "right"
       )
   })
-}
 
+
+
+  hydro_vals <- reactive({
+    w <- input$hydro_weight
+    d <- input$hydro_duration
+    i <- as.numeric(input$hydro_intensity)
+    baseline <- round(w * 0.55)
+    extra    <- round((d / 15) * 5 * i)
+    list(baseline = baseline, extra = extra, total = baseline + extra)
+  })
+  # Load ACL data
+  acl_by_sport <- read.csv("acl_by_sport.csv")
+  acl_risk <- read.csv("acl_risk_by_sport_gender.csv")
+  notch_data <- read.csv("notch_width_data.csv")
+  
+  
+  output$acl_total_bar <- renderPlot({
+    ggplot(acl_by_sport, aes(x = reorder(sport, total_reconstructions),
+                             y = total_reconstructions,
+                             fill = sport)) +
+      geom_col(show.legend = FALSE) +
+      scale_fill_manual(values = c("#78c2ad", "#f3969a", "#6cc3d5")) +
+      geom_text(aes(label = scales::comma(total_reconstructions)),
+                hjust = -0.1, size = 4, fontface = "bold") +
+      coord_flip() +
+      scale_y_continuous(expand = expansion(mult = c(0, 0.15))) +
+      xlab("") +
+      ylab("Number of Reconstructions") +
+      theme_minimal() +
+      theme(axis.text = element_text(size = 12),
+            axis.title = element_text(size = 13))
+  })
+  
+  
+  output$acl_gender_split <- renderPlot({
+    acl_by_sport %>%
+      pivot_longer(cols = c(male_pct, female_pct),
+                   names_to = "gender",
+                   values_to = "pct") %>%
+      mutate(gender = recode(gender,
+                             "male_pct" = "Male",
+                             "female_pct" = "Female")) %>%
+      ggplot(aes(x = sport, y = pct, fill = gender)) +
+      geom_col(position = "dodge") +
+      scale_fill_manual(values = c("Female" = "#f3969a", "Male" = "#6cc3d5")) +
+      geom_text(aes(label = paste0(pct, "%")),
+                position = position_dodge(width = 0.9),
+                vjust = -0.4, size = 3.5, fontface = "bold") +
+      scale_y_continuous(expand = expansion(mult = c(0, 0.12)),
+                         labels = function(x) paste0(x, "%")) +
+      xlab("") +
+      ylab("Percentage") +
+      labs(fill = "Gender") +
+      theme_minimal() +
+      theme(axis.text = element_text(size = 12),
+            axis.title = element_text(size = 13),
+            legend.title = element_text(size = 12),
+            legend.text = element_text(size = 11))
+  })
+  
+  
+  output$acl_risk_gender <- renderPlot({
+    ggplot(acl_risk, aes(x = reorder(sport, risk_pct),
+                         y = risk_pct,
+                         fill = gender)) +
+      geom_col(position = "dodge") +
+      scale_fill_manual(values = c("Male" = "#6cc3d5", "Female" = "#f3969a")) +
+      geom_text(aes(label = paste0(risk_pct, "%")),
+                position = position_dodge(width = 0.9),
+                hjust = -0.1, size = 3.5, fontface = "bold") +
+      coord_flip() +
+      scale_y_continuous(expand = expansion(mult = c(0, 0.15)),
+                         labels = function(x) paste0(x, "%")) +
+      xlab("") +
+      ylab("% of ACL Reconstructions") +
+      labs(fill = "Gender") +
+      theme_minimal() +
+      theme(axis.text = element_text(size = 12),
+            axis.title = element_text(size = 13),
+            legend.title = element_text(size = 12),
+            legend.text = element_text(size = 11))
+  })
+  
+  
+  output$acl_notch_width <- renderPlot({
+    notch_data %>%
+      filter(group == "All") %>%
+      ggplot(aes(x = gender, y = notch_width_mm, fill = acl_status)) +
+      geom_col(position = "dodge") +
+      scale_fill_manual(values = c("Normal" = "#78c2ad", "ACL Tear" = "#f3969a")) +
+      geom_text(aes(label = paste0(notch_width_mm, " mm")),
+                position = position_dodge(width = 0.9),
+                vjust = -0.4, size = 4, fontface = "bold") +
+      scale_y_continuous(expand = expansion(mult = c(0, 0.12)),
+                         limits = c(0, 20)) +
+      xlab("") +
+      ylab("Notch Width (mm)") +
+      labs(fill = "ACL Status") +
+      theme_minimal() +
+      theme(axis.text = element_text(size = 12),
+            axis.title = element_text(size = 13),
+            legend.title = element_text(size = 12),
+            legend.text = element_text(size = 11))
+  })
+  
+  
+  
+  output$acl_prevention <- renderPlot({
+    prevention_data <- data.frame(
+      strategy = c(
+        "Neuromuscular + Strength Training",
+        "Multi-Faceted Programs (Female)",
+        "Multi-Faceted Programs (Male)",
+        "Plyometrics",
+        "Balance / Proprioceptive Training"
+      ),
+      risk_reduction_pct = c(52, 52, 85, 35, 30)
+    )
+    
+    ggplot(prevention_data, aes(x = reorder(strategy, risk_reduction_pct),
+                                y = risk_reduction_pct,
+                                fill = strategy)) +
+      geom_col(show.legend = FALSE) +
+      scale_fill_manual(values = c("#78c2ad", "#56cc9d", "#6cc3d5",
+                                   "#ffce67", "#f3969a")) +
+      geom_text(aes(label = paste0(risk_reduction_pct, "%")),
+                hjust = -0.1, size = 4, fontface = "bold") +
+      coord_flip() +
+      scale_y_continuous(expand = expansion(mult = c(0, 0.15)),
+                         labels = function(x) paste0(x, "%")) +
+      xlab("") +
+      ylab("Estimated Risk Reduction") +
+      theme_minimal() +
+      theme(axis.text = element_text(size = 11),
+            axis.title = element_text(size = 13))
+  })
+  #Hydration Calculator
+  output$hydro_baseline <- renderText({ paste0(hydro_vals()$baseline, " oz") })
+  output$hydro_extra    <- renderText({ paste0(hydro_vals()$extra, " oz") })
+  output$hydro_total    <- renderText({ paste0(hydro_vals()$total, " oz") })
+  
+  output$hydro_tip <- renderText({
+    total <- hydro_vals()$total
+    if (total < 80)  "Spread your intake throughout the day — don't try to drink it all at once."
+    else if (total < 120) "Drink ~20 oz before your workout, sip 6–8 oz every 15 min during, and rehydrate with 16–24 oz after."
+    else "High activity level — consider electrolyte drinks to replace sodium and potassium lost through sweat."
+  })
+  
+  output$hydro_bottles <- renderUI({
+    total <- hydro_vals()$total
+    bottles <- ceiling(total / 16)
+    tagList(
+      p(style = "color:#555; font-size:13px; margin-bottom:5px;",
+        paste0("That's about ", bottles, " standard plastic water bottles (16 oz) per day")),
+      p(style = "font-size:20px; letter-spacing:4px;")
+    )
+  })
+  
+  #Nutrient Timing
+  timing_data <- list(
+    endurance = list(
+      pre    = list(time = "2–3 hrs before",   foods = c("Oats or pasta", "Banana or toast", "Avoid high fat")),
+      during = list(time = "Every 45–60 min",  foods = c("Energy gels or chews", "Sports drink", "Easily digestible carbs")),
+      post   = list(time = "Within 30 min",    foods = c("Chocolate milk", "Protein shake + fruit", "Rice + chicken"))
+    ),
+    strength = list(
+      pre    = list(time = "1–2 hrs before",   foods = c("Greek yogurt + fruit", "Eggs on toast", "Moderate carbs + protein")),
+      during = list(time = "If > 60 min",      foods = c("BCAAs or protein water", "Electrolyte drink", "Small carb snack")),
+      post   = list(time = "Within 30 min",    foods = c("20–30g protein", "Cottage cheese + berries", "Protein shake + oats"))
+    ),
+    team = list(
+      pre    = list(time = "2–3 hrs before",   foods = c("Pasta or rice", "Chicken or turkey", "Avoid high fiber")),
+      during = list(time = "Halftime / breaks", foods = c("Banana or orange slices", "Sports drink", "Small carb snack")),
+      post   = list(time = "Within 45 min",    foods = c("Carb + protein combo", "Sandwich or wrap", "Fruit + Greek yogurt"))
+    )
+  )
+  
+  timing_reactive <- reactive({ timing_data[[input$timing_sport]] })
+  
+  output$timing_pre_time    <- renderText({ timing_reactive()$pre$time })
+  output$timing_during_time <- renderText({ timing_reactive()$during$time })
+  output$timing_post_time   <- renderText({ timing_reactive()$post$time })
+  
+  output$timing_pre_foods <- renderUI({
+    tags$ul(lapply(timing_reactive()$pre$foods, tags$li))
+  })
+  output$timing_during_foods <- renderUI({
+    tags$ul(lapply(timing_reactive()$during$foods, tags$li))
+  })
+  output$timing_post_foods <- renderUI({
+    tags$ul(lapply(timing_reactive()$post$foods, tags$li))
+  })
+}
