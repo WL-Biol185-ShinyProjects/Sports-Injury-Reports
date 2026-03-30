@@ -1,0 +1,9 @@
+gender,group,acl_status,notch_width_mm
+Male,All,Normal,16.9
+Male,All,ACL Tear,15.9
+Female,All,Normal,15.4
+Female,All,ACL Tear,13.9
+Male,African American,Normal,18.0
+Male,Caucasian,Normal,16.9
+Female,African American,Normal,15.5
+Female,Caucasian,Normal,14.1
