@@ -951,7 +951,6 @@ fluidPage(
                                     )
                                   ),
                       
-                             
                                   
                                   # Research callout banner
                                   fluidRow(
