@@ -793,6 +793,8 @@ fluidPage(
                                       ))
                                     )
                                 ),
+                                hr(),
+                                h4("Nutrient Details", style = "color:#78c2ad; font-weight:700; margin-bottom:15px;"),
                                 tags$details(class = "nutrition-details nutr-teal",
                                              tags$summary("🍞  Carbohydrates"),
                                              p(strong("Role: "), "Prevents muscle and mental fatigue; supports energy for sustained performance and recovery."),
