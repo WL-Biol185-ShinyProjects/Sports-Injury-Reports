@@ -764,6 +764,35 @@ fluidPage(
                                 ),
                                 br(),
                                 ),
+                                hr(),
+                                div(style = "background:#e8f5f1; border-radius:12px; padding:20px; border: 1px solid #78c2ad; margin-bottom:15px;",
+                                    h4("Nutrient Timing", style = "color:#78c2ad; font-weight:700; margin-bottom:15px;"),
+                                    selectInput("timing_sport", "Sport type",
+                                                choices = c("Endurance (running, cycling)" = "endurance",
+                                                            "Strength (weightlifting)"      = "strength",
+                                                            "Team sport (soccer, basketball)" = "team")
+                                    ),
+                                    fluidRow(
+                                      column(4, div(style = "background:#e8f4fb; border-top:4px solid #6cc3d5; border-radius:10px; padding:15px;",
+                                                    h5("Pre-workout", style = "color:#6cc3d5; font-weight:700; margin-top:0;"),
+                                                    textOutput("timing_pre_time"),
+                                                    br(),
+                                                    uiOutput("timing_pre_foods")
+                                      )),
+                                      column(4, div(style = "background:#fdf0f1; border-top:4px solid #f3969a; border-radius:10px; padding:15px;",
+                                                    h5("During", style = "color:#f3969a; font-weight:700; margin-top:0;"),
+                                                    textOutput("timing_during_time"),
+                                                    br(),
+                                                    uiOutput("timing_during_foods")
+                                      )),
+                                      column(4, div(style = "background:#f0fdf7; border-top:4px solid #56cc9d; border-radius:10px; padding:15px;",
+                                                    h5("Post-workout", style = "color:#56cc9d; font-weight:700; margin-top:0;"),
+                                                    textOutput("timing_post_time"),
+                                                    br(),
+                                                    uiOutput("timing_post_foods")
+                                      ))
+                                    )
+                                ),
                                 tags$details(class = "nutrition-details nutr-teal",
                                              tags$summary("🍞  Carbohydrates"),
                                              p(strong("Role: "), "Prevents muscle and mental fatigue; supports energy for sustained performance and recovery."),

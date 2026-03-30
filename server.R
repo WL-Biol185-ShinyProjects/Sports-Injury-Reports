@@ -566,4 +566,39 @@ function(input, output, session) {
     else if (total < 120) "Drink ~20 oz before your workout, sip 6–8 oz every 15 min during, and rehydrate with 16–24 oz after."
     else "High activity level — consider electrolyte drinks to replace sodium and potassium lost through sweat."
   })
+  
+  #Nutrient Timing
+  timing_data <- list(
+    endurance = list(
+      pre    = list(time = "2–3 hrs before",   foods = c("Oats or pasta", "Banana or toast", "Avoid high fat")),
+      during = list(time = "Every 45–60 min",  foods = c("Energy gels or chews", "Sports drink", "Easily digestible carbs")),
+      post   = list(time = "Within 30 min",    foods = c("Chocolate milk", "Protein shake + fruit", "Rice + chicken"))
+    ),
+    strength = list(
+      pre    = list(time = "1–2 hrs before",   foods = c("Greek yogurt + fruit", "Eggs on toast", "Moderate carbs + protein")),
+      during = list(time = "If > 60 min",      foods = c("BCAAs or protein water", "Electrolyte drink", "Small carb snack")),
+      post   = list(time = "Within 30 min",    foods = c("20–30g protein", "Cottage cheese + berries", "Protein shake + oats"))
+    ),
+    team = list(
+      pre    = list(time = "2–3 hrs before",   foods = c("Pasta or rice", "Chicken or turkey", "Avoid high fiber")),
+      during = list(time = "Halftime / breaks", foods = c("Banana or orange slices", "Sports drink", "Small carb snack")),
+      post   = list(time = "Within 45 min",    foods = c("Carb + protein combo", "Sandwich or wrap", "Fruit + Greek yogurt"))
+    )
+  )
+  
+  timing_reactive <- reactive({ timing_data[[input$timing_sport]] })
+  
+  output$timing_pre_time    <- renderText({ timing_reactive()$pre$time })
+  output$timing_during_time <- renderText({ timing_reactive()$during$time })
+  output$timing_post_time   <- renderText({ timing_reactive()$post$time })
+  
+  output$timing_pre_foods <- renderUI({
+    tags$ul(lapply(timing_reactive()$pre$foods, tags$li))
+  })
+  output$timing_during_foods <- renderUI({
+    tags$ul(lapply(timing_reactive()$during$foods, tags$li))
+  })
+  output$timing_post_foods <- renderUI({
+    tags$ul(lapply(timing_reactive()$post$foods, tags$li))
+  })
 }
