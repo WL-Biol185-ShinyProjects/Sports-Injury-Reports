@@ -421,4 +421,23 @@ function(input, output, session) {
     p(style = "font-size: 18px; color: #444; line-height: 1.6; margin: 0;",
       fun_facts[fact_index()])
   })
+  hydro_vals <- reactive({
+    w <- input$hydro_weight
+    d <- input$hydro_duration
+    i <- as.numeric(input$hydro_intensity)
+    baseline <- round(w * 0.55)
+    extra    <- round((d / 15) * 5 * i)
+    list(baseline = baseline, extra = extra, total = baseline + extra)
+  })
+  
+  output$hydro_baseline <- renderText({ paste0(hydro_vals()$baseline, " oz") })
+  output$hydro_extra    <- renderText({ paste0(hydro_vals()$extra, " oz") })
+  output$hydro_total    <- renderText({ paste0(hydro_vals()$total, " oz") })
+  
+  output$hydro_tip <- renderText({
+    total <- hydro_vals()$total
+    if (total < 80)  "Spread your intake throughout the day — don't try to drink it all at once."
+    else if (total < 120) "Drink ~20 oz before your workout, sip 6–8 oz every 15 min during, and rehydrate with 16–24 oz after."
+    else "High activity level — consider electrolyte drinks to replace sodium and potassium lost through sweat."
+  })
 }
