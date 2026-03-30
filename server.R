@@ -421,4 +421,51 @@ function(input, output, session) {
     p(style = "font-size: 18px; color: #444; line-height: 1.6; margin: 0;",
       fun_facts[fact_index()])
   })
+  
+  # Concussion bar chart
+  output$concussion_plot <- renderPlot({
+    concussion_data <- read.csv("concussion.csv", check.names = FALSE)
+    
+    # Reshape from wide to long (exclude the 'total' column)
+    concussion_long <- concussion_data %>%
+      select(-total) %>%
+      pivot_longer(
+        cols = -sports,
+        names_to  = "year",
+        values_to = "concussions"
+      ) %>%
+      mutate(
+        sports = gsub("_", " ", sports),
+        sports = tools::toTitleCase(sports),
+        year   = factor(year)
+      ) %>%
+      group_by(sports) %>%
+      mutate(total = sum(concussions)) %>%
+      ungroup() %>%
+      mutate(sports = reorder(sports, total))
+    
+    ggplot(concussion_long, aes(x = sports, y = concussions, fill = year)) +
+      geom_bar(stat = "identity") +
+      scale_fill_manual(
+        values = c(
+          "2011-2012" = "#f3969a",
+          "2012-2013" = "#c97b8a",
+          "2013-2014" = "#9b5e7a",
+          "2014-2015" = "#6d4069"
+        ),
+        name = "Academic Year"
+      ) +
+      labs(
+        title = "Concussion Incidents Across Sports and Year",
+        x     = "Sport",
+        y     = "Number of Concussions"
+      ) +
+      theme_minimal(base_size = 13) +
+      theme(
+        axis.text.x      = element_text(angle = 45, hjust = 1),
+        plot.title       = element_text(color = "#f3969a", face = "bold"),
+        legend.position  = "right"
+      )
+  })
 }
+

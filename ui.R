@@ -3,6 +3,8 @@ library(plotly)
 library(bslib)
 library(leaflet)
 library(markdown)
+library(dplyr)
+library(tidyr)
 
 sport_injuries_by_age <- read.csv("yearly_injuries_final.csv") %>%
   mutate(injuries = as.numeric(gsub(",", "", injuries)),
@@ -571,8 +573,129 @@ fluidPage(
                                   ),
                                   br()
                          ),
-                         tabPanel("Concussion"
-                                  ),
+                         
+                         tabPanel("Concussion",
+                                  fluidRow(
+                                    br(),
+                                    div(
+                                      style = "background-color: #f8f9fa; border-left: 4px solid #f3969a;
+               padding: 15px; margin-bottom: 15px; border-radius: 4px;",
+                                      h4(style = "color: #f3969a; margin-top:0;", "Concussion"),
+                                      p(style = "margin: 0; color: #2c3e50; font-size: 20px;",
+                                        "A concussion is a mild traumatic brain injury causing short-term effects such as headaches, memory issues, and balance problems. 
+        They are most commonly caused by falls or impacts during contact sports, 
+        and while some may result in loss of consciousness, most people recover fully (Mayo Clinic).",
+                                        br(), br(),
+                                        "The chart below shows the number of concussions recorded across 13 collegiate sports over four academic years (2011–2015). 
+        Each bar represents a sport, with colors indicating the individual year's contribution to the total count."
+                                      )
+                                    ),
+                                    
+                                    column(8, offset = 2,
+                                           div(
+                                             style = "border: 1px solid #ddd; border-radius: 5px; padding: 10px; margin-bottom: 30px;",
+                                             plotOutput("concussion_plot", height = "500px")
+                                           )
+                                    ),
+                                    
+                                    h4(style = "color: #f3969a; margin-bottom: 15px; padding-left: 15px;", "Concussion Prevention"),
+                                    
+                                    # Row 1: Rule Changes & Protective Equipment
+                                    fluidRow(
+                                      column(6,
+                                             div(
+                                               style = "background-color: #f8f9fa; border-left: 4px solid #f3969a;
+                   border-radius: 4px; padding: 15px; min-height: 180px; margin-bottom: 15px;",
+                                               h5(style = "color: #f3969a; margin-top: 0;", "Rule Changes & Education"),
+                                               p(style = "color: #2c3e50; font-size: 15px; margin: 0;",
+                                                 "Enforcing safe play rules, teaching proper tackling and heading techniques, 
+            and increasing athlete and coach awareness remain foundational prevention strategies."
+                                               )
+                                             )
+                                      ),
+                                      column(6,
+                                             div(
+                                               style = "background-color: #f8f9fa; border-left: 4px solid #f3969a;
+                   border-radius: 4px; padding: 15px; min-height: 180px; margin-bottom: 15px;",
+                                               h5(style = "color: #f3969a; margin-top: 0;", "Protective Equipment"),
+                                               p(style = "color: #2c3e50; font-size: 15px; margin: 0;",
+                                                 "Helmets prevent skull fractures but have not been shown to significantly 
+            reduce concussion risk, as they cannot prevent the brain from moving 
+            inside the skull during impact."
+                                               )
+                                             )
+                                      )
+                                    ),
+                                    
+                                    # Row 2: Q-Collar full width
+                                    fluidRow(
+                                      column(12,
+                                             div(
+                                               style = "background-color: #f8f9fa; border-left: 4px solid #f3969a;
+                   border-radius: 4px; padding: 15px; margin-bottom: 15px;",
+                                               h5(style = "color: #f3969a; margin-top: 0;",
+                                                  "\U0001f9e0 The Q-Collar",
+                                                  br(),
+                                                  tags$span(
+                                                    style = "display: inline-block; background-color: #f3969a; color: white;
+                       font-size: 10px; font-weight: bold; padding: 3px 8px;
+                       border-radius: 20px; text-transform: uppercase; letter-spacing: 0.5px;",
+                                                    "New Technology"
+                                                  )
+                                               ),
+                                               p(style = "color: #2c3e50; font-size: 15px; margin: 0 0 15px 0;",
+                                                 "A neck collar that compresses the jugular veins to increase cerebral blood volume,
+            acting like an ", strong("\"airbag for the brain\""),
+                                                 " to reduce movement during impact. ",
+                                                 em("Myer et al. (2016, Br J Sports Med)"),
+                                                 " studied 62 high school varsity football players across a full season — here's what they found:"
+                                               ),
+                                               
+                                               # Stat boxes
+                                               
+                                               fluidRow(
+                                                 column(5, offset = 1,
+                                                        div(
+                                                          style = "background-color: #fff; border: 2px solid #f3969a; border-radius: 6px; padding: 20px;
+               text-align: center; margin-bottom: 12px;",
+                                                          div(style = "font-size: 36px; font-weight: bold; color: #2c3e50; line-height: 1;",
+                                                              "500K"),
+                                                          div(style = "font-size: 14px; color: #666; margin-top: 10px;",
+                                                              "impacts measured across the study")
+                                                        )
+                                                 ),
+                                                 column(5,
+                                                        div(
+                                                          style = "background-color: #f3969a; border-radius: 6px; padding: 20px;
+               text-align: center; margin-bottom: 8px;",
+                                                          div(
+                                                            style = "display: flex; align-items: center; justify-content: center; gap: 8px;",
+                                                            tags$span(style = "font-size: 36px; font-weight: bold; color: white; line-height: 1;",
+                                                                      "\u2193"),
+                                                            tags$span(style = "font-size: 36px; font-weight: bold; color: white; line-height: 1;",
+                                                                      "66%")
+                                                          ),
+                                                          div(style = "font-size: 14px; color: white; opacity: 0.9; margin-top: 10px;",
+                                                              "in the likelihood of brain damage")
+                                                        )
+                                                 )
+                                               ),
+                                               
+                                               tags$a(
+                                                 href = "https://www.qcollar.com",
+                                                 target = "_blank",
+                                                 style = "display: inline-block; background-color: #f3969a; color: white;
+                     padding: 8px 16px; border-radius: 20px; text-decoration: none;
+                     font-size: 14px; font-weight: bold; margin-top: 8px;",
+                                                 "\U0001f517 Visit Q-Collar Website"
+                                               )
+                                             )
+                                      )
+                                    ),
+                                    br()
+                                  )
+                         ),
+                         
                          tabPanel("Ankle Sprain"),
                          tabPanel("Knee Injury"),
                          tabPanel("Fracture"),
