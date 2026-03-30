@@ -13,5 +13,11 @@ https://www.aseaofblue.com/2023/8/9/23716779/favorite-sports-of-the-50-states
 https://www.hopkinsmedicine.org/health/conditions-and-diseases/sports-injuries/preventing-sports-injuries
 - injury prevention information
 
+https://pmc.ncbi.nlm.nih.gov/articles/PMC5384815/table/i1062-6050-52-3-167-t01/
+- concussion data
+
 https://pmc.ncbi.nlm.nih.gov/articles/PMC5099231/
 - Q collar study
+
+https://chnwebapp-auc-prod01.azurewebsites.net/athletes-risk-acl-tears
+- acl tear data
