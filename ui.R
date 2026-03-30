@@ -604,10 +604,10 @@ fluidPage(
                                     fluidRow(
                                       column(6,
                                              div(
-                                               style = "background-color: #f8f9fa; border-left: 4px solid #f3969a;
+                                               style = "background-color: #f8f9fa; border-left: 4px solid #78c2ad;
                    border-radius: 4px; padding: 15px; min-height: 180px; margin-bottom: 15px;",
-                                               h5(style = "color: #f3969a; margin-top: 0;", "Rule Changes & Education"),
-                                               p(style = "color: #2c3e50; font-size: 15px; margin: 0;",
+                                               h5(style = "color: #78c2ad; margin-top: 0; font-size: 20px;", "Rule Changes & Education"),
+                                               p(style = "color: #2c3e50; font-size: 18px; margin: 0;",
                                                  "Enforcing safe play rules, teaching proper tackling and heading techniques, 
             and increasing athlete and coach awareness remain foundational prevention strategies."
                                                )
@@ -615,10 +615,10 @@ fluidPage(
                                       ),
                                       column(6,
                                              div(
-                                               style = "background-color: #f8f9fa; border-left: 4px solid #f3969a;
+                                               style = "background-color: #f8f9fa; border-left: 4px solid #78c2ad;
                    border-radius: 4px; padding: 15px; min-height: 180px; margin-bottom: 15px;",
-                                               h5(style = "color: #f3969a; margin-top: 0;", "Protective Equipment"),
-                                               p(style = "color: #2c3e50; font-size: 15px; margin: 0;",
+                                               h5(style = "color: #78c2ad; margin-top: 0; font-size: 20px;", "Protective Equipment"),
+                                               p(style = "color: #2c3e50; font-size: 18px; margin: 0;",
                                                  "Helmets prevent skull fractures but have not been shown to significantly 
             reduce concussion risk, as they cannot prevent the brain from moving 
             inside the skull during impact."
@@ -631,19 +631,28 @@ fluidPage(
                                     fluidRow(
                                       column(12,
                                              div(
-                                               style = "background-color: #f8f9fa; border-left: 4px solid #f3969a;
+                                               style = "background-color: #fde8ec; border-left: 4px solid #f3969a;
                    border-radius: 4px; padding: 15px; margin-bottom: 15px;",
-                                               h5(style = "color: #f3969a; margin-top: 0;",
+                                               h5(style = "color: #f3969a; margin-top: 0; font-size: 20px;",
                                                   "\U0001f9e0 The Q-Collar",
-                                                  br(),
+                                                  
                                                   tags$span(
                                                     style = "display: inline-block; background-color: #f3969a; color: white;
                        font-size: 10px; font-weight: bold; padding: 3px 8px;
                        border-radius: 20px; text-transform: uppercase; letter-spacing: 0.5px;",
                                                     "New Technology"
-                                                  )
+                                                  ),
+                                                  br(),
+                                                  tags$a(
+                                                    href = "https://www.qcollar.com",
+                                                    target = "_blank",
+                                                    style = "display: inline-block; background-color: #f3969a; color: white;
+                     padding: 8px 16px; border-radius: 20px; text-decoration: none;
+                     font-size: 14px; font-weight: bold; margin-top: 8px;",
+                                                    "\U0001f517 Visit Q-Collar Website"
+                                                  ),
                                                ),
-                                               p(style = "color: #2c3e50; font-size: 15px; margin: 0 0 15px 0;",
+                                               p(style = "color: #2c3e50; font-size: 18px; margin: 0 0 15px 0;",
                                                  "A neck collar that compresses the jugular veins to increase cerebral blood volume,
             acting like an ", strong("\"airbag for the brain\""),
                                                  " to reduce movement during impact. ",
@@ -654,7 +663,7 @@ fluidPage(
                                                # Stat boxes
                                                
                                                fluidRow(
-                                                 column(5, offset = 1,
+                                                 column(4, offset = 2,
                                                         div(
                                                           style = "background-color: #fff; border: 2px solid #f3969a; border-radius: 6px; padding: 20px;
                text-align: center; margin-bottom: 12px;",
@@ -664,7 +673,7 @@ fluidPage(
                                                               "impacts measured across the study")
                                                         )
                                                  ),
-                                                 column(5,
+                                                 column(4,
                                                         div(
                                                           style = "background-color: #f3969a; border-radius: 6px; padding: 20px;
                text-align: center; margin-bottom: 8px;",
@@ -679,16 +688,9 @@ fluidPage(
                                                               "in the likelihood of brain damage")
                                                         )
                                                  )
-                                               ),
-                                               
-                                               tags$a(
-                                                 href = "https://www.qcollar.com",
-                                                 target = "_blank",
-                                                 style = "display: inline-block; background-color: #f3969a; color: white;
-                     padding: 8px 16px; border-radius: 20px; text-decoration: none;
-                     font-size: 14px; font-weight: bold; margin-top: 8px;",
-                                                 "\U0001f517 Visit Q-Collar Website"
                                                )
+                                               
+                                               
                                              )
                                       )
                                     ),
