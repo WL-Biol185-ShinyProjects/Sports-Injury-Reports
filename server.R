@@ -203,7 +203,7 @@ function(input, output, session) {
   })
   
   observeEvent(input$go_prevention, {
-    updateTabsetPanel(session, "tabs", selected = "Injury Prevention")
+    updateTabsetPanel(session, "tabs", selected = "General Information")
   })
   
   observeEvent(input$go_about, {
@@ -616,7 +616,8 @@ function(input, output, session) {
     else if (total < 120) "Drink ~20 oz before your workout, sip 6–8 oz every 15 min during, and rehydrate with 16–24 oz after."
     else "High activity level — consider electrolyte drinks to replace sodium and potassium lost through sweat."
   })
-  
+
+
   output$hydro_bottles <- renderUI({
     total <- hydro_vals()$total
     bottles <- ceiling(total / 16)
