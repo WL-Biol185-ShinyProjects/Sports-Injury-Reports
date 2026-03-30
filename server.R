@@ -429,7 +429,132 @@ function(input, output, session) {
     extra    <- round((d / 15) * 5 * i)
     list(baseline = baseline, extra = extra, total = baseline + extra)
   })
+  # Load ACL data
+  acl_by_sport <- read.csv("acl_by_sport.csv")
+  acl_risk <- read.csv("acl_risk_by_sport_gender.csv")
+  notch_data <- read.csv("notch_width_data.csv")
   
+  
+  output$acl_total_bar <- renderPlot({
+    ggplot(acl_by_sport, aes(x = reorder(sport, total_reconstructions),
+                             y = total_reconstructions,
+                             fill = sport)) +
+      geom_col(show.legend = FALSE) +
+      scale_fill_manual(values = c("#78c2ad", "#f3969a", "#6cc3d5")) +
+      geom_text(aes(label = scales::comma(total_reconstructions)),
+                hjust = -0.1, size = 4, fontface = "bold") +
+      coord_flip() +
+      scale_y_continuous(expand = expansion(mult = c(0, 0.15))) +
+      xlab("") +
+      ylab("Number of Reconstructions") +
+      theme_minimal() +
+      theme(axis.text = element_text(size = 12),
+            axis.title = element_text(size = 13))
+  })
+  
+  
+  output$acl_gender_split <- renderPlot({
+    acl_by_sport %>%
+      pivot_longer(cols = c(male_pct, female_pct),
+                   names_to = "gender",
+                   values_to = "pct") %>%
+      mutate(gender = recode(gender,
+                             "male_pct" = "Male",
+                             "female_pct" = "Female")) %>%
+      ggplot(aes(x = sport, y = pct, fill = gender)) +
+      geom_col(position = "dodge") +
+      scale_fill_manual(values = c("Female" = "#f3969a", "Male" = "#6cc3d5")) +
+      geom_text(aes(label = paste0(pct, "%")),
+                position = position_dodge(width = 0.9),
+                vjust = -0.4, size = 3.5, fontface = "bold") +
+      scale_y_continuous(expand = expansion(mult = c(0, 0.12)),
+                         labels = function(x) paste0(x, "%")) +
+      xlab("") +
+      ylab("Percentage") +
+      labs(fill = "Gender") +
+      theme_minimal() +
+      theme(axis.text = element_text(size = 12),
+            axis.title = element_text(size = 13),
+            legend.title = element_text(size = 12),
+            legend.text = element_text(size = 11))
+  })
+  
+  
+  output$acl_risk_gender <- renderPlot({
+    ggplot(acl_risk, aes(x = reorder(sport, risk_pct),
+                         y = risk_pct,
+                         fill = gender)) +
+      geom_col(position = "dodge") +
+      scale_fill_manual(values = c("Male" = "#6cc3d5", "Female" = "#f3969a")) +
+      geom_text(aes(label = paste0(risk_pct, "%")),
+                position = position_dodge(width = 0.9),
+                hjust = -0.1, size = 3.5, fontface = "bold") +
+      coord_flip() +
+      scale_y_continuous(expand = expansion(mult = c(0, 0.15)),
+                         labels = function(x) paste0(x, "%")) +
+      xlab("") +
+      ylab("% of ACL Reconstructions") +
+      labs(fill = "Gender") +
+      theme_minimal() +
+      theme(axis.text = element_text(size = 12),
+            axis.title = element_text(size = 13),
+            legend.title = element_text(size = 12),
+            legend.text = element_text(size = 11))
+  })
+  
+  
+  output$acl_notch_width <- renderPlot({
+    notch_data %>%
+      filter(group == "All") %>%
+      ggplot(aes(x = gender, y = notch_width_mm, fill = acl_status)) +
+      geom_col(position = "dodge") +
+      scale_fill_manual(values = c("Normal" = "#78c2ad", "ACL Tear" = "#f3969a")) +
+      geom_text(aes(label = paste0(notch_width_mm, " mm")),
+                position = position_dodge(width = 0.9),
+                vjust = -0.4, size = 4, fontface = "bold") +
+      scale_y_continuous(expand = expansion(mult = c(0, 0.12)),
+                         limits = c(0, 20)) +
+      xlab("") +
+      ylab("Notch Width (mm)") +
+      labs(fill = "ACL Status") +
+      theme_minimal() +
+      theme(axis.text = element_text(size = 12),
+            axis.title = element_text(size = 13),
+            legend.title = element_text(size = 12),
+            legend.text = element_text(size = 11))
+  })
+  
+  
+  
+  output$acl_prevention <- renderPlot({
+    prevention_data <- data.frame(
+      strategy = c(
+        "Neuromuscular + Strength Training",
+        "Multi-Faceted Programs (Female)",
+        "Multi-Faceted Programs (Male)",
+        "Plyometrics",
+        "Balance / Proprioceptive Training"
+      ),
+      risk_reduction_pct = c(52, 52, 85, 35, 30)
+    )
+    
+    ggplot(prevention_data, aes(x = reorder(strategy, risk_reduction_pct),
+                                y = risk_reduction_pct,
+                                fill = strategy)) +
+      geom_col(show.legend = FALSE) +
+      scale_fill_manual(values = c("#78c2ad", "#56cc9d", "#6cc3d5",
+                                   "#ffce67", "#f3969a")) +
+      geom_text(aes(label = paste0(risk_reduction_pct, "%")),
+                hjust = -0.1, size = 4, fontface = "bold") +
+      coord_flip() +
+      scale_y_continuous(expand = expansion(mult = c(0, 0.15)),
+                         labels = function(x) paste0(x, "%")) +
+      xlab("") +
+      ylab("Estimated Risk Reduction") +
+      theme_minimal() +
+      theme(axis.text = element_text(size = 11),
+            axis.title = element_text(size = 13))
+  })
   #Hydration Calculator
   output$hydro_baseline <- renderText({ paste0(hydro_vals()$baseline, " oz") })
   output$hydro_extra    <- renderText({ paste0(hydro_vals()$extra, " oz") })
