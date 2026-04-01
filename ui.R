@@ -324,7 +324,7 @@ fluidPage(
                padding: 15px; margin-bottom: 15px; border-radius: 4px;",
                            h4(style = "color: #78c2ad; margin-top:0;", "Injuries By Age Group"),
                            p(style = "margin: 0; color: #2c3e50; font-size: 20px;",
-                             "Select an age group and one or more sports from the sidebar to compare injury counts across different age groups. Use the sport selector to add or remove sports from the chart.")
+                             "Select an age group and one or more sports from the sidebar to compare injury counts across different age groups. Use the sport selector to add or remove sports from the chart. Below the chart, the Injury Trend Summary shows the top increasing and decreasing sports for the selected age group — use the numeric input to control how many sports appear in each list.")
                          ),
                          column(12,
                                 hr(),
@@ -544,12 +544,43 @@ fluidPage(
                                   fluidRow(
                                     column(8, offset = 2,
                                            div(style = "background: linear-gradient(135deg, #78c2ad 0%, #6cc3d5 100%);
-                   border-radius: 12px; padding: 30px; text-align: center;
-                   box-shadow: 0 4px 15px rgba(120,194,173,0.4);",
+                 border-radius: 12px; padding: 30px; text-align: center;
+                 box-shadow: 0 4px 15px rgba(120,194,173,0.4);",
                                                h4(style = "color: white; font-weight: 700; font-size: 25px;",
                                                   "Remember: Prevention is always better than treatment!"),
-                                               p(style = "color: white; opacity: 0.9; font-size: 20px; margin: 0;",
-                                                 "Taking small steps before and after activity can save you weeks of recovery time.")
+                                               p(style = "color: white; opacity: 0.9; font-size: 20px; margin-bottom: 20px;",
+                                                 "Taking small steps before and after activity can save you weeks of recovery time."),
+                                               tags$style(HTML("
+        .topic-btn {
+          background-color: white;
+          color: #78c2ad;
+          border: none;
+          padding: 8px 16px;
+          border-radius: 20px;
+          font-size: 14px;
+          font-weight: bold;
+          cursor: pointer;
+          transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .topic-btn:hover {
+          transform: translateY(-4px);
+          box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+        }
+      ")),
+                                               hr(),
+                                               p(style = "color: white; font-size: 16px; font-weight: bold; margin-top: 15px; margin-bottom: 10px;",
+                                                 "Learn more about specific injuries and ways to prevent:"),
+                                               div(
+                                                 style = "display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;",
+                                                 tags$button("Nutrition & Recovery", class = "topic-btn",
+                                                             onclick = "document.querySelector('.nav-tabs a[data-value=\"Nutrition & Recovery\"]').click();"),
+                                                 tags$button("Concussion", class = "topic-btn",
+                                                             onclick = "document.querySelector('.nav-tabs a[data-value=\"Concussion\"]').click();"),
+                                                 tags$button("ACL Injuries", class = "topic-btn",
+                                                             onclick = "document.querySelector('.nav-tabs a[data-value=\"ACL Injuries\"]').click();"),
+                                                 tags$button("Ankle Sprain", class = "topic-btn",
+                                                             onclick = "document.querySelector('.nav-tabs a[data-value=\"Ankle Sprain\"]').click();")
+                                               )
                                            )
                                     )
                                   ),
