@@ -321,12 +321,12 @@ fluidPage(
                          br(),
                          div(
                            style = "background-color: #f8f9fa; border-left: 4px solid #78c2ad;
-                 padding: 15px; margin-bottom: 15px; border-radius: 4px;",
+               padding: 15px; margin-bottom: 15px; border-radius: 4px;",
                            h4(style = "color: #78c2ad; margin-top:0;", "Injuries By Age Group"),
                            p(style = "margin: 0; color: #2c3e50; font-size: 20px;",
-                             "Select an age group and one or more sports from the sidebar to compare injury counts across different age group. Use the sport selector to add or remove sports from the chart.")
+                             "Select an age group and one or more sports from the sidebar to compare injury counts across different age groups. Use the sport selector to add or remove sports from the chart.")
                          ),
-                         column(12, 
+                         column(12,
                                 hr(),
                                 sidebarLayout(
                                   sidebarPanel(
@@ -343,7 +343,14 @@ fluidPage(
                                                 label = "Select Sport(s)",
                                                 choices  = unique(injuries_by_agegroup$sport_or_activity),
                                                 selected = unique(injuries_by_agegroup$sport_or_activity)[1],
-                                                multiple = TRUE)
+                                                multiple = TRUE),
+                                    hr(),
+                                    numericInput(inputId = "top_n_sports",
+                                                 label = "Sports to show in trend summary",
+                                                 value = 3,
+                                                 min = 1,
+                                                 max = 10,
+                                                 step = 1)
                                   ),
                                   mainPanel(
                                     width = 9,
@@ -352,10 +359,31 @@ fluidPage(
                                     )
                                   )
                                 )
-                                )
+                         ),
+                         column(12,
+                                br(),
+                                h4(style = "color: #555; margin-bottom: 15px; padding-left: 15px;", "Injury Trend Summary"),
+                                fluidRow(
+                                  column(6,
+                                         div(
+                                           style = "background-color: #f8f9fa; border-left: 4px solid #f3969a;
+               border-radius: 4px; padding: 15px; margin-bottom: 15px;",
+                                           h5(style = "color: #f3969a; margin-top: 0;", "\u2191 Top Increasing Sports"),
+                                           uiOutput("increasing_trends")
+                                         )
+                                  ),
+                                  column(6,
+                                         div(
+                                           style = "background-color: #f8f9fa; border-left: 4px solid #78c2ad;
+               border-radius: 4px; padding: 15px; margin-bottom: 15px;",
+                                           h5(style = "color: #78c2ad; margin-top: 0;", "\u2193 Top Decreasing Sports"),
+                                           uiOutput("decreasing_trends")
+                                         )
+                                  )
+                                ),
+                         )
                        )
-                       ),
-             
+              ),
               tabPanel("Sport Injuries By Age",
                        fluidRow(
                          br(),
@@ -379,7 +407,14 @@ fluidPage(
                                                 multiple = TRUE),
                                     hr(),
                                     p("Age Group Legend", style = "text-align: center; font-weight: bold; color: #555; margin-bottom: 0;"),
-                                    plotOutput("age_legend", height = "180px")
+                                    plotOutput("age_legend", height = "180px"),
+                                    hr(),
+                                    p(style = "text-align: center; font-size: 13px;",
+                                      tags$a(href = "#", 
+                                             onclick = "document.querySelector('.nav-tabs a[data-value=\"Injuries By Age Group\"]').click(); return false;",
+                                             style = "color: #f3969a; font-size: 15px;",
+                                             "\u2192 View Injury Trends By Age Group")
+                                    )
                                   ),
                                   mainPanel(
                                     width = 9,
@@ -968,6 +1003,9 @@ fluidPage(
                                   ),
                                   br()
                          ),
+                         tabPanel("Ankle Sprain"
+                           
+                         )
                       
               ),
 

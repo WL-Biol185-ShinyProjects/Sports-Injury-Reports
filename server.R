@@ -162,18 +162,17 @@ function(input, output, session) {
       filter(age_group == input$age_group,
              sport_or_activity %in% input$sport_or_activity) %>%
       group_by(year, sport_or_activity) %>%
-
-      summarise(injuries = sum(injuries, na.rm = TRUE), .group = "drop") %>%
+      summarise(injuries = sum(injuries, na.rm = TRUE), .groups = "drop") %>%
       ggplot(aes(x = year,
                  y = injuries,
                  color = sport_or_activity,
                  group = sport_or_activity)) +
       geom_line(linewidth = 1.5) +
       geom_point(size = 3) +
-      scale_x_continuous(breaks = unique(yearly_injuries_by_age$year))+
-      xlab("Year")+
-      ylab("Number of Injuries")+
-      ggtitle("Injuries by Age Group Over Time")+
+      scale_x_continuous(breaks = unique(yearly_injuries_by_age$year)) +
+      xlab("Year") +
+      ylab("Number of Injuries") +
+      ggtitle("Injuries by Age Group Over Time") +
       labs(color = "Sport") +
       theme(
         plot.title   = element_text(size = 22),
@@ -182,7 +181,79 @@ function(input, output, session) {
         legend.title = element_text(size = 18),
         legend.text  = element_text(size = 15)
       )
+  })
   
+  trend_summary <- reactive({
+    req(input$age_group)
+    
+    tidyAge <- function(table) {
+      gather(table, key = "age_group", value = "injuries", "X0_to_4":"X65_or_over")
+    }
+    
+    tidyAge(injuries_by_agegroup) %>%
+      filter(age_group == input$age_group) %>%
+      group_by(sport_or_activity) %>%
+      arrange(year) %>%
+      summarise(
+        trend = coef(lm(injuries ~ year))[2],
+        avg_injuries = round(mean(injuries, na.rm = TRUE), 0),
+        .groups = "drop"
+      ) %>%
+      arrange(desc(trend))
+  })
+  
+  output$increasing_trends <- renderUI({
+    df <- trend_summary()
+    top_n <- input$top_n_sports
+    
+    increasing <- df %>% filter(trend > 0) %>% slice_head(n = top_n)
+    
+    if (nrow(increasing) == 0) {
+      p(style = "color: #2c3e50; font-size: 15px;", "No increasing trends found.")
+    } else {
+      tagList(
+        lapply(1:nrow(increasing), function(i) {
+          div(
+            style = "padding: 10px 0; border-bottom: 1px solid #dee2e6;",
+            div(style = "display: flex; justify-content: space-between; align-items: center;",
+                span(style = "color: #2c3e50; font-size: 15px; font-weight: bold;",
+                     increasing$sport_or_activity[i]),
+                span(style = "color: #f3969a; font-weight: bold; font-size: 15px;",
+                     paste0("+", round(increasing$trend[i], 1), " injuries/yr"))
+            ),
+            div(style = "color: #888; font-size: 13px; margin-top: 3px;",
+                paste0("Avg. ", format(increasing$avg_injuries[i], big.mark = ","), " injuries/yr"))
+          )
+        })
+      )
+    }
+  })
+  
+  output$decreasing_trends <- renderUI({
+    df <- trend_summary()
+    top_n <- input$top_n_sports
+    
+    decreasing <- df %>% filter(trend < 0) %>% arrange(trend) %>% slice_head(n = top_n)
+    
+    if (nrow(decreasing) == 0) {
+      p(style = "color: #2c3e50; font-size: 15px;", "No decreasing trends found.")
+    } else {
+      tagList(
+        lapply(1:nrow(decreasing), function(i) {
+          div(
+            style = "padding: 10px 0; border-bottom: 1px solid #dee2e6;",
+            div(style = "display: flex; justify-content: space-between; align-items: center;",
+                span(style = "color: #2c3e50; font-size: 15px; font-weight: bold;",
+                     decreasing$sport_or_activity[i]),
+                span(style = "color: #78c2ad; font-weight: bold; font-size: 15px;",
+                     paste0(round(decreasing$trend[i], 1), " injuries/yr"))
+            ),
+            div(style = "color: #888; font-size: 13px; margin-top: 3px;",
+                paste0("Avg. ", format(decreasing$avg_injuries[i], big.mark = ","), " injuries/yr"))
+          )
+        })
+      )
+    }
   })
   
   # Navigate to tabs when buttons are clicked
