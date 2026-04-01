@@ -21,3 +21,6 @@ https://pmc.ncbi.nlm.nih.gov/articles/PMC5099231/
 
 https://chnwebapp-auc-prod01.azurewebsites.net/athletes-risk-acl-tears
 - acl tear data
+
+https://journals.sagepub.com/doi/10.1177/0363546516660980?url_ver=Z39.88-2003&rfr_id=ori:rid:crossref.org&rfr_dat=cr_pub%20%200pubmed#table1-0363546516660980
+- ankle sprain data

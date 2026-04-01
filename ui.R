@@ -1003,8 +1003,30 @@ fluidPage(
                                   ),
                                   br()
                          ),
-                         tabPanel("Ankle Sprain"
-                           
+                         tabPanel("Ankle Sprain",
+                                  fluidRow(
+                                    br(),
+                                    div(
+                                      style = "background-color: #f8f9fa; border-left: 4px solid #78c2ad;
+               padding: 15px; margin-bottom: 15px; border-radius: 4px;",
+                                      h4(style = "color: #78c2ad; margin-top:0;", "Ankle Sprains"),
+                                      p(style = "margin: 0; color: #2c3e50; font-size: 20px;",
+                                        "An ankle sprain occurs when the ligaments supporting the ankle are stretched
+     or torn, typically from rolling, twisting, or turning the ankle awkwardly.
+     They are one of the most common injuries in athletics, often happening during
+     landing, cutting, or contact with another player."),
+                                      br(),
+                                      p(style = "margin: 0; color: #2c3e50; font-size: 20px;",
+                                        "The chart below shows lateral ankle sprain counts across collegiate sports,
+                                        broken down by whether the injury occurred in practice or competition from 2009 to 2015.")
+                                    ),
+                                    column(8, offset = 2,
+                                           div(
+                                             style = "border: 1px solid #ddd; border-radius: 5px; padding: 10px; margin-bottom: 30px;",
+                                             plotOutput("ankle_sprain_plot", height = "500px")
+                                           )
+                                    )
+                                  )
                          )
                       
               ),
