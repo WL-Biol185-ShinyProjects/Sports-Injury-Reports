@@ -676,6 +676,35 @@ function(input, output, session) {
       theme(axis.text = element_text(size = 11),
             axis.title = element_text(size = 13))
   })
+  
+  
+  #Ankle Sprains
+  ankle_sprains <- read.csv("ankle_sprain.csv") %>%
+    filter(Sport != "Overall total") %>%
+    pivot_longer(cols = c("Practice", "Competition"),
+                 names_to = "type",
+                 values_to = "count")
+  
+  output$ankle_sprain_plot <- renderPlot({
+    ggplot(ankle_sprains, aes(x = reorder(Sport, -count), y = count, fill = type)) +
+      geom_bar(stat = "identity") +
+      scale_fill_manual(
+        values = c("Practice" = "#78c2ad", "Competition" = "#f3969a"),
+        name = "Injury Context"
+      ) +
+      labs(
+        title = "Ankle Sprains by Sport",
+        x = "Sport",
+        y = "Number of Injuries"
+      ) +
+      theme_minimal() +
+      theme(
+        axis.text.x = element_text(angle = 45, hjust = 1, size = 11),
+        plot.title = element_text(hjust = 0.5, color = "#2c3e50", font = "bold"),
+        legend.position = "top"
+      )
+  })
+  
   #Hydration Calculator
   output$hydro_baseline <- renderText({ paste0(hydro_vals()$baseline, " oz") })
   output$hydro_extra    <- renderText({ paste0(hydro_vals()$extra, " oz") })
