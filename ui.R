@@ -704,7 +704,7 @@ fluidPage(
                                            
                                            hr(),
                                            div(style = "background:#e8f5f1; border-radius:12px; padding:20px; border: 1px solid #78c2ad; margin-bottom:15px;",
-                                               h4("Hydration Calculator", style = "color:#78c2ad; font-weight:700; margin-bottom:15px;"),
+                                               h4("Hydration Calculator", style = "color:#555; font-weight:700; margin-bottom:15px;"),
                                                fluidRow(
                                                  column(4,
                                                         sliderInput("hydro_weight", "Body weight (lbs)", min = 80, max = 300, value = 160, step = 1)
@@ -744,7 +744,7 @@ fluidPage(
                                                ),
                                                hr(),
                                                div(style = "background:#e8f5f1; border-radius:12px; padding:20px; border: 1px solid #78c2ad; margin-bottom:15px;",
-                                                   h4("Nutrient Timing", style = "color:#78c2ad; font-weight:700; margin-bottom:15px;"),
+                                                   h4("Nutrient Timing", style = "color:#555; font-weight:700; margin-bottom:15px;"),
                                                    selectInput("timing_sport", "Sport type",
                                                                choices = c("Endurance (running, cycling)" = "endurance",
                                                                            "Strength (weightlifting)"      = "strength",
@@ -774,7 +774,7 @@ fluidPage(
                                            ),
                                            
                                            hr(),
-                                           h4("Nutrient Details", style = "color:#78c2ad; font-weight:700; margin-bottom:15px;"),
+                                           h4("Nutrient Details", style = "color:#555; font-weight:700; margin-bottom:15px;"),
                                            tags$details(class = "nutrition-details nutr-teal",
                                                         tags$summary("🍞  Carbohydrates"),
                                                         p(strong("Role: "), "Prevents muscle and mental fatigue; supports energy for sustained performance and recovery."),
@@ -850,7 +850,7 @@ fluidPage(
                                            )
                                     ),
                                     
-                                    h4(style = "color: #f3969a; margin-bottom: 15px; padding-left: 15px;", "Concussion Prevention"),
+                                    h4(style = "color: #555; margin-bottom: 15px; padding-left: 15px;", "Concussion Prevention"),
                                     
                                     # Row 1: Rule Changes & Protective Equipment
                                     fluidRow(
