@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ankle Injury Prevention</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, -apple-system, sans-serif; background: #f9f9f7; color: #1a1a1a; line-height: 1.6; padding: 2rem 1rem; }
+  .container { max-width: 680px; margin: 0 auto; display: flex; flex-direction: column; gap: 3rem; }
+
+  /* ── shared tokens ── */
+  :root {
+    --bg: #ffffff;
+    --bg-secondary: #f1efe8;
+    --border: rgba(0,0,0,0.12);
+    --border-hover: rgba(0,0,0,0.25);
+    --text: #1a1a1a;
+    --text-secondary: #5f5e5a;
+    --text-hint: #888780;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --green-bg: #e1f5ee; --green-text: #085041; --green-border: #1d9e75;
+    --amber-bg: #faeeda; --amber-text: #633806;
+    --red-bg: #fcebeb; --red-text: #791f1f; --red-border: #e24b4a;
+    --purple-bg: #eeedfe;
+    --teal-bg: #e1f5ee;
+    --coral-bg: #faece7;
+  }
+
+  h2 { font-size: 18px; font-weight: 500; }
+  p { font-size: 14px; }
+  button {
+    font-family: inherit; font-size: 14px; cursor: pointer;
+    background: var(--bg); border: 0.5px solid var(--border-hover);
+    border-radius: var(--radius-md); padding: 8px 16px; color: var(--text);
+    transition: background 0.12s;
+  }
+  button:hover { background: var(--bg-secondary); }
+  button:active { transform: scale(0.98); }
+
+  /* ══════════════════════════════════════
+     TIPS WIDGET
+  ══════════════════════════════════════ */
+  .tip-card {
+    background: var(--bg); border: 0.5px solid var(--border);
+    border-radius: var(--radius-lg); padding: 1rem 1.25rem;
+    cursor: pointer; transition: border-color 0.15s;
+  }
+  .tip-card:hover { border-color: var(--border-hover); }
+  .tip-card.open { border-color: rgba(0,0,0,0.35); }
+  .tip-header { display: flex; align-items: center; gap: 12px; }
+  .tip-icon {
+    width: 36px; height: 36px; border-radius: var(--radius-md);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; font-size: 16px;
+  }
+  .tip-title { font-size: 15px; font-weight: 500; color: var(--text); margin: 0; }
+  .tip-subtitle { font-size: 13px; color: var(--text-secondary); margin: 2px 0 0; }
+  .tip-chevron { margin-left: auto; font-size: 11px; color: var(--text-hint); transition: transform 0.2s; }
+  .tip-body { overflow: hidden; max-height: 0; transition: max-height 0.3s ease; }
+  .tip-body.open { max-height: 400px; }
+  .tip-body-inner { padding: 12px 0 4px 48px; font-size: 14px; color: var(--text-secondary); line-height: 1.7; }
+  .tip-body-inner ul { margin: 0; padding-left: 16px; }
+  .tip-body-inner li { margin-bottom: 4px; }
+  .badge {
+    display: inline-block; font-size: 11px; font-weight: 500;
+    padding: 2px 8px; border-radius: 20px; margin-left: 8px; vertical-align: middle;
+  }
+  .badge-green { background: var(--green-bg); color: var(--green-text); }
+  .badge-amber { background: var(--amber-bg); color: var(--amber-text); }
+  .tips-list { display: flex; flex-direction: column; gap: 10px; }
+  .progress-track { background: var(--bg-secondary); border-radius: 20px; height: 6px; margin-top: 1.5rem; }
+  .progress-fill { height: 6px; border-radius: 20px; background: #1d9e75; transition: width 0.3s; }
+  .progress-label { font-size: 12px; color: var(--text-hint); margin-top: 6px; }
+
+  /* ══════════════════════════════════════
+     QUIZ WIDGET
+  ══════════════════════════════════════ */
+  .q-card {
+    background: var(--bg); border: 0.5px solid var(--border);
+    border-radius: var(--radius-lg); padding: 1.25rem; margin-bottom: 10px;
+  }
+  .q-text { font-size: 15px; font-weight: 500; color: var(--text); margin: 0 0 12px; }
+  .opt-btn {
+    display: block; width: 100%; text-align: left;
+    background: var(--bg); border: 0.5px solid var(--border);
+    border-radius: var(--radius-md); padding: 10px 14px;
+    font-size: 14px; color: var(--text); cursor: pointer;
+    margin-bottom: 6px; transition: background 0.12s, border-color 0.12s;
+  }
+  .opt-btn:hover { background: var(--bg-secondary); border-color: var(--border-hover); }
+  .opt-btn.selected { border-color: var(--green-border); background: var(--green-bg); color: var(--green-text); }
+  .opt-btn.selected-bad { border-color: var(--red-border); background: var(--red-bg); color: var(--red-text); }
+  .opt-btn.revealed-good { border-color: var(--green-border); background: var(--green-bg); color: var(--green-text); }
+  .opt-btn:disabled { cursor: default; opacity: 0.85; }
+  .feedback {
+    font-size: 13px; margin-top: 8px; padding: 8px 12px;
+    border-radius: var(--radius-md); line-height: 1.5;
+  }
+  .feedback-good { background: var(--green-bg); color: var(--green-text); }
+  .feedback-bad { background: var(--red-bg); color: var(--red-text); }
+  .step-dots { display: flex; gap: 6px; margin-bottom: 1.25rem; }
+  .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--bg-secondary); border: 0.5px solid var(--border-hover);
+    transition: background 0.2s;
+  }
+  .dot.done { background: #1d9e75; border-color: #1d9e75; }
+  .dot.active { background: var(--text-secondary); border-color: var(--text-secondary); }
+  .result-card {
+    background: var(--bg); border: 0.5px solid var(--border);
+    border-radius: var(--radius-lg); padding: 1.5rem; text-align: center;
+  }
+  .risk-badge {
+    display: inline-block; font-size: 13px; font-weight: 500;
+    padding: 4px 14px; border-radius: 20px; margin-bottom: 12px;
+  }
+  .risk-low { background: var(--green-bg); color: var(--green-text); }
+  .risk-mod { background: var(--amber-bg); color: var(--amber-text); }
+  .risk-high { background: var(--red-bg); color: var(--red-text); }
+  .result-tips { text-align: left; margin-top: 1rem; font-size: 14px; color: var(--text-secondary); line-height: 1.7; }
+  .result-tips li { margin-bottom: 4px; }
+  .nav-row { display: flex; justify-content: space-between; align-items: center; margin-top: 1rem; }
+  .section-header { margin-bottom: 1.25rem; }
+  .section-header p { font-size: 13px; color: var(--text-secondary); margin-top: 4px; }
+  .check-count { font-size: 13px; color: var(--text-secondary); }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- ══════════ TIPS WIDGET ══════════ -->
+  <section>
+    <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:1.25rem;">
+      <div class="section-header">
+        <h2>Ankle sprain prevention</h2>
+        <p>Tap any tip to learn more</p>
+      </div>
+      <span class="check-count" id="check-count">0 of 6 reviewed</span>
+    </div>
+
+    <div class="tips-list" id="tips-list">
+
+      <div class="tip-card" onclick="toggleTip(this,0)">
+        <div class="tip-header">
+          <div class="tip-icon" style="background:#eaf3de;">👟</div>
+          <div>
+            <p class="tip-title">Wear the right shoes <span class="badge badge-amber">key factor</span></p>
+            <p class="tip-subtitle">Sport-specific footwear matters</p>
+          </div>
+          <span class="tip-chevron">▼</span>
+        </div>
+        <div class="tip-body">
+          <div class="tip-body-inner">
+            <ul>
+              <li>Choose shoes designed for your specific sport — running shoes for forward motion, cross-trainers for lateral movement</li>
+              <li>Look for good arch support, a stable heel base, and cushioning under the ball of the foot</li>
+              <li>Replace shoes regularly — worn-out soles lose the support that protects your ankles</li>
+              <li>Try shoes on at the end of the day when feet are slightly swollen for the most accurate fit</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="tip-card" onclick="toggleTip(this,1)">
+        <div class="tip-header">
+          <div class="tip-icon" style="background:#e1f5ee;">🔄</div>
+          <div>
+            <p class="tip-title">Warm up before activity <span class="badge badge-green">essential</span></p>
+            <p class="tip-subtitle">5–10 min before every session</p>
+          </div>
+          <span class="tip-chevron">▼</span>
+        </div>
+        <div class="tip-body">
+          <div class="tip-body-inner">
+            <ul>
+              <li>Always warm up for at least 5–10 minutes before any physical activity</li>
+              <li>Include ankle circles, leg swings, and light jogging to increase blood flow</li>
+              <li>Use dynamic stretches that mimic the movements of your sport</li>
+              <li>Start at low intensity and gradually build up to your full workout pace</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="tip-card" onclick="toggleTip(this,2)">
+        <div class="tip-header">
+          <div class="tip-icon" style="background:#eeedfe;">💪</div>
+          <div>
+            <p class="tip-title">Strengthen your ankle muscles <span class="badge badge-green">essential</span></p>
+            <p class="tip-subtitle">Calf raises &amp; resistance bands</p>
+          </div>
+          <span class="tip-chevron">▼</span>
+        </div>
+        <div class="tip-body">
+          <div class="tip-body-inner">
+            <ul>
+              <li>Do heel raises daily — rise onto the balls of your feet and slowly lower back down, 10 reps</li>
+              <li>Use a resistance band for ankle eversion — this trains the peroneal muscles that act as a natural brace</li>
+              <li>Gradually condition your leg and ankle muscles — don't rush into high-intensity activity</li>
+              <li>Repeat exercises 10–15 times, 3 sets per day</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="tip-card" onclick="toggleTip(this,3)">
+        <div class="tip-header">
+          <div class="tip-icon" style="background:#e1f5ee;">⚖️</div>
+          <div>
+            <p class="tip-title">Train your balance &amp; proprioception</p>
+            <p class="tip-subtitle">Your ankle's "sixth sense"</p>
+          </div>
+          <span class="tip-chevron">▼</span>
+        </div>
+        <div class="tip-body">
+          <div class="tip-body-inner">
+            <ul>
+              <li>Balance on one foot for 30 seconds — progress to eyes closed or unstable surfaces</li>
+              <li>Proprioception is critical — strong ankles can still roll if your brain can't react in time</li>
+              <li>Use a balance board or wobble cushion for more advanced training</li>
+              <li>These exercises help your ankle react before a roll becomes a sprain</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="tip-card" onclick="toggleTip(this,4)">
+        <div class="tip-header">
+          <div class="tip-icon" style="background:#faeeda;">🧘</div>
+          <div>
+            <p class="tip-title">Stretch your calves regularly</p>
+            <p class="tip-subtitle">Especially the lower calf (soleus)</p>
+          </div>
+          <span class="tip-chevron">▼</span>
+        </div>
+        <div class="tip-body">
+          <div class="tip-body-inner">
+            <ul>
+              <li>Soleus stretch: step one foot back, bend both knees, keep heels flat — hold 15–30 seconds</li>
+              <li>Also stretch the gastrocnemius: back leg straight, lean into a wall, heel on floor</li>
+              <li>Best done after exercise when muscles are warm — make it part of your cool-down</li>
+              <li>Stretch both legs equally; consistency beats intensity</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="tip-card" onclick="toggleTip(this,5)">
+        <div class="tip-header">
+          <div class="tip-icon" style="background:#faece7;">🩹</div>
+          <div>
+            <p class="tip-title">Brace or tape if you've had a previous sprain <span class="badge badge-amber">if applicable</span></p>
+            <p class="tip-subtitle">External support for high-risk activities</p>
+          </div>
+          <span class="tip-chevron">▼</span>
+        </div>
+        <div class="tip-body">
+          <div class="tip-body-inner">
+            <ul>
+              <li>A previous sprain leaves ligaments lax and increases re-injury risk — bracing helps during recovery</li>
+              <li>Use a snug-but-not-tight brace; it should not restrict blood flow</li>
+              <li>Gradually wean off the brace as strength and confidence return</li>
+              <li>Bracing is a supplement — not a replacement — for strengthening and balance work</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="progress-track">
+      <div class="progress-fill" id="progress-fill" style="width:0%;"></div>
+    </div>
+    <p class="progress-label" id="progress-label">Open each tip to review it</p>
+  </section>
+
+  <!-- ══════════ QUIZ WIDGET ══════════ -->
+  <section>
+    <div class="section-header">
+      <h2>What's your ankle sprain risk?</h2>
+      <p>Answer 6 quick questions to get personalized tips</p>
+    </div>
+    <div class="step-dots" id="dots"></div>
+    <div id="q-area"></div>
+  </section>
+
+</div>
+
+<script>
+/* ── Tips logic ── */
+const opened = new Set();
+function toggleTip(card, idx) {
+  const body = card.querySelector('.tip-body');
+  const chevron = card.querySelector('.tip-chevron');
+  const isOpen = body.classList.contains('open');
+  document.querySelectorAll('.tip-body').forEach(b => b.classList.remove('open'));
+  document.querySelectorAll('.tip-card').forEach(c => c.classList.remove('open'));
+  document.querySelectorAll('.tip-chevron').forEach(ch => ch.style.transform = '');
+  if (!isOpen) {
+    body.classList.add('open');
+    card.classList.add('open');
+    chevron.style.transform = 'rotate(180deg)';
+    opened.add(idx);
+    updateProgress();
+  }
+}
+function updateProgress() {
+  const pct = Math.round((opened.size / 6) * 100);
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('check-count').textContent = opened.size + ' of 6 reviewed';
+  const labels = ['Open each tip to review it','Great start!','Halfway there!','Almost done!','Nearly complete!','All done — great work!','All done — great work!'];
+  document.getElementById('progress-label').textContent = labels[opened.size];
+}
+
+/* ── Quiz logic ── */
+const questions = [
+  {
+    q: "Have you sprained your ankle before?",
+    opts: ["Yes, more than once","Yes, once","No, never"],
+    scores: [3,2,0],
+    feedback: [
+      "Multiple sprains significantly increase re-injury risk due to stretched ligaments — bracing during activity is strongly recommended.",
+      "A prior sprain leaves the ligament lax, raising your risk. Consider an ankle brace for high-intensity activities.",
+      "Great — no prior history means your ligaments are at full strength."
+    ]
+  },
+  {
+    q: "How often do you warm up before exercise?",
+    opts: ["Rarely or never","Sometimes","Always"],
+    scores: [3,1,0],
+    feedback: [
+      "Skipping warm-ups is a top risk factor. Just 5–10 minutes of ankle circles and dynamic stretching dramatically reduces injury risk.",
+      "Try to make it a consistent habit — even a short warm-up before every session makes a real difference.",
+      "Excellent habit — a proper warm-up prepares your joints and reduces sprain risk."
+    ]
+  },
+  {
+    q: "How would you describe your balance?",
+    opts: ["Poor — I wobble easily","Average","Strong — very stable on one foot"],
+    scores: [3,1,0],
+    feedback: [
+      "Poor balance is a major risk factor. Daily single-leg balance exercises can build your proprioception quickly.",
+      "There's room to improve. Try standing on one foot for 30 seconds daily and progress from there.",
+      "Good balance means your ankle can react faster to uneven surfaces before a roll becomes a sprain."
+    ]
+  },
+  {
+    q: "Do you wear sport-appropriate footwear?",
+    opts: ["No — I wear whatever is handy","Sometimes","Yes — always activity-specific shoes"],
+    scores: [3,1,0],
+    feedback: [
+      "Wearing the wrong shoes removes a key layer of ankle protection. Sport-specific shoes provide the right lateral support.",
+      "Inconsistent footwear means inconsistent protection. Try to match your shoes to the activity every time.",
+      "Great — the right shoes provide crucial arch support, heel stability, and cushioning for your specific movements."
+    ]
+  },
+  {
+    q: "Do you stretch your calves and ankles regularly?",
+    opts: ["Never","Occasionally","Yes, after most workouts"],
+    scores: [2,1,0],
+    feedback: [
+      "Tight calves limit ankle flexibility and increase sprain risk. Add a 15-second soleus stretch into your daily routine.",
+      "More consistency will pay off — tight muscles are less able to absorb sudden forces on uneven terrain.",
+      "Excellent — regular calf and ankle stretching maintains the range of motion that protects your joints."
+    ]
+  },
+  {
+    q: "What surfaces do you typically exercise on?",
+    opts: ["Uneven terrain, trails, or grass","Mixed surfaces","Flat, predictable surfaces"],
+    scores: [2,1,0],
+    feedback: [
+      "Uneven terrain is the primary environment for ankle sprains — proprioception training is especially important for you.",
+      "Mixed surfaces are common — make sure your footwear and balance training cover both indoor and outdoor scenarios.",
+      "Flat surfaces carry lower risk, but it's still worth building ankle strength for everyday missteps."
+    ]
+  }
+];
+
+let current = 0, totalScore = 0, answers = [];
+
+function renderDots() {
+  document.getElementById('dots').innerHTML = questions.map((_,i) => {
+    let cls = 'dot';
+    if (i < current) cls += ' done';
+    else if (i === current) cls += ' active';
+    return `<div class="${cls}"></div>`;
+  }).join('');
+}
+
+function renderQuestion() {
+  if (current >= questions.length) { renderResult(); return; }
+  const q = questions[current];
+  renderDots();
+  document.getElementById('q-area').innerHTML = `
+    <div class="q-card">
+      <p class="q-text">${current + 1} of ${questions.length} — ${q.q}</p>
+      ${q.opts.map((o,i) => `<button class="opt-btn" onclick="selectAnswer(${i})">${o}</button>`).join('')}
+      <div id="feedback-area"></div>
+    </div>
+    <div class="nav-row" id="nav-row" style="display:none;">
+      <span style="font-size:13px;color:var(--text-secondary);">${current + 1} of ${questions.length}</span>
+      <button onclick="nextQ()">${current + 1 < questions.length ? 'Next question' : 'See my results'} →</button>
+    </div>
+  `;
+}
+
+function selectAnswer(idx) {
+  const q = questions[current];
+  const score = q.scores[idx];
+  answers[current] = { idx, score };
+  totalScore = answers.reduce((a,b) => a + b.score, 0);
+  document.querySelectorAll('.opt-btn').forEach((b,i) => {
+    b.disabled = true;
+    if (i === idx) b.classList.add(score === 0 ? 'selected' : 'selected-bad');
+    else if (q.scores[i] === 0) b.classList.add('revealed-good');
+  });
+  document.getElementById('feedback-area').innerHTML =
+    `<div class="feedback ${score === 0 ? 'feedback-good' : 'feedback-bad'}">${q.feedback[idx]}</div>`;
+  document.getElementById('nav-row').style.display = 'flex';
+}
+
+function nextQ() { current++; renderQuestion(); }
+
+function renderResult() {
+  const max = questions.reduce((a,q) => a + Math.max(...q.scores), 0);
+  const pct = Math.round((totalScore / max) * 100);
+  let level, badgeCls, headline, tips;
+  if (pct <= 25) {
+    level = 'Low risk'; badgeCls = 'risk-low';
+    headline = "Your habits are already working in your favor.";
+    tips = ["Keep warming up consistently before every session.","Maintain your stretching routine — it's making a difference.","Consider balance drills occasionally to stay sharp on uneven terrain."];
+  } else if (pct <= 60) {
+    level = 'Moderate risk'; badgeCls = 'risk-mod';
+    headline = "A few targeted changes could significantly lower your risk.";
+    tips = ["Add 5 minutes of ankle circles and calf stretches to your warm-up.","Try single-leg balance stands daily — 30 seconds per leg.","Check your footwear is appropriate for your sport and replace worn shoes."];
+  } else {
+    level = 'Higher risk'; badgeCls = 'risk-high';
+    headline = "Your ankles would benefit from some focused attention.";
+    tips = ["Start with heel raises and resistance band ankle eversion exercises 3x/day.","Always warm up — even a 5-minute routine cuts sprain risk meaningfully.","If you've had past sprains, ask a sports medicine specialist about bracing.","Work on single-leg balance to rebuild proprioception."];
+  }
+  document.getElementById('dots').innerHTML = questions.map(() => '<div class="dot done"></div>').join('');
+  document.getElementById('q-area').innerHTML = `
+    <div class="result-card">
+      <span class="risk-badge ${badgeCls}">${level}</span>
+      <p style="font-size:22px;font-weight:500;margin:0 0 6px;">${pct}% risk score</p>
+      <p style="font-size:14px;color:var(--text-secondary);margin:0 0 1rem;">${headline}</p>
+      <div class="result-tips">
+        <p style="font-size:13px;font-weight:500;margin:0 0 8px;">Your top priorities:</p>
+        <ul style="margin:0;padding-left:18px;">${tips.map(t => `<li>${t}</li>`).join('')}</ul>
+      </div>
+      <div style="margin-top:1.25rem;">
+        <button onclick="restartQuiz()">Retake quiz</button>
+      </div>
+    </div>
+  `;
+}
+
+function restartQuiz() { current = 0; totalScore = 0; answers = []; renderQuestion(); }
+
+renderQuestion();
+</script>
+</body>
+</html>
