@@ -1043,19 +1043,438 @@ fluidPage(
                                       h4(style = "color: #78c2ad; margin-top:0;", "Ankle Sprains"),
                                       p(style = "margin: 0; color: #2c3e50; font-size: 20px;",
                                         "An ankle sprain occurs when the ligaments supporting the ankle are stretched
-     or torn, typically from rolling, twisting, or turning the ankle awkwardly.
-     They are one of the most common injuries in athletics, often happening during
-     landing, cutting, or contact with another player."),
+         or torn, typically from rolling, twisting, or turning the ankle awkwardly.
+         They are one of the most common injuries in athletics, often happening during
+         landing, cutting, or contact with another player."),
                                       br(),
                                       p(style = "margin: 0; color: #2c3e50; font-size: 20px;",
                                         "The chart below shows lateral ankle sprain counts across collegiate sports,
-                                        broken down by whether the injury occurred in practice or competition from 2009 to 2015.")
+         broken down by whether the injury occurred in practice or competition from 2009 to 2015.")
                                     ),
                                     column(8, offset = 2,
                                            div(
                                              style = "border: 1px solid #ddd; border-radius: 5px; padding: 10px; margin-bottom: 30px;",
                                              plotOutput("ankle_sprain_plot", height = "500px")
                                            )
+                                    ),
+                                    
+                                    column(10, offset = 1,
+                                           br(),
+                                           tags$style(HTML("
+        .ankle-tip-card {
+          background: #ffffff;
+          border: 1px solid #ddd;
+          border-radius: 8px;
+          padding: 0;
+          margin-bottom: 10px;
+          cursor: pointer;
+          transition: border-color 0.15s;
+          overflow: hidden;
+        }
+        .ankle-tip-card:hover { border-color: #78c2ad; }
+        .ankle-tip-header {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          padding: 14px 16px;
+        }
+        .ankle-tip-title { font-size: 15px; font-weight: 500; color: #2c3e50; margin: 0; }
+        .ankle-tip-subtitle { font-size: 13px; color: #6c757d; margin: 2px 0 0; }
+        .ankle-tip-chevron { margin-left: auto; font-size: 11px; color: #aaa; transition: transform 0.2s; }
+        .ankle-tip-body {
+          max-height: 0; overflow: hidden;
+          transition: max-height 0.3s ease;
+          background: #f8f9fa;
+        }
+        .ankle-tip-body.open { max-height: 400px; }
+        .ankle-tip-body-inner {
+          padding: 12px 16px 14px 20px;
+          font-size: 14px; color: #495057; line-height: 1.7;
+        }
+        .ankle-tip-body-inner ul { margin: 0; padding-left: 16px; }
+        .ankle-tip-body-inner li { margin-bottom: 4px; }
+        .ankle-badge {
+          display: inline-block; font-size: 11px; font-weight: 500;
+          padding: 2px 8px; border-radius: 20px; margin-left: 8px; vertical-align: middle;
+        }
+        .ankle-badge-green { background: #e1f5ee; color: #085041; }
+        .ankle-badge-amber { background: #faeeda; color: #633806; }
+
+        .ankle-q-card {
+          background: #ffffff;
+          border: 1px solid #ddd;
+          border-radius: 8px;
+          padding: 16px; margin-bottom: 10px;
+        }
+        .ankle-q-text { font-size: 15px; font-weight: 500; color: #2c3e50; margin: 0 0 12px; }
+        .ankle-opt-btn {
+          display: block; width: 100%; text-align: left;
+          background: #ffffff; border: 1px solid #ddd;
+          border-radius: 6px; padding: 10px 14px;
+          font-size: 14px; color: #2c3e50; cursor: pointer;
+          margin-bottom: 6px; transition: background 0.12s, border-color 0.12s;
+          font-family: inherit;
+        }
+        .ankle-opt-btn:hover { background: #f8f9fa; border-color: #78c2ad; }
+        .ankle-opt-btn.selected-good { border-color: #78c2ad; background: #e1f5ee; color: #085041; }
+        .ankle-opt-btn.selected-bad  { border-color: #e24b4a; background: #fcebeb; color: #791f1f; }
+        .ankle-opt-btn.revealed-good { border-color: #78c2ad; background: #e1f5ee; color: #085041; }
+        .ankle-opt-btn:disabled { cursor: default; opacity: 0.85; }
+        .ankle-feedback {
+          font-size: 13px; margin-top: 8px; padding: 8px 12px;
+          border-radius: 6px; line-height: 1.5;
+        }
+        .ankle-feedback-good { background: #e1f5ee; color: #085041; }
+        .ankle-feedback-bad  { background: #fcebeb; color: #791f1f; }
+        .ankle-step-dots { display: flex; gap: 6px; margin-bottom: 16px; }
+        .ankle-dot {
+          width: 8px; height: 8px; border-radius: 50%;
+          background: #f8f9fa; border: 1px solid #bbb;
+          transition: background 0.2s;
+        }
+        .ankle-dot.done   { background: #78c2ad; border-color: #78c2ad; }
+        .ankle-dot.active { background: #495057; border-color: #495057; }
+        .ankle-nav-row { display: flex; justify-content: space-between; align-items: center; margin-top: 12px; }
+        .ankle-nav-btn {
+          background: #ffffff; border: 1px solid #bbb;
+          border-radius: 6px; padding: 8px 16px;
+          font-size: 14px; color: #2c3e50; cursor: pointer; font-family: inherit;
+          transition: background 0.12s;
+        }
+        .ankle-nav-btn:hover { background: #f8f9fa; border-color: #78c2ad; }
+        .ankle-result-card {
+          background: #ffffff; border: 1px solid #ddd;
+          border-radius: 8px; padding: 24px; text-align: center;
+        }
+        .ankle-risk-badge {
+          display: inline-block; font-size: 13px; font-weight: 500;
+          padding: 4px 14px; border-radius: 20px; margin-bottom: 12px;
+        }
+        .ankle-risk-low  { background: #e1f5ee; color: #085041; }
+        .ankle-risk-mod  { background: #faeeda; color: #633806; }
+        .ankle-risk-high { background: #fcebeb; color: #791f1f; }
+        .ankle-result-tips { text-align: left; margin-top: 14px; font-size: 14px; color: #495057; line-height: 1.7; }
+        .ankle-result-tips li { margin-bottom: 4px; }
+        .ankle-section-title {
+          font-size: 18px; font-weight: 500; color: #2c3e50; margin: 0 0 4px;
+        }
+        .ankle-section-sub { font-size: 13px; color: #6c757d; margin: 0 0 16px; }
+      ")),
+                                           
+                                           # ── Tips ──────────────────────────────────────
+                                           div(style = "margin-bottom: 8px;",
+                                               p(class = "ankle-section-title", "Ankle sprain prevention"),
+                                               p(class = "ankle-section-sub", "Tap any tip to learn more")
+                                           ),
+                                           div(id = "ankle-tips-list",
+                                               
+                                               # Tip 1
+                                               div(class = "ankle-tip-card", onclick = "ankleTip(this)",
+                                                   div(class = "ankle-tip-header",
+                                                       div(
+                                                         p(class = "ankle-tip-title", HTML('Wear the right shoes <span class="ankle-badge ankle-badge-amber">key factor</span>')),
+                                                         p(class = "ankle-tip-subtitle", "Sport-specific footwear matters")
+                                                       ),
+                                                       span(class = "ankle-tip-chevron", "▼")
+                                                   ),
+                                                   div(class = "ankle-tip-body",
+                                                       div(class = "ankle-tip-body-inner",
+                                                           tags$ul(
+                                                             tags$li("Choose shoes designed for your specific sport — running shoes for forward motion, cross-trainers for lateral movement"),
+                                                             tags$li("Look for good arch support, a stable heel base, and cushioning under the ball of the foot"),
+                                                             tags$li("Replace shoes regularly — worn-out soles lose the support that protects your ankles"),
+                                                             tags$li("Try shoes on at the end of the day when feet are slightly swollen for the most accurate fit")
+                                                           )
+                                                       )
+                                                   )
+                                               ),
+                                               
+                                               # Tip 2
+                                               div(class = "ankle-tip-card", onclick = "ankleTip(this)",
+                                                   div(class = "ankle-tip-header",
+                                                       div(
+                                                         p(class = "ankle-tip-title", HTML('Warm up before activity <span class="ankle-badge ankle-badge-green">essential</span>')),
+                                                         p(class = "ankle-tip-subtitle", "5–10 min before every session")
+                                                       ),
+                                                       span(class = "ankle-tip-chevron", "▼")
+                                                   ),
+                                                   div(class = "ankle-tip-body",
+                                                       div(class = "ankle-tip-body-inner",
+                                                           tags$ul(
+                                                             tags$li("Always warm up for at least 5–10 minutes before any physical activity"),
+                                                             tags$li("Include ankle circles, leg swings, and light jogging to increase blood flow"),
+                                                             tags$li("Use dynamic stretches that mimic the movements of your sport"),
+                                                             tags$li("Start at low intensity and gradually build up to your full workout pace")
+                                                           )
+                                                       )
+                                                   )
+                                               ),
+                                               
+                                               # Tip 3
+                                               div(class = "ankle-tip-card", onclick = "ankleTip(this)",
+                                                   div(class = "ankle-tip-header",
+                                                       div(
+                                                         p(class = "ankle-tip-title", HTML('Strengthen your ankle muscles <span class="ankle-badge ankle-badge-green">essential</span>')),
+                                                         p(class = "ankle-tip-subtitle", "Calf raises & resistance bands")
+                                                       ),
+                                                       span(class = "ankle-tip-chevron", "▼")
+                                                   ),
+                                                   div(class = "ankle-tip-body",
+                                                       div(class = "ankle-tip-body-inner",
+                                                           tags$ul(
+                                                             tags$li("Do heel raises daily — rise onto the balls of your feet and slowly lower back down, 10 reps"),
+                                                             tags$li("Use a resistance band for ankle eversion — trains the peroneal muscles that act as a natural brace"),
+                                                             tags$li("Gradually condition your leg and ankle muscles — don't rush into high-intensity activity"),
+                                                             tags$li("Repeat exercises 10–15 times, 3 sets per day")
+                                                           )
+                                                       )
+                                                   )
+                                               ),
+                                               
+                                               # Tip 4
+                                               div(class = "ankle-tip-card", onclick = "ankleTip(this)",
+                                                   div(class = "ankle-tip-header",
+                                                       div(
+                                                         p(class = "ankle-tip-title", "Train your balance & proprioception"),
+                                                         p(class = "ankle-tip-subtitle", "Your ankle's \"sixth sense\"")
+                                                       ),
+                                                       span(class = "ankle-tip-chevron", "▼")
+                                                   ),
+                                                   div(class = "ankle-tip-body",
+                                                       div(class = "ankle-tip-body-inner",
+                                                           tags$ul(
+                                                             tags$li("Balance on one foot for 30 seconds — progress to eyes closed or unstable surfaces"),
+                                                             tags$li("Proprioception is critical — strong ankles can still roll if your brain can't react in time"),
+                                                             tags$li("Use a balance board or wobble cushion for more advanced training"),
+                                                             tags$li("These exercises help your ankle react before a roll becomes a sprain")
+                                                           )
+                                                       )
+                                                   )
+                                               ),
+                                               
+                                               # Tip 5
+                                               div(class = "ankle-tip-card", onclick = "ankleTip(this)",
+                                                   div(class = "ankle-tip-header",
+                                                       div(
+                                                         p(class = "ankle-tip-title", "Stretch your calves regularly"),
+                                                         p(class = "ankle-tip-subtitle", "Especially the lower calf (soleus)")
+                                                       ),
+                                                       span(class = "ankle-tip-chevron", "▼")
+                                                   ),
+                                                   div(class = "ankle-tip-body",
+                                                       div(class = "ankle-tip-body-inner",
+                                                           tags$ul(
+                                                             tags$li("Soleus stretch: step one foot back, bend both knees, keep heels flat — hold 15–30 seconds"),
+                                                             tags$li("Also stretch the gastrocnemius: back leg straight, lean into a wall, heel on floor"),
+                                                             tags$li("Best done after exercise when muscles are warm — make it part of your cool-down"),
+                                                             tags$li("Stretch both legs equally; consistency beats intensity")
+                                                           )
+                                                       )
+                                                   )
+                                               ),
+                                               
+                                               # Tip 6
+                                               div(class = "ankle-tip-card", onclick = "ankleTip(this)",
+                                                   div(class = "ankle-tip-header",
+                                                       div(
+                                                         p(class = "ankle-tip-title", HTML('Brace or tape if you\'ve had a previous sprain <span class="ankle-badge ankle-badge-amber">if applicable</span>')),
+                                                         p(class = "ankle-tip-subtitle", "External support for high-risk activities")
+                                                       ),
+                                                       span(class = "ankle-tip-chevron", "▼")
+                                                   ),
+                                                   div(class = "ankle-tip-body",
+                                                       div(class = "ankle-tip-body-inner",
+                                                           tags$ul(
+                                                             tags$li("A previous sprain leaves ligaments lax and increases re-injury risk — bracing helps during recovery"),
+                                                             tags$li("Use a snug-but-not-tight brace; it should not restrict blood flow"),
+                                                             tags$li("Gradually wean off the brace as strength and confidence return"),
+                                                             tags$li("Bracing is a supplement — not a replacement — for strengthening and balance work")
+                                                           )
+                                                       )
+                                                   )
+                                               )
+                                           ), # end tips list
+                                           
+                                           br(),
+                                           
+                                           # ── Quiz ──────────────────────────────────────
+                                           div(style = "margin-bottom: 8px;",
+                                               p(class = "ankle-section-title", "What's your ankle sprain risk?"),
+                                               p(class = "ankle-section-sub", "Answer 6 quick questions to get personalized tips")
+                                           ),
+                                           div(class = "ankle-step-dots", id = "ankle-dots"),
+                                           div(id = "ankle-q-area"),
+                                           
+                                           br(), br(),
+                                           
+                                           tags$script(HTML("
+        function ankleTip(card) {
+          var body = card.querySelector('.ankle-tip-body');
+          var chevron = card.querySelector('.ankle-tip-chevron');
+          var isOpen = body.classList.contains('open');
+          document.querySelectorAll('.ankle-tip-body').forEach(function(b){ b.classList.remove('open'); });
+          document.querySelectorAll('.ankle-tip-card').forEach(function(c){ c.style.borderColor = ''; });
+          document.querySelectorAll('.ankle-tip-chevron').forEach(function(ch){ ch.style.transform = ''; });
+          if (!isOpen) {
+            body.classList.add('open');
+            card.style.borderColor = '#78c2ad';
+            chevron.style.transform = 'rotate(180deg)';
+          }
+        }
+
+        var ankleQ = [
+          {
+            q: 'Have you sprained your ankle before?',
+            opts: ['Yes, more than once','Yes, once','No, never'],
+            scores: [3,2,0],
+            feedback: [
+              'Multiple sprains significantly increase re-injury risk due to stretched ligaments — bracing during activity is strongly recommended.',
+              'A prior sprain leaves the ligament lax, raising your risk. Consider an ankle brace for high-intensity activities.',
+              'Great — no prior history means your ligaments are at full strength.'
+            ]
+          },
+          {
+            q: 'How often do you warm up before exercise?',
+            opts: ['Rarely or never','Sometimes','Always'],
+            scores: [3,1,0],
+            feedback: [
+              'Skipping warm-ups is a top risk factor. Just 5–10 minutes of ankle circles and dynamic stretching dramatically reduces injury risk.',
+              'Try to make it a consistent habit — even a short warm-up before every session makes a real difference.',
+              'Excellent habit — a proper warm-up prepares your joints and reduces sprain risk.'
+            ]
+          },
+          {
+            q: 'How would you describe your balance?',
+            opts: ['Poor — I wobble easily','Average','Strong — very stable on one foot'],
+            scores: [3,1,0],
+            feedback: [
+              'Poor balance is a major risk factor. Daily single-leg balance exercises can build your proprioception quickly.',
+              'There is room to improve. Try standing on one foot for 30 seconds daily and progress from there.',
+              'Good balance means your ankle can react faster to uneven surfaces before a roll becomes a sprain.'
+            ]
+          },
+          {
+            q: 'Do you wear sport-appropriate footwear?',
+            opts: ['No — I wear whatever is handy','Sometimes','Yes — always activity-specific shoes'],
+            scores: [3,1,0],
+            feedback: [
+              'Wearing the wrong shoes removes a key layer of ankle protection. Sport-specific shoes provide the right lateral support.',
+              'Inconsistent footwear means inconsistent protection. Try to match your shoes to the activity every time.',
+              'Great — the right shoes provide crucial arch support, heel stability, and cushioning for your specific movements.'
+            ]
+          },
+          {
+            q: 'Do you stretch your calves and ankles regularly?',
+            opts: ['Never','Occasionally','Yes, after most workouts'],
+            scores: [2,1,0],
+            feedback: [
+              'Tight calves limit ankle flexibility and increase sprain risk. Add a 15-second soleus stretch into your daily routine.',
+              'More consistency will pay off — tight muscles are less able to absorb sudden forces on uneven terrain.',
+              'Excellent — regular calf and ankle stretching maintains the range of motion that protects your joints.'
+            ]
+          },
+          {
+            q: 'What surfaces do you typically exercise on?',
+            opts: ['Uneven terrain, trails, or grass','Mixed surfaces','Flat, predictable surfaces'],
+            scores: [2,1,0],
+            feedback: [
+              'Uneven terrain is the primary environment for ankle sprains — proprioception training is especially important for you.',
+              'Mixed surfaces are common — make sure your footwear and balance training cover both indoor and outdoor scenarios.',
+              'Flat surfaces carry lower risk, but it is still worth building ankle strength for everyday missteps.'
+            ]
+          }
+        ];
+        var ankleState = { cur: 0, total: 0, answers: [] };
+
+        function ankleRenderDots() {
+          var html = '';
+          for (var i = 0; i < ankleQ.length; i++) {
+            var cls = 'ankle-dot';
+            if (i < ankleState.cur) cls += ' done';
+            else if (i === ankleState.cur) cls += ' active';
+            html += '<div class=\"' + cls + '\"></div>';
+          }
+          document.getElementById('ankle-dots').innerHTML = html;
+        }
+
+        function ankleRenderQ() {
+          if (ankleState.cur >= ankleQ.length) { ankleRenderResult(); return; }
+          var q = ankleQ[ankleState.cur];
+          ankleRenderDots();
+          var opts = q.opts.map(function(o, i) {
+            return '<button class=\"ankle-opt-btn\" onclick=\"ankleSelect(' + i + ')\">' + o + '</button>';
+          }).join('');
+          var nextLabel = ankleState.cur + 1 < ankleQ.length ? 'Next question &rarr;' : 'See my results &rarr;';
+          document.getElementById('ankle-q-area').innerHTML =
+            '<div class=\"ankle-q-card\">' +
+              '<p class=\"ankle-q-text\">' + (ankleState.cur + 1) + ' of ' + ankleQ.length + ' — ' + q.q + '</p>' +
+              opts +
+              '<div id=\"ankle-feedback\"></div>' +
+            '</div>' +
+            '<div class=\"ankle-nav-row\" id=\"ankle-nav\" style=\"display:none;\">' +
+              '<span style=\"font-size:13px;color:#6c757d;\">' + (ankleState.cur + 1) + ' of ' + ankleQ.length + '</span>' +
+              '<button class=\"ankle-nav-btn\" onclick=\"ankleNext()\">' + nextLabel + '</button>' +
+            '</div>';
+        }
+
+        function ankleSelect(idx) {
+          var q = ankleQ[ankleState.cur];
+          var score = q.scores[idx];
+          ankleState.answers[ankleState.cur] = { idx: idx, score: score };
+          ankleState.total = ankleState.answers.reduce(function(a, b){ return a + b.score; }, 0);
+          var btns = document.querySelectorAll('.ankle-opt-btn');
+          btns.forEach(function(b, i) {
+            b.disabled = true;
+            if (i === idx) b.className = 'ankle-opt-btn ' + (score === 0 ? 'selected-good' : 'selected-bad');
+            else if (q.scores[i] === 0) b.className = 'ankle-opt-btn revealed-good';
+          });
+          document.getElementById('ankle-feedback').innerHTML =
+            '<div class=\"ankle-feedback ' + (score === 0 ? 'ankle-feedback-good' : 'ankle-feedback-bad') + '\">' + q.feedback[idx] + '</div>';
+          document.getElementById('ankle-nav').style.display = 'flex';
+        }
+
+        function ankleNext() { ankleState.cur++; ankleRenderQ(); }
+
+        function ankleRenderResult() {
+          var maxScore = ankleQ.reduce(function(a, q){ return a + Math.max.apply(null, q.scores); }, 0);
+          var pct = Math.round((ankleState.total / maxScore) * 100);
+          var level, badgeCls, headline, tips;
+          if (pct <= 25) {
+            level = 'Low risk'; badgeCls = 'ankle-risk-low';
+            headline = 'Your habits are already working in your favor.';
+            tips = ['Keep warming up consistently before every session.','Maintain your stretching routine — it is making a difference.','Consider balance drills occasionally to stay sharp on uneven terrain.'];
+          } else if (pct <= 60) {
+            level = 'Moderate risk'; badgeCls = 'ankle-risk-mod';
+            headline = 'A few targeted changes could significantly lower your risk.';
+            tips = ['Add 5 minutes of ankle circles and calf stretches to your warm-up.','Try single-leg balance stands daily — 30 seconds per leg.','Check your footwear is appropriate for your sport and replace worn shoes.'];
+          } else {
+            level = 'Higher risk'; badgeCls = 'ankle-risk-high';
+            headline = 'Your ankles would benefit from some focused attention.';
+            tips = ['Start with heel raises and resistance band ankle eversion exercises 3x/day.','Always warm up — even a 5-minute routine cuts sprain risk meaningfully.','If you have had past sprains, ask a sports medicine specialist about bracing.','Work on single-leg balance to rebuild proprioception.'];
+          }
+          document.getElementById('ankle-dots').innerHTML = ankleQ.map(function(){ return '<div class=\"ankle-dot done\"></div>'; }).join('');
+          document.getElementById('ankle-q-area').innerHTML =
+            '<div class=\"ankle-result-card\">' +
+              '<span class=\"ankle-risk-badge ' + badgeCls + '\">' + level + '</span>' +
+              '<p style=\"font-size:22px;font-weight:500;margin:0 0 6px;color:#2c3e50;\">' + pct + '% risk score</p>' +
+              '<p style=\"font-size:14px;color:#6c757d;margin:0 0 14px;\">' + headline + '</p>' +
+              '<div class=\"ankle-result-tips\">' +
+                '<p style=\"font-size:13px;font-weight:500;margin:0 0 8px;color:#2c3e50;\">Your top priorities:</p>' +
+                '<ul style=\"margin:0;padding-left:18px;\">' + tips.map(function(t){ return '<li>' + t + '</li>'; }).join('') + '</ul>' +
+              '</div>' +
+              '<div style=\"margin-top:16px;\">' +
+                '<button class=\"ankle-nav-btn\" onclick=\"ankleRestart()\">Retake quiz</button>' +
+              '</div>' +
+            '</div>';
+        }
+
+        function ankleRestart() {
+          ankleState = { cur: 0, total: 0, answers: [] };
+          ankleRenderQ();
+        }
+
+        ankleRenderQ();
+      "))
                                     )
                                   )
                          )
@@ -1113,7 +1532,7 @@ fluidPage(
                             tags$img(src = "serenna.jpeg",
                                      style = "width: 250px; height: 250px; object-fit: cover; border-radius: 8px; flex-shrink: 0;"),
                             tags$div(
-                              h4("Serenna Wu", style = "font-size: 25px; margin-top: 0;"),
+                              h4("Jou-Hsuan (Serenna) Wu", style = "font-size: 25px; margin-top: 0;"),
                               p("2029", style = "color: grey; font-size: 20px;"),
                               p("I am a Neuroscience major passionate about developing treatment for neurodegenerative diseases. On campus, I am a part of the First-Year Residential Experience Board, HOSA, the LEAD Program, Orientaion Leader, and Eco-Rep. In my free time, I enjoy playing the flute and making arts and crafts.",
                                 style = "font-size: 20px;")
