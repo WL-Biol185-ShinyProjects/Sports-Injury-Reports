@@ -1159,7 +1159,9 @@ fluidPage(
           font-size: 18px; font-weight: 500; color: #2c3e50; margin: 0 0 4px;
         }
         .ankle-section-sub { font-size: 13px; color: #6c757d; margin: 0 0 16px; }
-      ")),
+      .ankle-opt-btn.selected { border-color: #495057; background: #f0f0f0; color: #2c3e50; }
+.ankle-feedback-neutral { background: #f0f4f8; color: #2c3e50; }
+                                                           ")),
                                            
                                            # ── Tips ──────────────────────────────────────
                                            div(style = "margin-bottom: 8px;",
@@ -1417,22 +1419,27 @@ fluidPage(
             '</div>';
         }
 
-        function ankleSelect(idx) {
-          var q = ankleQ[ankleState.cur];
-          var score = q.scores[idx];
-          ankleState.answers[ankleState.cur] = { idx: idx, score: score };
-          ankleState.total = ankleState.answers.reduce(function(a, b){ return a + b.score; }, 0);
-          var btns = document.querySelectorAll('.ankle-opt-btn');
-          btns.forEach(function(b, i) {
-            b.disabled = true;
-            if (i === idx) b.className = 'ankle-opt-btn ' + (score === 0 ? 'selected-good' : 'selected-bad');
-            else if (q.scores[i] === 0) b.className = 'ankle-opt-btn revealed-good';
-          });
-          document.getElementById('ankle-feedback').innerHTML =
-            '<div class=\"ankle-feedback ' + (score === 0 ? 'ankle-feedback-good' : 'ankle-feedback-bad') + '\">' + q.feedback[idx] + '</div>';
-          document.getElementById('ankle-nav').style.display = 'flex';
-        }
+function ankleSelect(idx) {
+  var q = ankleQ[ankleState.cur];
+  var score = q.scores[idx];
+  ankleState.answers[ankleState.cur] = { idx: idx, score: score };
+  ankleState.total = ankleState.answers.reduce(function(a, b){ return a + b.score; }, 0);
 
+  var btns = document.querySelectorAll('.ankle-opt-btn');
+  btns.forEach(function(b, i) {
+    b.disabled = true;
+    if (i === idx) b.className = 'ankle-opt-btn selected';
+  });
+
+  var feedbackDiv = document.createElement('div');
+  feedbackDiv.className = 'ankle-feedback ankle-feedback-neutral';
+  feedbackDiv.innerHTML = q.feedback[idx];
+  var feedbackArea = document.getElementById('ankle-feedback');
+  feedbackArea.innerHTML = '';
+  feedbackArea.appendChild(feedbackDiv);
+
+  document.getElementById('ankle-nav').style.display = 'flex';
+}
         function ankleNext() { ankleState.cur++; ankleRenderQ(); }
 
         function ankleRenderResult() {
