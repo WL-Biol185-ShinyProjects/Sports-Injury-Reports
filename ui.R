@@ -615,7 +615,7 @@ fluidPage(
                                                                       target = "_blank", "AAP Healthy Children - Sports")),
                                                        tags$li(tags$a(href = "https://www.cdc.gov/headsup/index.html", target = "_blank",
                                                                       "CDC Heads Up - Concussion Safety")),
-                                                       tags$li(tags$a(href = "https://www.safekids.org", target = "_blank",
+                                                       tags$li(tags$a(href = "https://www.safekids.org/safetytips", target = "_blank",
                                                                       "Safe Kids Worldwide"))
                                                )
                                            )
