@@ -9,7 +9,7 @@ Course: BIOL 185
 
 Overview: Data reports and injury prevention advice focused on different injuries across a variety of sports.
 
-Acknowledgments: Our group woul like to thank Dr. Whitworth for his help throughout the creation of this website as well as his teaching this term. We would also like to acknowledge the AI platform Claude for its help in our code creation.
+Acknowledgments: Our group would like to thank Dr. Whitworth for his help throughout the creation of this website as well as his teaching this term. We would also like to acknowledge the AI platform Claude for its help in our code creation.
 
 
 Sources:
