@@ -2,7 +2,7 @@
 
 ## Data and reports focused on different injuries across a variety of sports.
 
-Sports Injury Reports Authors: Cora Villere, Ellery McKnight, and Serena Wu, Washington & Lee University
+Sports Injury Reports Authors: Cora Villere, Ellery McKnight, and Jou-Hsuan (Serenna) Wu, Washington & Lee University
 Created: February 9, 2026
 Last Date of Modification: April 6, 2026
 Course: BIOL 185
