@@ -1081,12 +1081,12 @@ fluidPage(
                             tags$img(src = "cora.jpeg",
                                      style = "width: 250px; height: 250px; object-fit: cover; border-radius: 8px; flex-shrink: 0;"),
                             tags$div(
-                              h4("Cora Villere", style = "margin-top: 0;"),
-                              p("2027", style = "color: grey; font-size: 12px;"),
+                              h4("Cora Villere", style = "font-size: 25px; margin-top: 0;"),
+                              p("2027", style = "color: grey; font-size: 20px;"),
                               p("I am a Biology major on the pre-health track, with a passion for medicine and public health.
                               Specifically, I hope to become an emergency physician. Emergency departments are on the front lines of
                               sports injuries every day, leading to a great interest in this project.",
-                                style = "font-size: 13px;")
+                                style = "font-size: 20px;")
                             )
                           )
                         )),
@@ -1098,10 +1098,10 @@ fluidPage(
                             tags$img(src = "ellery.jpeg",
                                      style = "width: 250px; height: 250px; object-fit: cover; border-radius: 8px; flex-shrink: 0;"),
                             tags$div(
-                              h4("Ellery Mcknight", style = "margin-top: 0;"),
-                              p("2028", style = "color: grey; font-size: 12px;"),
+                              h4("Ellery Mcknight", style = "font-size: 25px; margin-top: 0;"),
+                              p("2028", style = "color: grey; font-size: 20px;"),
                               p("I'm a Biology major and Data Science minor from Atlanta, GA. On campus I enjoy being part of the University Singers and am involved in greek life. In my free time I like spending time outside and playing the guitar.",
-                                style = "font-size: 13px;")
+                                style = "font-size: 20px;")
                             )
                           )
 
@@ -1113,10 +1113,10 @@ fluidPage(
                             tags$img(src = "serenna.jpeg",
                                      style = "width: 250px; height: 250px; object-fit: cover; border-radius: 8px; flex-shrink: 0;"),
                             tags$div(
-                              h4("Serenna Wu", style = "margin-top: 0;"),
-                              p("2029", style = "color: grey; font-size: 12px;"),
+                              h4("Serenna Wu", style = "font-size: 25px; margin-top: 0;"),
+                              p("2029", style = "color: grey; font-size: 20px;"),
                               p("I am a Neuroscience major passionate about developing treatment for neurodegenerative diseases. On campus, I am a part of the First-Year Residential Experience Board, HOSA, the LEAD Program, Orientaion Leader, and Eco-Rep. In my free time, I enjoy playing the flute and making arts and crafts.",
-                                style = "font-size: 13px;")
+                                style = "font-size: 20px;")
                             )
                           )
                         ))
