@@ -166,7 +166,6 @@ fluidPage(
                        
                        div(class = "hero-banner", style = "margin-top: 20px;",
                            h1("Sports Injury Reports"),
-                           # Fun Facts
                            div(style = "background: white; border-radius: 12px; padding: 25px 40px;
              box-shadow: 0 2px 10px rgba(0,0,0,0.08); margin: 20px 10px;
              border-left: 6px solid #78c2ad; text-align: center;",
@@ -1524,9 +1523,9 @@ function ankleSelect(idx) {
                             tags$img(src = "ellery.jpeg",
                                      style = "width: 250px; height: 250px; object-fit: cover; border-radius: 8px; flex-shrink: 0;"),
                             tags$div(
-                              h4("Ellery Mcknight", style = "font-size: 25px; margin-top: 0;"),
+                              h4("Ellery McKnight", style = "font-size: 25px; margin-top: 0;"),
                               p("2028", style = "color: grey; font-size: 20px;"),
-                              p("I'm a Biology major and Data Science minor from Atlanta, GA. On campus I enjoy being part of the University Singers and am involved in greek life. In my free time I like spending time outside and playing the guitar.",
+                              p("I'm a Biology major and Data Science minor from Atlanta, GA. On campus I enjoy being part of the University Singers and am involved in greek life. In my free time I like spending time outside, hanging out with my friends, and playing the guitar.",
                                 style = "font-size: 20px;")
                             )
                           )
